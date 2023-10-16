@@ -2,13 +2,6 @@
 import React, { useState } from "react";
 import parse from "html-react-parser";
 
-// swiper
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import Link from "next/link";
 import Image from "next/image";
 import Reviews from "./Reviews";
@@ -18,29 +11,36 @@ import { MdDateRange } from "react-icons/md";
 import { AiFillWindows } from "react-icons/ai";
 import { RiMacLine } from "react-icons/ri";
 import { DiLinux } from "react-icons/di";
+import ImageBox from "./ImageBox";
+import { TNewsData, TReviewData } from "@/types";
+import ModalVideo from "./ui/ModalVideo";
+
+
 
 const GameProfileClient = ({ gameData, news, reviews }: any) => {
-  const [imageUrl, setImageUrl] = useState<string>(gameData.background_raw);
   // get percentage of positive reviews
   const handleReviewPositive = (total: string, positive: string) => {
     const percentage = (parseInt(positive) / parseInt(total)) * 100;
     return Math.floor(percentage);
   };
 
-  const handleImageError = () => {
-    setImageUrl(gameData.screenshots[0].path_full);
-  };
+  console.log(news);
+  console.log(gameData);
+  console.log(gameData?.movies?.[0]?.thumbnail)
+
   return (
     <main>
       <header className="h-screen relative text-white">
-        <Image
+        <ImageBox realImage={gameData?.background_raw} errorImage={gameData?.screenshots[0].path_full} customStyle={'absolute top-0 left-0 z-0'} />
+
+        {/* <Image
           src={imageUrl}
           onError={() => handleImageError()}
           alt="Background Image"
           width={1920}
           height={1080}
           className="absolute top-0 left-0 z-0"
-        />
+        /> */}
         <div className="bg-gradient-to-t from-[rgba(0,0,0,0.50)] z-10 absolute top-0 left-0 h-screen w-full" />
         <section className="absolute bottom-0 left-0 z-20 w-full h-full grid gap-4 sm:grid-cols-2 px-4 sm:px-20 py-10">
           <div className="sm:mt-auto">
@@ -61,13 +61,12 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
                 <BsHandThumbsUp className="text-xl" />
                 {reviews ? reviews.query_summary.review_score_desc : ""}
                 <span className="text-sm">
-                  {` (${
-                    reviews
-                      ? reviews.query_summary.total_reviews.toLocaleString(
-                          "en-IN"
-                        )
-                      : ""
-                  })`}
+                  {` (${reviews
+                    ? reviews.query_summary.total_reviews.toLocaleString(
+                      "en-IN"
+                    )
+                    : ""
+                    })`}
                 </span>
               </div>
             </div>
@@ -126,7 +125,7 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
               <h1 className="text-[1rem] ">{gameData.short_description}</h1>
               <div className="py-3 flex gap-3">
                 {gameData?.genres?.map(
-                  (item, index) =>
+                  (item: { id: number, description: string }, index: number) =>
                     index < 3 && (
                       <button
                         key={item.id}
@@ -160,8 +159,8 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
                     {gameData?.price_overview?.final
                       ? `₹${gameData?.price_overview?.final}`
                       : gameData.release_date.coming_soon
-                      ? "Coming soon"
-                      : "Free to Play"}
+                        ? "Coming soon"
+                        : "Free to Play"}
                   </span>
                 )}
               </div>
@@ -188,13 +187,21 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
             <h1 className="font-bold text-4xl ">Trailers</h1>
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
           </div>
-          <Swiper
+          <div className=" flex gap-4 overflow-x-scroll scrollbar py-5 h-[400px]">
+
+            {gameData?.movies?.map((item: { id: number, thumbnail: string, name: string, mp4: { max: string } }) => (
+              <ModalVideo item={item} />
+            ))
+            }
+          </div>
+
+          {/* <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             navigation
             slidesPerView={2}
             spaceBetween={30}
           >
-            {gameData?.movies?.map((item) => (
+            {gameData?.movies?.map((item: { id: number, thumbnail: string, name: string, mp4: { max: string } }) => (
               <SwiperSlide key={item.id}>
                 <video
                   controls
@@ -209,7 +216,7 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
                 </video>
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> */}
         </section>
       )}
 
@@ -220,13 +227,13 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
           <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
         </div>
 
-        <Swiper
+        {/* <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           navigation
           slidesPerView={3}
           spaceBetween={20}
         >
-          {gameData?.screenshots?.map((item) => (
+          {gameData?.screenshots?.map((item: { id: number, path_full: string }) => (
             <SwiperSlide key={item.id}>
               <Link href={item.path_full} target="_blank">
                 <Image
@@ -239,7 +246,7 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
               </Link>
             </SwiperSlide>
           ))}
-        </Swiper>
+        </Swiper> */}
       </section>
 
       {/* about_the_game  */}
@@ -275,11 +282,9 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
 
           <div className="relative">
             <div
-              className={`flex gap-8 scrollBar ${
-                reviews?.reviews.length > 3 && "overflow-x-scroll"
-              } `}
+              className={`flex gap-8 scrollBar ${reviews?.reviews.length > 3 && "overflow-x-scroll"} `}
             >
-              {reviews?.reviews.map((item, index) => (
+              {reviews?.reviews.map((item: TReviewData, index: number) => (
                 <Reviews key={item.recommendationid} review={item} />
               ))}
             </div>
@@ -299,7 +304,7 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
           </div>
 
           <div className="max-w-[1000px] mx-auto flex flex-col gap-20">
-            {news?.map((item) => (
+            {news?.map((item: TNewsData) => (
               <News key={item.gid} item={item} />
             ))}
           </div>

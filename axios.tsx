@@ -10,19 +10,22 @@ const apiDetails = axios.create({
   baseURL: `https://store.steampowered.com/api/appdetails`,
 });
 const GetTopReleasesPages = axios.create({
-  baseURL: `https://api.steampowered.com/ISteamChartsService/GetTopReleasesPages/v1/?key=F872433F9AF2F8C7F6BF95ED37998E28/`,
+  baseURL: `https://api.steampowered.com/ISteamChartsService/GetTopReleasesPages/v1/?key=${process.env.REACT_APP_STEAM_KEY}/`,
 });
 const GetNews = axios.create({
-  baseURL: `https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?key=F872433F9AF2F8C7F6BF95ED37998E28&cc=IND&l=english`,
+  baseURL: `https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?key=${process.env.REACT_APP_STEAM_KEY}&cc=IND&l=english`,
 });
 const GetReviews = axios.create({
   baseURL: `https://store.steampowered.com/appreviews/`,
 });
 const GetPlayer = axios.create({
-  baseURL: `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/`,
+  baseURL: `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${process.env.REACT_APP_STEAM_KEY}`,
 });
 const SearchApi = axios.create({
   baseURL: `https://steamcommunity.com/actions/SearchApps/`,
+});
+const GetDlc = axios.create({
+  baseURL: `https://store.steampowered.com/api/dlcforapp/`,
 });
 
 export {
@@ -34,4 +37,5 @@ export {
   GetReviews,
   GetPlayer,
   SearchApi,
+  GetDlc
 };

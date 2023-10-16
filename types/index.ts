@@ -16,11 +16,11 @@ export type TGameData = {
   header_image: string;
   controller_support?: string;
 };
-
 export type TGameDataProps = {
   gameData: TGameData[];
 };
 
+// category Api 
 export type TCategoryApiType = {
   specials: {
     id: string;
@@ -43,23 +43,23 @@ export type TCategoryApiType = {
     items: TGameData[];
   };
 };
+export type TCategoryDataProps = {
+  gameData: TGameData[];
+  heading: string;
+};
 
+// header Api 
 export type THeaderApiType = {
   featured_win: TGameData[];
 };
 
+// single Game api 
 export type TApiDetailsApi = {
   [key: string]: {
     success: boolean;
     data: TSingleGameData;
   };
 };
-
-export type TCategoryDataProps = {
-  gameData: TGameData[];
-  heading: string;
-};
-
 export type TSingleGameData = {
   type: string;
   name: string;
@@ -98,6 +98,71 @@ export type TSingleGameData = {
   background_raw: string;
 };
 
+// dlc Api 
 export type TDlcProps = {
-  gameData: TSingleGameData[];
+  dlc: TDlcDataProps[];
 };
+export type TDlcDataProps = {
+  id: number,
+  name: string,
+  header_image: string,
+  price_overview: {
+    currency: string,
+    initial: number,
+    final: number,
+    discount_percent: number
+  },
+  platforms: {
+    windows: boolean,
+    mac: boolean,
+    linux: boolean
+  },
+  release_date: {
+    steam: string
+  },
+  controller_support: string
+}
+
+// News Api 
+export type TNewsData = {
+  gid: string,
+  title: string,
+  url: string,
+  is_external_url: boolean,
+  author: string,
+  contents: string,
+  feedlabel: string,
+  date: number,
+  feedname: string,
+  feed_type: number,
+  appid: number
+}
+
+// Review Api 
+
+export type TReviewData = {
+  recommendationid: string,
+  author: {
+    steamid: string,
+    num_games_owned: number,
+    num_reviews: number,
+    playtime_forever: number,
+    playtime_last_two_weeks: number,
+    playtime_at_review: number,
+    last_played: number
+  },
+  language: string,
+  review: string,
+  timestamp_created: number,
+  timestamp_updated: number,
+  voted_up: boolean,
+  votes_up: number,
+  votes_funny: number,
+  weighted_vote_score: string,
+  comment_count: number,
+  steam_purchase: boolean,
+  received_for_free: boolean,
+  written_during_early_access: boolean,
+  hidden_in_steam_china: boolean,
+  steam_china_location: string
+}

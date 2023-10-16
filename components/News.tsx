@@ -2,20 +2,15 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import parse from "html-react-parser";
+import parser from "bbcode-to-react";
+import moment from "moment";
 
-const News = ({ item }) => {
-  const [newsContent, setNewsContent] = useState("");
+const News = ({ item }: any) => {
+  const [newsContent, setNewsContent] = useState<any>('');
 
   useEffect(() => {
-    setNewsContent(parse(item.contents));
+    setNewsContent(parser.toReact(item.contents.replace("{STEAM_CLAN_IMAGE}", "https://clan.akamai.steamstatic.com/images/")));
   }, []);
-
-  // convert news timestamp in real date
-  const handleTimestamp = (unix) => {
-    let dateObject = new Date(unix * 1000);
-    let dateString = dateObject.toLocaleDateString();
-    return dateString;
-  };
 
   return (
     <div
@@ -27,12 +22,12 @@ const News = ({ item }) => {
       </h1>
       <div className="flex justify-between py-4">
         <h1>Author: {item.author || "Unknown"}</h1>
-        <h1>Date: {handleTimestamp(item.date)}</h1>
+        <h1>Date: {moment(item.date).format('DD-MM-YYYY')}</h1>
         <Link href={`${item.url}`} target="_blank" className="text-blue-500">
           Read More!
         </Link>
       </div>
-      <div className="newsContent overflow-hidden">{newsContent}</div>
+      <div className="newsContent overflow-hidden whitespace-pre-wrap py-10">{item.contents.startsWith('<') ? parse(item.contents) : newsContent}</div>
     </div>
   );
 };

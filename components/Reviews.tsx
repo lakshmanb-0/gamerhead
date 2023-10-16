@@ -1,50 +1,41 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import {
   BsFillHandThumbsUpFill,
   BsFillHandThumbsDownFill,
 } from "react-icons/bs";
+import parser from "bbcode-to-react";
+import moment from 'moment';
+import ImageBox from "./ImageBox";
 
-const Reviews = ({ review }) => {
+const Reviews = ({ review }: any) => {
   const [readMore, setReadMore] = useState(false);
-  const [reviewerData, setReviewerData] = useState([]);
+  const [reviewContent, setReviewContent] = useState<any>('')
+  const [reviewerData, setReviewerData] = useState<any>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetch("https://randomuser.me/api/")
-        .then((result) => result.json())
-        .then((data) => setReviewerData(data.results[0]));
-    };
-    fetchData();
+    fetch(`/api/getplayer/?steamId=${review?.author?.steamid}`).then((res) => res.json())
+      .then((data) => {
+        setReviewerData(data.data.response.players[0]);
+      })
+    setReviewContent(parser.toReact(review.review));
   }, []);
-  const handleTimestamp = (unix) => {
-    let dateObject = new Date(unix * 1000);
-    let dateString = dateObject.toLocaleDateString();
-    return dateString;
-  };
 
-  const truncate = (str, n) => {
-    return `${str}`.length > n ? str.substr(0, n - 1) + " ..." : str;
-  };
+  function truncate(str: string) {
+    return str?.length > 250 ? str?.substring(0, 240) + "..." : str;
+  }
 
   return (
     <div className="bg-[#0f0f0f] px-5 py-4 rounded mb-6">
       <div className="flex justify-between items-center py-3 ">
         <div className="flex gap-4 items-center">
           <div className="w-14 h-14 ">
-            <Image
-              src={reviewerData?.picture?.large || "/person.jpeg"}
-              alt="Avatar"
-              width={1080}
-              height={1920}
-              className="rounded-full"
-            />
+            <ImageBox realImage={reviewerData?.avatarfull} errorImage={"/person.jpeg"} customStyle={'rounded-full'} />
           </div>
           <div className="flex flex-col ">
-            <span>{reviewerData?.login?.username}</span>
+            <span>{reviewerData?.personaname}</span>
             <span className="text-sm">
-              {handleTimestamp(review.timestamp_created)}
+              {moment(review.timestamp_created).format('DD-MM-YYYY')}
             </span>
           </div>
         </div>
@@ -56,16 +47,13 @@ const Reviews = ({ review }) => {
           )}
         </div>
       </div>
-
       <div
-        className={`w-[400px] h-[200px] ${
-          readMore && "overflow-y-scroll scrollBar"
-        } my-4`}
+        className={`w-[400px] h-[200px] ${readMore && "overflow-y-scroll scrollBar"} my-4`}
         onClick={() =>
-          review.review.length > 250 && setReadMore((prev) => !prev)
+          reviewContent[0].length > 250 && setReadMore((prev) => !prev)
         }
       >
-        {readMore ? review.review : truncate(review.review, 250)}
+        {readMore ? reviewContent : truncate(reviewContent[0])}
       </div>
       <div className="text-sm">
         <span>{review.votes_up} people found this review helpful</span>

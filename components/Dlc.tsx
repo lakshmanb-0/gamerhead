@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { TDlcProps, TSingleGameData } from "@/types";
+import { TDlcDataProps, TDlcProps } from "@/types";
+import ImageBox from "./ImageBox";
 
-const Dlc = ({ gameData }: TDlcProps) => {
+const Dlc = ({ dlc }: TDlcProps) => {
   const router = useRouter();
-  console.log(gameData);
+  console.log(dlc);
 
   const handleClick = (id: number) => {
     router.push(`/GameProfile/${id}`);
@@ -16,19 +16,20 @@ const Dlc = ({ gameData }: TDlcProps) => {
     <div className="py-10 px-4">
       <h1 className="text-4xl font-bold">Destiny DLC</h1>
       <div className="flex overflow-x-scroll scrollBar p-2">
-        {gameData?.map((item: TSingleGameData, index: number) => (
+        {dlc?.map((item: TDlcDataProps, index: number) => (
           <div key={index} className="pr-3 last:pr-0 flex flex-col gap-2 py-5">
             <div
               className="w-[300px] cursor-pointer"
-              onClick={() => handleClick(item.steam_appid)}
+              onClick={() => handleClick(item.id)}
             >
-              <Image
+              <ImageBox realImage={item?.header_image} errorImage={item?.header_image} customStyle={'h-[12rem]'} />
+              {/* <Image
                 src={item.background_raw}
                 alt={item.name}
                 width={1080}
                 height={1920}
                 className="h-[12rem]"
-              />
+              /> */}
             </div>
             <div className="flex flex-col gap-1 h-full">
               <h1 className="text-xl py-2 text-center">{item.name}</h1>

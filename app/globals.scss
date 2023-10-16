@@ -5,7 +5,7 @@
 
 @layer base {
   body {
-    @apply bg-[#121212] text-white font-sans scrollBar;
+    @apply bg-[#121212] text-white font-sans ;
   }
 
   img {
@@ -38,9 +38,9 @@
     @apply border-2 outline-0 text-black p-2 border-[#ededed] bg-[#ededed] rounded-md;
   }
 
-  .scrollBar {
-    @apply scrollbar-thin scrollbar-thumb-[#6152c8] scrollbar-track-[#f9f1fe] scrollbar-w-[0.5rem] scrollbar-h-[0.5rem] scrollbar-track-rounded-xl scrollbar-thumb-rounded-xl;
-  }
+  // .scrollBar {
+  //   @apply scrollbar-thumb-[#6152c8] scrollbar-track-[#f9f1fe] scrollbar-w-[0.5rem] scrollbar-h-[0.5rem] scrollbar-track-rounded-xl scrollbar-thumb-rounded-xl;
+  // }
 
   .requirement {
     div {
