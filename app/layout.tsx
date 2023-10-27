@@ -1,5 +1,6 @@
 'use client'
 import { Provider } from "react-redux";
+import { ClerkProvider, RedirectToSignIn, RedirectToSignUp, SignedIn, SignedOut } from '@clerk/nextjs'
 import "./globals.scss";
 import { store } from "@/components/redux/store/store";
 
@@ -13,11 +14,14 @@ export default function RootLayout({ children, }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" >
-      <body>
-        <Provider store={store}>
-          {children}
-        </Provider></body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" >
+        <body>
+          <Provider store={store}>
+            {children}
+          </Provider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

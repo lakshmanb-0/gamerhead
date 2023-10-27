@@ -5,15 +5,17 @@
 
 @layer base {
   body {
-    @apply bg-[#121212] text-white font-sans ;
+    @apply bg-[#121212] text-white font-sans;
   }
 
   img {
     @apply object-cover w-full h-full;
   }
+
   input {
     @apply border-0 outline-0;
   }
+
   video::poster {
     @apply w-full h-full object-cover;
   }
@@ -29,6 +31,7 @@
       @apply cursor-pointer hover:opacity-50;
     }
   }
+
   .swiper .swiper-button-prev,
   .swiper .swiper-button-next {
     @apply font-bold;
@@ -47,6 +50,7 @@
       strong {
         @apply text-lg;
       }
+
       ul {
         strong {
           @apply bg-gradient-to-r from-[#fe1f94] to-[#fd2adf] text-transparent bg-clip-text;
@@ -54,6 +58,8 @@
       }
     }
   }
+
+
 
   .newsContent {
     a {

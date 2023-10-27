@@ -1,5 +1,5 @@
 import { GetNews, GetReviews, apiDetails } from "@/axios";
-import GameProfileClient from "@/components/GameProfileClient";
+import GameProfileClient from "@/components/GameProfile/GameProfileClient";
 import { TNewsData } from "@/types";
 
 const GamePage = async ({ params }: { params: { id: string } }) => {

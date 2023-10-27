@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { TGameData, TGameDataProps } from "@/types";
-import ImageBox from "./ImageBox";
+import ImageBox from "../ImageBox";
 
 const Header = ({ gameData }: TGameDataProps) => {
   const router = useRouter();

@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { TDlcDataProps, TDlcProps } from "@/types";
-import ImageBox from "./ImageBox";
+import ImageBox from "../ImageBox";
 
 const Dlc = ({ dlc }: TDlcProps) => {
   const router = useRouter();

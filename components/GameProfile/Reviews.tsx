@@ -6,7 +6,7 @@ import {
 } from "react-icons/bs";
 import parser from "bbcode-to-react";
 import moment from 'moment';
-import ImageBox from "./ImageBox";
+import ImageBox from "../ImageBox";
 
 const Reviews = ({ review }: any) => {
   const [readMore, setReadMore] = useState(false);
@@ -20,6 +20,9 @@ const Reviews = ({ review }: any) => {
       })
     setReviewContent(parser.toReact(review.review));
   }, []);
+
+  console.log(review);
+  console.log(reviewContent);
 
   function truncate(str: string) {
     return str?.length > 250 ? str?.substring(0, 240) + "..." : str;
@@ -48,7 +51,7 @@ const Reviews = ({ review }: any) => {
         </div>
       </div>
       <div
-        className={`w-[400px] h-[200px] ${readMore && "overflow-y-scroll scrollBar"} my-4`}
+        className={`w-[400px] h-[200px] ${readMore ? "overflow-y-scroll scrollBar" : 'overflow-y-hidden'} my-4 whitespace-pre-wrap `}
         onClick={() =>
           reviewContent[0].length > 250 && setReadMore((prev) => !prev)
         }

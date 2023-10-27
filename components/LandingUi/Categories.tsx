@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { TCategoryDataProps, TGameData } from "@/types";
-import ImageBox from "./ImageBox";
+import ImageBox from "../ImageBox";
 
 export const Categories = ({ gameData, heading }: TCategoryDataProps) => {
   const router = useRouter();

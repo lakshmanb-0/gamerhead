@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TGameData, TGameDataProps } from "@/types";
+import ImageBox from "../ImageBox";
 
 const GamesSale = ({ gameData }: TGameDataProps) => {
   const router = useRouter();
@@ -29,7 +30,8 @@ const GamesSale = ({ gameData }: TGameDataProps) => {
               className=" cursor-pointer h-full"
               onClick={() => handleClick(item.id)}
             >
-              <Image
+              <ImageBox realImage={item?.header_image} errorImage={item?.large_capsule_image} customStyle={'rounded-lg'} />
+              {/* <Image
                 src={imgSrc ? item?.header_image : item?.large_capsule_image}
                 alt={item.name}
                 // onLoad={()=> setImgSrc(item?.large_capsule_image)}
@@ -37,7 +39,7 @@ const GamesSale = ({ gameData }: TGameDataProps) => {
                 width={1080}
                 height={1920}
                 className="rounded-lg"
-              />
+              /> */}
             </div>
             {/* <div className="flex flex-col justify-center p-3 h-full">
               <h1 className="text-xl py-2 text-center font-bold">
