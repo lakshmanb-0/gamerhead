@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { TGameData, TGameDataProps } from "@/types";
 import ImageBox from "../ImageBox";
+import CountdownTimer from "../countdownTimer";
 
 const GamesSale = ({ gameData }: TGameDataProps) => {
   const router = useRouter();
@@ -20,6 +21,8 @@ const GamesSale = ({ gameData }: TGameDataProps) => {
 
       })
   }, []);
+  console.log(gameData);
+
   return (
     <div className="py-10 px-4">
       <h1 className="text-4xl py-4">Games on Sale</h1>
@@ -59,6 +62,14 @@ const GamesSale = ({ gameData }: TGameDataProps) => {
                 </span>
               </div>
             </div> */}
+            <div>hello</div>
+            {item?.discounted && <div>
+              <h1>{CountdownTimer(item?.discount_expiration).days} days </h1>
+              <h1>{CountdownTimer(item?.discount_expiration).hours} hours </h1>
+              <h1>{CountdownTimer(item?.discount_expiration).minutes} minutes </h1>
+              <h1>{CountdownTimer(item?.discount_expiration).seconds} seconds </h1>
+            </div>
+            }
           </div>
         ))}
       </div>

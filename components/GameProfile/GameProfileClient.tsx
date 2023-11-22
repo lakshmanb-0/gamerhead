@@ -1,9 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import parse from "html-react-parser";
-
-import Link from "next/link";
-import Image from "next/image";
 import Reviews from "./Reviews";
 import News from "./News";
 import { BsHandThumbsUp } from "react-icons/bs";
@@ -14,16 +11,15 @@ import { DiLinux } from "react-icons/di";
 import ImageBox from "../ImageBox";
 import { TNewsData, TReviewData } from "@/types";
 import ModalVideo from "../ui/ModalVideo";
+import Dlc from "../LandingUi/Dlc";
 
 
-const GameProfileClient = ({ gameData, news, reviews }: any) => {
-
+const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
   // get percentage of positive reviews
   const handleReviewPositive = (total: string, positive: string) => {
     const percentage = (parseInt(positive) / parseInt(total)) * 100;
     return Math.floor(percentage);
   };
-
 
   return (
     <main>
@@ -147,7 +143,7 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
           </div>
           <div className=" flex gap-4 overflow-x-scroll scrollbar py-5 h-[250px]">
             {gameData?.movies?.map((item: { id: number, thumbnail: string, name: string, mp4: { max: string } }) => (
-              <ModalVideo item={item} />
+              <ModalVideo item={item} key={item.id} />
             ))}
           </div>
         </section>
@@ -159,9 +155,12 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
           <h1 className="font-bold text-4xl ">Screenshots</h1>
           <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
         </div>
-        {gameData?.screenshots?.map((item: { id: number, path_full: string }) => (
-          <ImageBox key={item?.id} realImage={item?.path_full} errorImage={item?.path_full} customStyle={'rounded'} />
-        ))}
+        <section className="flex gap-4 overflow-x-scroll scrollbar py-5 h-[250px]">
+          {gameData?.screenshots?.map((item: { id: number, path_full: string }) => (
+            <ImageBox key={item?.id} realImage={item?.path_full} errorImage={item?.path_full} customStyle={'rounded'} />
+          ))}
+        </section>
+
 
         {/* <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -207,6 +206,8 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
         </div>
       </section>
 
+      <Dlc dlc={dlcData} />
+
       {/* reviews  */}
       {!!reviews?.reviews.length && (
         <section className="py-10 maxWidth">
@@ -242,7 +243,6 @@ const GameProfileClient = ({ gameData, news, reviews }: any) => {
           </div>
         </section>
       )}
-
     </main>
   );
 };

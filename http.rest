@@ -1,0 +1,34 @@
+
+@url=https://store.steampowered.com/api/
+
+
+
+###
+GET {{url}}featuredcategories/?cc=IND&l=english
+Content-Type: application/json
+
+
+###
+GET https://store.steampowered.com/appreviews/199901?json=1&cc=IND&l=english
+Content-Type: application/json
+
+
+###
+GET https://steamcommunity.com/actions/SearchApps/witcher
+Content-Type: application/json
+
+
+
+
+###
+GET {{url}}featured/?cc=IND&l=english
+Content-Type: application/json
+Authorization: bearer {{}}
+
+
+
+
+
+###
+GET http://localhost:3000/api/url
+Content-Type: application/json

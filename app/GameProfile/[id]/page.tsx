@@ -1,25 +1,24 @@
-import { GetNews, GetReviews, apiDetails } from "@/axios";
+import { getAppDetails, getDlc, getNews, getReviews } from "@/app/server.ts/apiCalls";
 import GameProfileClient from "@/components/GameProfile/GameProfileClient";
 import { TNewsData } from "@/types";
 
 const GamePage = async ({ params }: { params: { id: string } }) => {
   // game data
-  const response = await apiDetails.get(`?appids=${params.id}&cc=IND&l=english`);
-  const gameData = response.data[params.id].data;
-  console.log(gameData);
+  const response = await getAppDetails(`?appids=${params.id}&cc=IND&l=english`)
+  const gameData = response?.[params.id].data;
 
   // news data
-  const newsApi = await GetNews.get(`&appid=${params.id}`);
-  const newsResponse = newsApi.data.appnews.newsitems;
+  const newsApi = await getNews(`appid=${params.id}`);
+  const newsResponse = newsApi?.appnews?.newsitems?.filter((item: TNewsData) => item.author !== "SteamDB")
 
   //review data
-  const review = await GetReviews.get(`${params.id}?json=1&cc=IND&l=english`);
-  const reviews = review.data;
+  const review = await getReviews(`${params.id}?json=1&cc=IND&l=english`);
+  const reviews = review;
+
+  const dlcData = await getDlc(`?appid=${gameData?.steam_appid}`);
 
   return (
-    <main>
-      <GameProfileClient gameData={gameData} news={newsResponse.filter((item: TNewsData) => item.author !== "SteamDB")} reviews={reviews} />
-    </main>
+    <GameProfileClient gameData={gameData} news={newsResponse} reviews={reviews} dlcData={dlcData?.dlc} />
   );
 };
 

@@ -5,7 +5,6 @@ import { RootState, store } from "@/components/redux/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { logIn, logOut } from '../redux/reducers/auth.reducers';
 
-
 export default function Providers() {
     const loggedIn = useSelector((state: RootState) => state.auth.loggedIn)
     const dispatch = useDispatch()

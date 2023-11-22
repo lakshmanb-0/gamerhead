@@ -7,6 +7,7 @@ import {
 import parser from "bbcode-to-react";
 import moment from 'moment';
 import ImageBox from "../ImageBox";
+import { getPlayer } from "@/app/server.ts/apiCalls";
 
 const Reviews = ({ review }: any) => {
   const [readMore, setReadMore] = useState(false);
@@ -14,15 +15,15 @@ const Reviews = ({ review }: any) => {
   const [reviewerData, setReviewerData] = useState<any>([]);
 
   useEffect(() => {
-    fetch(`/api/getplayer/?steamId=${review?.author?.steamid}`).then((res) => res.json())
-      .then((data) => {
-        setReviewerData(data.data.response.players[0]);
-      })
+    const apiDetail = async () => {
+      const data = await getPlayer(`steamids=${review?.author?.steamid}`);
+      setReviewerData(data.response.players[0]);
+    }
+    apiDetail()
     setReviewContent(parser.toReact(review.review));
-  }, []);
 
-  console.log(review);
-  console.log(reviewContent);
+  }, [])
+
 
   function truncate(str: string) {
     return str?.length > 250 ? str?.substring(0, 240) + "..." : str;
@@ -33,7 +34,8 @@ const Reviews = ({ review }: any) => {
       <div className="flex justify-between items-center py-3 ">
         <div className="flex gap-4 items-center">
           <div className="w-14 h-14 ">
-            <ImageBox realImage={reviewerData?.avatarfull} errorImage={"/person.jpeg"} customStyle={'rounded-full'} />
+            {/* <Image src={reviewerData.avatarfull} width={1080} height={1920} /> */}
+            <ImageBox realImage={reviewerData.avatarfull} errorImage='/person.jpeg' customStyle='rounded-full' />
           </div>
           <div className="flex flex-col ">
             <span>{reviewerData?.personaname}</span>

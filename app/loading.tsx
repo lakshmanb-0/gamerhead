@@ -1,11 +1,11 @@
 "use client";
+import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
-import { FlapperSpinner } from "react-spinners-kit";
 
 const Loading = () => {
     return (
         <main className="grid place-items-center h-screen">
-            <FlapperSpinner color={'#00ff89'} size={30} />
+            <Skeleton className="h-12 w-12 rounded-full bg-white" />
         </main>
     );
 };

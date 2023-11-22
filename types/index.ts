@@ -14,6 +14,7 @@ export type TGameData = {
   linux_available: boolean;
   streamingvideo_available: boolean;
   header_image: string;
+  discount_expiration?: number,
   controller_support?: string;
 };
 export type TGameDataProps = {

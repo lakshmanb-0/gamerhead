@@ -4,27 +4,24 @@ import GamesSale from "@/components/LandingUi/GamesSale";
 import Header from "@/components/LandingUi/Header";
 import Providers from "@/components/Provider/Providers";
 import LandingInfinite from "@/components/LoadingInfinite/LandingInfinite";
-import { useEffect, useState } from "react";
 import { TCategoryApiType, TDlcProps, THeaderApiType } from "@/types";
 import { getCategory, getDlc, getFeature, getTopReleases } from "./server.ts/apiCalls";
-import { SignedIn, auth, currentUser, useAuth } from "@clerk/nextjs";
+import { getUniqueData } from "@/utils/utility";
+import { Metadata } from "next";
 import Navbar from "@/components/LandingUi/Navbar";
+
+export const metadata: Metadata = {
+  title: "GamerHead",
+  description:
+    "Welcome to GameStore, your ultimate destination for all things gaming! Step into a world of endless fun and adventure as we bring you the best selection of video games, consoles, and gaming accessories. Our website is designed to cater to gamers of all ages and preferences, providing an immersive and user-friendly experience.",
+};
 
 export default async function Home() {
   const categoryData = await getCategory();
   const headerData = await getFeature();
   const topReleasesData = await getTopReleases();
-  const dlcData = await getDlc();
-  // fetch(`/api/dlc?appid=${1085660}`).then((res) => res.json()).then((data) => setDlcData(data.data))
+  const dlcData = await getDlc(`?appid=${1085660}`);
 
-  // uniqueArray 
-  const getUniqueData = (objects: any) => {
-    const uniqueMap = new Map();
-    objects?.forEach((obj: any) => {
-      uniqueMap.set(obj.id, obj);
-    });
-    return Array.from(uniqueMap.values());
-  };
 
   return (
     <>
