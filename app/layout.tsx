@@ -1,19 +1,26 @@
+'use client'
+import { Provider } from "react-redux";
+import { ClerkProvider } from '@clerk/nextjs'
+import { NextUIProvider } from '@nextui-org/react'
 import "./globals.scss";
+import Navbar from "@/components/LandingUi/Nav";
+import { store } from "@/components/redux/store/store";
 
-export const metadata = {
-  title: "GamerHead",
-  description:
-    "Welcome to GameStore, your ultimate destination for all things gaming! Step into a world of endless fun and adventure as we bring you the best selection of video games, consoles, and gaming accessories. Our website is designed to cater to gamers of all ages and preferences, providing an immersive and user-friendly experience. ",
-};
-
-export default function RootLayout({
-  children,
-}: {
+export default function RootLayout({ children, }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className='dark' >
+      <body>
+        <ClerkProvider>
+          <NextUIProvider>
+            <Provider store={store}>
+              <Navbar />
+              {children}
+            </Provider>
+          </NextUIProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

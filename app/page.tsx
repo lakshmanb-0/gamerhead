@@ -1,69 +1,39 @@
-import { Categories } from "@/components/Categories";
-import Dlc from "@/components/Dlc";
-import GamesSale from "@/components/GamesSale";
-import Header from "@/components/Header";
-import Navbar from "@/components/Navbar";
-import { apiDetails, featured, featuredCategories } from "@/axios";
-import { AxiosResponse } from "axios";
-import {
-  TApiDetailsApi,
-  TCategoryApiType,
-  TGameData,
-  THeaderApiType,
-  TSingleGameData,
-} from "@/types";
+import { Categories } from "@/components/LandingUi/Categories";
+import Dlc from "@/components/LandingUi/Dlc";
+import GamesSale from "@/components/LandingUi/GamesSale";
+import Header from "@/components/LandingUi/Header";
+import LandingInfinite from "@/components/LoadingInfinite/LandingInfinite";
+import { getCategory, getDlc, getFeature, getTopReleases } from "./server.ts/apiCalls";
+import { getUniqueData } from "@/utils/utility";
+import { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
+
+
+// export const metadata: Metadata = {
+//   title: "GamerHead",
+//   description:
+//     `Welcome to GameStore, your ultimate destination for all things gaming! Step into a world of endless fun and adventure as we bring you the best selection of video games, 
+//     consoles, and gaming accessories. Our website is designed to cater to gamers of all ages and preferences, providing an immersive and user-friendly experience.`,
+// };
 
 export default async function Home() {
-  // unique game data function
-  const getUniqueData = (objects) => {
-    const uniqueMap = new Map();
-    objects.forEach((obj) => {
-      uniqueMap.set(obj.id, obj);
-    });
-    return Array.from(uniqueMap.values());
-  };
+  const categoryData = await getCategory();
+  const headerData = await getFeature();
+  const topReleasesData = await getTopReleases();
+  const dlcData = await getDlc(1085660);
 
-  //dlc
-  const gameDlc: number[] = [
-    1945360, 1945340, 2266420, 1940230, 1656370, 1656330, 1314563, 1090200,
-    1090150, 1745440,
-  ];
 
-  let dlcData = [];
-  gameDlc.map(async (item: number) => {
-    const response: AxiosResponse<TApiDetailsApi> = await apiDetails.get(
-      `?appids=${item}&cc=IND&l=english`
-    );
-    const data = response.data[item].data;
-    dlcData.push(data);
-  });
-
-  //header
-  const headerApi: AxiosResponse<THeaderApiType> =
-    await featured.get<THeaderApiType>("");
-  const headerData = getUniqueData(headerApi.data.featured_win);
-
-  //gameSale
-  const CategoryApi: AxiosResponse<TCategoryApiType> =
-    await featuredCategories.get<TCategoryApiType>("");
-  const gameSaleData = getUniqueData(CategoryApi.data.specials.items);
-
-  // //topSellers
-  const topSellers = getUniqueData(CategoryApi.data.top_sellers.items);
-  // //Upcoming
-  const upcoming = getUniqueData(CategoryApi.data.coming_soon.items);
-  // // new releases
-  const newReleases = getUniqueData(CategoryApi.data.new_releases.items);
 
   return (
-    <main>
-      {/* <Navbar /> */}
-      <Header gameData={headerData} />
-      <GamesSale gameData={gameSaleData} />
-      <Categories gameData={topSellers} heading="Top Sellers" />
-      <Categories gameData={upcoming} heading="Upcoming" />
-      <Categories gameData={newReleases} heading="New Releases" />
-      <Dlc gameData={dlcData} />
-    </main>
+    <>
+      {/* <Header gameData={getUniqueData(headerData?.featured_win)} />
+      <GamesSale gameData={getUniqueData(categoryData?.specials?.items)} />
+      <Categories gameData={getUniqueData(categoryData?.top_sellers?.items)} heading="Top Sellers" />
+      <Categories gameData={getUniqueData(categoryData?.coming_soon?.items)} heading="Upcoming" />
+      <Dlc dlcData={dlcData} />
+      <LandingInfinite data={topReleasesData?.response?.pages[0]} />
+      <Categories gameData={getUniqueData(categoryData?.new_releases?.items)} heading="New Releases" /> */}
+      <ToastContainer />
+    </>
   );
 }

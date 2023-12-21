@@ -1,13 +1,12 @@
 "use client";
+import { Spinner } from "@nextui-org/react";
 import React from "react";
-import { FlapperSpinner } from "react-spinners-kit";
 
-const Loading = ({ color = "#00ff89", size = 30 }) => {
-  return (
-    <main className="grid place-items-center h-screen">
-      <FlapperSpinner color={color} size={size} />
-    </main>
-  );
+const Loading = () => {
+    return (
+        <main className="grid place-items-center h-screen">
+            <Spinner size="lg" />
+        </main>
+    );
 };
-
 export default Loading;

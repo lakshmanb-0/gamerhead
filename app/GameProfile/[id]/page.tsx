@@ -1,32 +1,39 @@
-import { GetNews, GetReviews, apiDetails } from "@/axios";
-import GameProfileClient from "@/components/GameProfileClient";
+import { getAppDetails, getDlc, getNews, getReviews } from "@/app/server.ts/apiCalls";
+import { createLastVisited } from "@/app/server.ts/prismaDb";
+import GameProfileClient from "@/components/GameProfile/GameProfileClient";
+import { TNewsData } from "@/types";
+import { auth } from "@clerk/nextjs";
+import { PrismaClient } from "@prisma/client";
 
-const GamePage = async ({ params }: { params: { id: string } }) => {
+const prisma = new PrismaClient();
+
+const GamePage = async ({ params }: { params: { id: number } }) => {
+  const { userId } = auth()
+
   // game data
-  const response = await apiDetails.get(
-    `?appids=${params.id}&cc=IND&l=english`
-  );
-  const gameData = response.data[params.id].data;
+  const response = await getAppDetails(Number(params.id))
+  const gameData = response?.[params.id].data;
 
   // news data
-  const newsApi = await GetNews.get(`&appid=${params.id}`);
-  const newsResponse = newsApi.data.appnews.newsitems;
-
-  let news = [];
-  newsResponse.map((item) => {
-    item.contents[0] !== "[" && item.author !== "SteamDB"
-      ? news.push(item)
-      : "";
-  });
+  const newsApi = await getNews(params.id);
+  const newsResponse = newsApi?.appnews?.newsitems?.filter((item: TNewsData) => item.author !== "SteamDB")
 
   //review data
-  const review = await GetReviews.get(`${params.id}?json=1&cc=IND&l=english`);
-  const reviews = review.data;
+  const review = await getReviews(params.id);
+  const dlcData = await getDlc(gameData?.steam_appid);
+
+
+  //all dbData files
+  const currentUser = await prisma.usersDb.findFirst({
+    where: { id: userId! }
+  })
+
+  if (!currentUser?.lastVisitedData?.includes(Number(params.id))) {
+    await createLastVisited(userId!, Number(params.id));
+  }
 
   return (
-    <main>
-      <GameProfileClient gameData={gameData} news={news} reviews={reviews} />
-    </main>
+    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} inCart={currentUser?.cartData ?? []} />
   );
 };
 
