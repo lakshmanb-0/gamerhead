@@ -8,26 +8,51 @@ import parser from "bbcode-to-react";
 import moment from 'moment';
 import ImageBox from "../ImageBox";
 import { getPlayer } from "@/app/server.ts/apiCalls";
+import { TPlayer } from "@/types";
+import { truncate } from "@/lib/utils";
 
-const Reviews = ({ review }: any) => {
+type ReviewType = {
+  recommendationid: string,
+  author: {
+    steamid: string,
+    num_games_owned: number,
+    num_reviews: number,
+    playtime_forever: number,
+    playtime_last_two_weeks: number,
+    playtime_at_review: number,
+    last_played: number
+  },
+  language: string,
+  review: string,
+  timestamp_created: number,
+  timestamp_updated: number,
+  voted_up: boolean,
+  votes_up: number,
+  votes_funny: number,
+  weighted_vote_score: string,
+  comment_count: number,
+  steam_purchase: boolean,
+  received_for_free: boolean,
+  written_during_early_access: boolean,
+}
+
+
+const Reviews = ({ review }: { review: ReviewType }) => {
   const [readMore, setReadMore] = useState(false);
   const [reviewContent, setReviewContent] = useState<any>('')
-  const [reviewerData, setReviewerData] = useState<any>([]);
+  const [reviewerData, setReviewerData] = useState<TPlayer>();
 
+
+  // getting player data 
   useEffect(() => {
-    const apiDetail = async () => {
-      const data = await getPlayer(`steamids=${review?.author?.steamid}`);
-      setReviewerData(data.response.players[0]);
+    const playerDetail = async () => {
+      const data = await getPlayer(Number(review?.author?.steamid));
+      setReviewerData(data?.[0]);
     }
-    apiDetail()
+    playerDetail()
     setReviewContent(parser.toReact(review.review));
-
   }, [])
 
-
-  function truncate(str: string) {
-    return str?.length > 250 ? str?.substring(0, 240) + "..." : str;
-  }
 
   return (
     <div className="bg-[#0f0f0f] px-5 py-4 rounded mb-6">
@@ -35,10 +60,10 @@ const Reviews = ({ review }: any) => {
         <div className="flex gap-4 items-center">
           <div className="w-14 h-14 ">
             {/* <Image src={reviewerData.avatarfull} width={1080} height={1920} /> */}
-            <ImageBox realImage={reviewerData.avatarfull} errorImage='/person.jpeg' customStyle='rounded-full' />
+            <ImageBox realImage={`https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} errorImage='/person.jpeg' customStyle='rounded-full w-14 h-14' />
           </div>
           <div className="flex flex-col ">
-            <span>{reviewerData?.personaname}</span>
+            <span>{reviewerData?.persona_name ?? 'Unknown'}</span>
             <span className="text-sm">
               {moment(review.timestamp_created).format('DD-MM-YYYY')}
             </span>

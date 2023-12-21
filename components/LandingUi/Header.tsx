@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { TGameData, TGameDataProps } from "@/types";
+import { TGameData } from "@/types";
 import ImageBox from "../ImageBox";
-import CountdownTimer from "../countdownTimer";
 import { AiFillWindows } from "react-icons/ai";
 import { RiMacLine } from "react-icons/ri";
 import { DiLinux } from "react-icons/di";
 
-const Header = ({ gameData }: TGameDataProps) => {
+const Header = ({ gameData }: { gameData: TGameData[] }) => {
   const router = useRouter();
 
   //handle click button
@@ -16,11 +15,10 @@ const Header = ({ gameData }: TGameDataProps) => {
     router.push(`/GameProfile/${id}`);
   };
 
-  console.log(CountdownTimer(1699549254));
   return (
     <section className="flex overflow-x-scroll scrollbar w-full gap-4">
       {/* games list  */}
-      {gameData?.map((item: TGameData, index: number) => (
+      {gameData?.map((item, index: number) => (
         <div
           key={index}
           onClick={() => handleClick(item.id)}

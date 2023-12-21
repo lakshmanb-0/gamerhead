@@ -2,33 +2,112 @@
 @url=https://store.steampowered.com/api/
 
 
-
 ###
-GET {{url}}featuredcategories/?cc=IND&l=english
+GET {{url}}featuredcategories/?cc=IN&l=english
 Content-Type: application/json
 
 
 ###
-GET https://store.steampowered.com/appreviews/199901?json=1&cc=IND&l=english
+GET https://store.steampowered.com/appreviews/19900?json=1&cc=IN&l=english
+Content-Type: application/json
+
+###
+GET https://steamcommunity.com/actions/ajaxresolveusers?steamids=76561198448503350&cc=IN&l=english&json=1
 Content-Type: application/json
 
 
 ###
-GET https://steamcommunity.com/actions/SearchApps/witcher
+GET https://steamcommunity.com/actions/SearchApps/witcher?json=1&cc=IN&l=english
 Content-Type: application/json
 
-
-
-
 ###
-GET {{url}}featured/?cc=IND&l=english
+GET {{url}}featured/?cc=IN&l=english
+Content-Type: application/json
+Authorization: bearer {{}}
+###
+GET https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=19900&cc=IN&l=english&json=1
 Content-Type: application/json
 Authorization: bearer {{}}
 
-
-
-
-
 ###
 GET http://localhost:3000/api/url
+Content-Type: application/json
+
+###
+GET https://store.steampowered.com/api/appdetails/?appids=1817230&cc=INR&l=english&json=1
+
+# Player summaries
+###
+GET https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=F872433F9AF2F8C7F6BF95ED37998E28&steamids=76561198034957967&json=1&cc=IN&l=english
+Content-Type: application/json
+
+
+
+
+
+
+# new Api 
+
+
+
+# online user in steam api 
+###
+GET https://www.valvesoftware.com/en/about/stats?json=1&cc=IN&l=english
+Content-Type: application/json
+
+
+# Category
+###
+GET https://store.steampowered.com/actions/ajaxgetstorecategories
+Content-Type: application/json
+
+# appinCategory
+###
+GET https://store.steampowered.com/api/getappsincategory/?category=cat_newreleases&cc=us&l=english
+Content-Type: application/json
+
+# TAG
+###
+GET https://store.steampowered.com/actions/ajaxgetstoretags
+Content-Type: application/json
+# appingenre
+###
+GET https://store.steampowered.com/api/getappsingenre/?genre=action&cc=IN&l=english
+Content-Type: application/json
+# genrelIST
+###
+GET https://store.steampowered.com/api/getgenrelist/?cc=IN&l=english
+Content-Type: application/json
+
+
+# trailer
+###
+GET https://store.steampowered.com/api/trailerslideshow/?cc=IN&l=english
+Content-Type: application/json
+
+# apphover
+###
+GET https://store.steampowered.com/apphoverpublic/1088850/?l=english&json=1
+Content-Type: application/json
+
+# appreviewHistogram
+###
+GET https://store.steampowered.com/appreviewhistogram/431240?l=english&review_score_preference=1
+Content-Type: application/json
+
+
+# BOARDCAST
+###
+GET https://store.steampowered.com/broadcast/ajaxgetstreamersforpage?appid=1850570&test=false&cc=IN&l=english
+Content-Type: application/json
+# PopularBOARDCAST
+###
+GET https://store.steampowered.com/broadcast/ajaxgetpopularpartnerbroadcasts/?minviews=1&tagid=0&genreid=0&categoryid=0&maxbroadcasts=12
+Content-Type: application/json
+
+
+
+# Player summaries
+###
+GET https://steamcommunity.com/actions/ajaxresolveusers?steamids=76561198034957967
 Content-Type: application/json

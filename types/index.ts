@@ -61,6 +61,7 @@ export type TApiDetailsApi = {
     data: TSingleGameData;
   };
 };
+
 export type TSingleGameData = {
   type: string;
   name: string;
@@ -73,13 +74,13 @@ export type TSingleGameData = {
   about_the_game: string;
   short_description: string;
   supported_languages: string;
-  reviews: string;
+  reviews?: string;
   header_image: string;
   capsule_image: string;
   capsule_imagev5: string;
   website: string;
-  pc_requirements: { [key: string]: string };
-  mac_requirements: { [key: string]: string };
+  pc_requirements?: { [key: string]: string };
+  mac_requirements?: { [key: string]: string };
   linux_requirements?: { [key: string]: string };
   legal_notice: string;
   developers: string[];
@@ -96,33 +97,80 @@ export type TSingleGameData = {
   platforms: {
     [key: string]: boolean;
   };
-  background_raw: string;
+  metacritic?: {
+    score: number,
+    url: string
+  },
+  categories?: {
+    id: number,
+    description: string
+  }[],
+  genres?: {
+    id: number,
+    description: string
+  }[],
+  screenshots?: {
+    id: number,
+    path_thumbnail: string
+    path_full: string
+  }[],
+  movies?: {
+    id?: number,
+    name?: string,
+    thumbnail?: string,
+    webm?: {
+      480?: string,
+      max?: string
+    },
+    mp4?: {
+      480?: string,
+      max?: string
+    },
+    highlight?: boolean
+  }[],
+  recommendations?: {
+    total?: number
+  },
+  release_date?: {
+    coming_soon?: boolean,
+    date?: string
+  },
+  support_info?: {
+    url?: string
+    email?: string
+  },
+  background?: string,
+  background_raw?: string
 };
 
+
 // dlc Api 
-export type TDlcProps = {
-  dlc: TDlcDataProps[];
-};
-export type TDlcDataProps = {
-  id: number,
-  name: string,
-  header_image: string,
-  price_overview: {
-    currency: string,
-    initial: number,
-    final: number,
-    discount_percent: number
-  },
-  platforms: {
-    windows: boolean,
-    mac: boolean,
-    linux: boolean
-  },
-  release_date: {
-    steam: string
-  },
-  controller_support: string
+export type TDlcData = {
+  appid: string
+  dlc: {
+    id: number,
+    name: string,
+    header_image: string,
+    price_overview: {
+      currency: string,
+      initial: number,
+      final: number,
+      discount_percent: number
+    },
+    platforms: {
+      windows: boolean,
+      mac: boolean,
+      linux: boolean
+    },
+    release_date: {
+      steam: string
+    },
+    controller_support: string
+  }[]
+  name: string
+  status?: number
 }
+
 
 // News Api 
 export type TNewsData = {
@@ -139,31 +187,54 @@ export type TNewsData = {
   appid: number
 }
 
-// Review Api 
 
+// Review Api 
 export type TReviewData = {
-  recommendationid: string,
-  author: {
-    steamid: string,
-    num_games_owned: number,
+  query_summary: {
     num_reviews: number,
-    playtime_forever: number,
-    playtime_last_two_weeks: number,
-    playtime_at_review: number,
-    last_played: number
+    review_score: number,
+    review_score_desc: string,
+    total_positive: number,
+    total_negative: number,
+    total_reviews: number
   },
-  language: string,
-  review: string,
-  timestamp_created: number,
-  timestamp_updated: number,
-  voted_up: boolean,
-  votes_up: number,
-  votes_funny: number,
-  weighted_vote_score: string,
-  comment_count: number,
-  steam_purchase: boolean,
-  received_for_free: boolean,
-  written_during_early_access: boolean,
-  hidden_in_steam_china: boolean,
-  steam_china_location: string
+  reviews: {
+    recommendationid: string,
+    author: {
+      steamid: string,
+      num_games_owned: number,
+      num_reviews: number,
+      playtime_forever: number,
+      playtime_last_two_weeks: number,
+      playtime_at_review: number,
+      last_played: number
+    },
+    language: string,
+    review: string,
+    timestamp_created: number,
+    timestamp_updated: number,
+    voted_up: boolean,
+    votes_up: number,
+    votes_funny: number,
+    weighted_vote_score: string,
+    comment_count: number,
+    steam_purchase: boolean,
+    received_for_free: boolean,
+    written_during_early_access: boolean,
+    hidden_in_steam_china: boolean,
+    steam_china_location: string
+  }[]
+}
+
+// player api 
+export type TPlayer = {
+  steamid: string
+  accountid: number,
+  persona_name: string,
+  avatar_url: string,
+  profile_url: string,
+  city: string,
+  state: string,
+  country: string,
+  real_name: string
 }

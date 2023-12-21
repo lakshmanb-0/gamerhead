@@ -1,32 +1,26 @@
 'use client'
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { Skeleton } from './ui/skeleton';
+// import { useAuth, useUser } from '@clerk/nextjs';
+import { Image } from '@nextui-org/react';
+import React from 'react'
 
 type TImageType = {
-    errorImage: string,
-    realImage: string
+    errorImage?: string,
+    realImage?: string,
     customStyle?: string
 };
 
-export default function ImageBox(item: TImageType) {
-    const [imgSrc, setImgSrc] = useState(item?.realImage)
 
-    useEffect(() => {
-        setImgSrc(item?.realImage)
-    }, [item])
+export default function ImageBox(item: TImageType) {
 
     return (
-        <div>
-            <Image
-                src={imgSrc}
-                width={1080}
-                height={1920}
-                loading='lazy'
-                onError={() => setImgSrc(item?.errorImage)}
-                alt='Loading...'
-                className={item?.customStyle}
-            />
-        </div >
+        <Image
+            isZoomed
+            width={1920}
+            height={1080}
+            src={item?.realImage}
+            fallbackSrc={item?.errorImage}
+            alt='Picture'
+            className={item?.customStyle}
+        />
     )
 }

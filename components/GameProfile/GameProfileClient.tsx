@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import parse from "html-react-parser";
 import Reviews from "./Reviews";
 import News from "./News";
@@ -9,23 +9,72 @@ import { AiFillWindows } from "react-icons/ai";
 import { RiMacLine } from "react-icons/ri";
 import { DiLinux } from "react-icons/di";
 import ImageBox from "../ImageBox";
-import { TNewsData, TReviewData } from "@/types";
+import { TDlcData, TNewsData, TReviewData, TSingleGameData } from "@/types";
 import ModalVideo from "../ui/ModalVideo";
 import Dlc from "../LandingUi/Dlc";
+import parser from "bbcode-to-react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../redux/reducers/cart.reducer";
+import { RootState } from "../redux/store/store";
+import { createCart, createWishlist } from "@/app/server.ts/prismaDb";
+import { addWishlist } from "../redux/reducers/wishlist.reducer";
+import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 
-const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
+type GameProfileClient = {
+  gameData: TSingleGameData,
+  news: TNewsData[],
+  reviews: TReviewData,
+  dlcData: TDlcData,
+  inCart: number[]
+}
+
+const GameProfileClient = ({ gameData, news, reviews, dlcData, inCart }: GameProfileClient) => {
+  const cartData = useSelector((state: RootState) => state.cartData)
+  const dispatch = useDispatch()
+  const { user } = useUser();
+
+
   // get percentage of positive reviews
-  const handleReviewPositive = (total: string, positive: string) => {
-    const percentage = (parseInt(positive) / parseInt(total)) * 100;
+  const handleReviewPositive = (total: number, positive: number) => {
+    const percentage = (positive / total) * 100;
     return Math.floor(percentage);
   };
 
+
+  useEffect(() => {
+    dispatch(addCart(inCart))
+  }, [])
+
+
+  // add to cart 
+  const addToCart = async (id: number) => {
+    console.log('cartStart');
+    let x = await createCart(user?.id!, id);
+    dispatch(addCart(x?.[0]?.cartData))
+    console.log('CartFulfilled');
+  }
+
+  // add to wishlist 
+  const addToWishlist = async (id: number) => {
+    console.log('wishlistStart');
+    let x = await createWishlist(user?.id!, id);
+    dispatch(addWishlist(x?.[0]?.wishlistData))
+    console.log('wishlistFulfilled');
+  }
+
+
   return (
     <main>
-      <header className="h-screen relative text-white">
-        <ImageBox realImage={gameData?.background_raw} errorImage={gameData?.screenshots[0].path_full} customStyle={'absolute top-0 left-0 z-0'} />
-        <div className="bg-gradient-to-t from-[rgba(0,0,0,0.50)] z-10 absolute top-0 left-0 h-screen w-full" />
+      <header className="h-screen relative text-white ">
+        <div className="relative">
+
+          <ImageBox realImage={gameData?.screenshots?.[0].path_full} errorImage={gameData?.screenshots?.[0].path_full} customStyle={'z-0'} />
+          <div className="bg-gradient-to-t from-[rgba(0,0,0,0.90)] z-10 absolute bottom-0 left-0 w-full h-full" />
+
+        </div>
+
         <section className="absolute bottom-0 left-0 z-20 w-full h-full grid gap-4 sm:grid-cols-2 px-4 sm:px-20 py-10">
           <div className="sm:mt-auto">
             <div className="flex gap-4">
@@ -50,7 +99,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
             <div className="text-sm py-1">
               <span className="opacity-60">Features: </span>
               <span>
-                {gameData?.categories?.map((item: any, index: number) =>
+                {gameData?.categories?.map((item, index: number) =>
                   index < 3 && `${item?.description}, `
                 )}
               </span>
@@ -82,7 +131,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
             <div className="px-5 py-8">
               <h1 className="text-[1rem] ">{gameData?.short_description}</h1>
               <div className="py-3 flex gap-3">
-                {gameData?.genres?.map((item: { id: number, description: string }, index: number) =>
+                {gameData?.genres?.map((item, index) =>
                   index < 3 && (
                     <button
                       key={item.id}
@@ -100,31 +149,34 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
                     </span>
                     <span className="line-through text-[rgba(0,0,0,0.40)] text-xl">
                       &#8377;
-                      {gameData?.price_overview?.initial?.toLocaleString("en-IN")}{" "}
+                      {(gameData?.price_overview?.initial_formatted).toLocaleString()}{" "}
                     </span>
                     <span className="text-xl">
                       &#8377;
-                      {gameData?.price_overview?.final?.toLocaleString("en-IN")}
+                      {gameData?.price_overview?.final_formatted?.toLocaleString()}
                     </span>
                   </>
                 ) : (
                   <span className="text-xl">
-                    {gameData?.price_overview?.final
-                      ? `₹${gameData?.price_overview?.final}`
-                      : gameData?.release_date?.coming_soon
-                        ? "Coming soon"
-                        : "Free to Play"}
+                    {gameData?.price_overview?.final_formatted
+                      ?? gameData?.release_date?.coming_soon
+                      ? "Coming soon"
+                      : "Free to Play"}
                   </span>
                 )}
               </div>
 
               <div className="flex items-center gap-2 pt-4">
                 {!gameData?.release_date?.coming_soon && (
-                  <button className="py-4 px-6 bg-white text-black rounded-lg text-sm font-semibold">
-                    BUY NOW
-                  </button>
+                  cartData?.includes(gameData?.steam_appid) ?
+                    <button className="py-4 px-6 bg-white text-black rounded-lg text-sm font-semibold" disabled={!user}>
+                      Added to Cart
+                    </button>
+                    : <button className="py-4 px-6 bg-white text-black rounded-lg text-sm font-semibold" disabled={!user} onClick={() => addToCart(gameData?.steam_appid)}>
+                      BUY NOW
+                    </button>
                 )}
-                <button className="flex items-center gap-1">
+                <button className="flex items-center gap-1" onClick={() => addToWishlist(gameData?.steam_appid)}>
                   {/* {heartFill ? <AiFillHeart /> : <AiOutlineHeart />} */}
                   ADD TO WISHLIST
                 </button>
@@ -142,7 +194,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
           </div>
           <div className=" flex gap-4 overflow-x-scroll scrollbar py-5 h-[250px]">
-            {gameData?.movies?.map((item: { id: number, thumbnail: string, name: string, mp4: { max: string } }) => (
+            {gameData?.movies?.map((item) => (
               <ModalVideo item={item} key={item.id} />
             ))}
           </div>
@@ -206,8 +258,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
         </div>
       </section>
 
-      <Dlc dlc={dlcData} />
-
+      <Dlc dlcData={dlcData} />
       {/* reviews  */}
       {!!reviews?.reviews.length && (
         <section className="py-10 maxWidth">
@@ -218,7 +269,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
           <div className="relative">
             <div className={`flex gap-8 scrollBar ${reviews?.reviews.length > 3 && "overflow-x-scroll"} `}
             >
-              {reviews?.reviews.map((item: TReviewData) => (
+              {reviews?.reviews.map((item) => (
                 <Reviews key={item.recommendationid} review={item} />
               ))}
             </div>
@@ -237,7 +288,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: any) => {
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
           </div>
           <div className="max-w-[1000px] mx-auto flex flex-col gap-20">
-            {news?.map((item: TNewsData) => (
+            {news?.map((item) => (
               <News key={item.gid} item={item} />
             ))}
           </div>

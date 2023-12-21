@@ -1,15 +1,28 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import parse from "html-react-parser";
-import parser from "bbcode-to-react";
 import moment from "moment";
+import HTMLReactParser from "html-react-parser";
+import parser from "bbcode-to-react";
+import Linkify from 'react-linkify';
+import { TNewsData } from "@/types";
 
-const News = ({ item }: any) => {
+
+const News = ({ item }: { item: TNewsData }) => {
   const [newsContent, setNewsContent] = useState<any>('');
 
   useEffect(() => {
-    setNewsContent(parser.toReact(item.contents.replace("{STEAM_CLAN_IMAGE}", "https://clan.akamai.steamstatic.com/images/")));
+    let imageReplace = item.contents.replace(/{STEAM_CLAN_IMAGE}/g, "https://clan.akamai.steamstatic.com/images/")
+
+    // let imageString = item.contents
+    //   .replace(/`[img]{STEAM_CLAN_IMAGE}`/g, `<img src='https://clan.akamai.steamstatic.com/images/`)
+    //   .replace(/`[/img]/g, `'</img>`)
+    // let videoString = imageString
+    //   .replace("[previewyoutube=", '<iframe src="https://www.youtube.com/embed/')
+    //   .replace(";full][/previewyoutube]", '" frameborder="0"></iframe>');
+
+    setNewsContent(parser.toReact(imageReplace));
+
   }, []);
 
   return (
@@ -27,7 +40,9 @@ const News = ({ item }: any) => {
           Read More!
         </Link>
       </div>
-      <div className="newsContent overflow-hidden whitespace-pre-wrap py-10">{item.contents.startsWith('<') ? parse(item.contents) : newsContent}</div>
+      <Linkify>
+        <div className="newsContent overflow-hidden whitespace-pre-wrap py-10">{item.contents.startsWith('<') ? HTMLReactParser(item.contents) : newsContent}</div>
+      </Linkify>
     </div>
   );
 };

@@ -1,11 +1,11 @@
 "use client";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@nextui-org/react";
 import React from "react";
 
 const Loading = () => {
     return (
         <main className="grid place-items-center h-screen">
-            <Skeleton className="h-12 w-12 rounded-full bg-white" />
+            <Spinner size="lg" />
         </main>
     );
 };

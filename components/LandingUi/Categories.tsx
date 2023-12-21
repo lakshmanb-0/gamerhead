@@ -9,8 +9,6 @@ export const Categories = ({ gameData, heading }: TCategoryDataProps) => {
   const handleClick = (id: number) => {
     router.push(`/GameProfile/${id}`);
   };
-  console.log(gameData);
-
 
   return (
     <div className="py-10 px-4">

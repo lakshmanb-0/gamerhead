@@ -1,47 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import moment, { Moment } from 'moment';
+'use client'
+import React from 'react'
+import useCountdownTimer from './useCountdownTimer';
 
-function CountdownTimer(unixTime: number) {
-    const targetDate = moment(moment.unix(unixTime).format('YYYY-MM-DD'));
+const CountdownTimer = ({ item }: { item: { discounted: boolean, discount_expiration: number } }) => {
+    const { days, hours, minutes, seconds, timeIsPast } = useCountdownTimer(item?.discount_expiration);
 
-    const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining(targetDate));
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTimeRemaining(calculateTimeRemaining(targetDate));
-        }, 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, [targetDate]);
-
-    function calculateTimeRemaining(targetDate: Moment) {
-        console.log();
-
-        const now = moment();
-        const diff = moment.duration(targetDate.diff(now));
-
-        const days = diff.days();
-        const hours = diff.hours();
-        const minutes = diff.minutes();
-        const seconds = diff.seconds();
-
-        return {
-            days,
-            hours,
-            minutes,
-            seconds,
-        };
-    }
-
-    return {
-        days: timeRemaining.days,
-        hours: timeRemaining.hours,
-        minutes: timeRemaining.minutes,
-        seconds: timeRemaining.seconds,
-    }
+    return (item?.discounted && timeIsPast) && (
+        <div>
+            <h1>{days} days </h1>
+            <h1>{hours} hours </h1>
+            <h1>{minutes} minutes </h1>
+            <h1>{seconds} seconds </h1>
+        </div>
+    )
 }
 
-export default CountdownTimer;
-
+export default CountdownTimer

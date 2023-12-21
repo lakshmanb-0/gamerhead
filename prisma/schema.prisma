@@ -9,3 +9,13 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model usersDb {
+  id              String @id @map("_id")
+  name            String
+  email           String
+  cartData        Int[]
+  wishlistData    Int[]
+  lastVisitedData Int[]
+  purchasedData   Int[]
+}

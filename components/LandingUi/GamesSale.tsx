@@ -1,27 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { TGameData, TGameDataProps } from "@/types";
+import { TGameData } from "@/types";
 import ImageBox from "../ImageBox";
-import CountdownTimer from "../countdownTimer";
+import CountdownTimer from "../CountdownTimer";
 
-const GamesSale = ({ gameData }: TGameDataProps) => {
+const GamesSale = ({ gameData }: { gameData: TGameData[] }) => {
   const router = useRouter();
-  const [imgSrc, setImgSrc] = useState('')
 
   const handleClick = (id: number) => {
     router.push(`/GameProfile/${id}`);
   };
-
-  useEffect(() => {
-    fetch(`/api/category`).then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-
-      })
-  }, []);
-  console.log(gameData);
 
   return (
     <div className="py-10 px-4">
@@ -62,14 +51,8 @@ const GamesSale = ({ gameData }: TGameDataProps) => {
                 </span>
               </div>
             </div> */}
-            <div>hello</div>
-            {item?.discounted && <div>
-              <h1>{CountdownTimer(item?.discount_expiration).days} days </h1>
-              <h1>{CountdownTimer(item?.discount_expiration).hours} hours </h1>
-              <h1>{CountdownTimer(item?.discount_expiration).minutes} minutes </h1>
-              <h1>{CountdownTimer(item?.discount_expiration).seconds} seconds </h1>
-            </div>
-            }
+            <div>{item?.name}</div>
+            <CountdownTimer item={{ discounted: item?.discounted, discount_expiration: item?.discount_expiration ?? 0 }} />
           </div>
         ))}
       </div>
