@@ -46,11 +46,11 @@ const Reviews = ({ review }: { review: ReviewType }) => {
   // getting player data 
   useEffect(() => {
     const playerDetail = async () => {
-      const data = await getPlayer(Number(review?.author?.steamid));
+      const data = await getPlayer(review?.author?.steamid);
       setReviewerData(data?.[0]);
+      setReviewContent(parser.toReact(review.review));
     }
     playerDetail()
-    setReviewContent(parser.toReact(review.review));
   }, [])
 
 
@@ -65,7 +65,7 @@ const Reviews = ({ review }: { review: ReviewType }) => {
           <div className="flex flex-col ">
             <span>{reviewerData?.persona_name ?? 'Unknown'}</span>
             <span className="text-sm">
-              {moment(review.timestamp_created).format('DD-MM-YYYY')}
+              {moment.unix(review.timestamp_created).format('DD MMM, YYYY')}
             </span>
           </div>
         </div>
