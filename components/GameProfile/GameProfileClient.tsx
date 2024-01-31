@@ -148,11 +148,9 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, inCart }: GamePro
                       {`-${gameData?.price_overview?.discount_percent}% `}
                     </span>
                     <span className="line-through text-[rgba(0,0,0,0.40)] text-xl">
-                      &#8377;
                       {(gameData?.price_overview?.initial_formatted).toLocaleString()}{" "}
                     </span>
                     <span className="text-xl">
-                      &#8377;
                       {gameData?.price_overview?.final_formatted?.toLocaleString()}
                     </span>
                   </>

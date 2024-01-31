@@ -12,7 +12,7 @@ GET https://store.steampowered.com/appreviews/19900?json=1&cc=IN&l=english
 Content-Type: application/json
 
 ###
-GET https://steamcommunity.com/actions/ajaxresolveusers?steamids=76561198448503350&cc=IN&l=english&json=1
+GET https://steamcommunity.com/actions/ajaxresolveusers?steamids=76561198071433169&cc=IN&l=english&json=1
 Content-Type: application/json
 
 

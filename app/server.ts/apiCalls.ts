@@ -20,7 +20,7 @@ export const getAppDetails = async (params: number) => {
     const result = await fetch(`https://store.steampowered.com/api/appdetails/?appids=${params}&cc=IN&l=english&json=1`, { cache: 'no-store' }).then(res => res.json()).then(data => data)
     return result
 }
-export const getPlayer = async (params: number) => {
+export const getPlayer = async (params: string) => {
     const result = await fetch(`https://steamcommunity.com/actions/ajaxresolveusers?steamids=${params}&cc=IN&l=english&json=1`, { cache: 'no-store' }).then(res => res.json())
     return result
 }

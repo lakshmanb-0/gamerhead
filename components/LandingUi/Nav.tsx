@@ -29,18 +29,15 @@ const Nav = () => {
     ];
 
     useEffect(() => {
-        const checkUser = async () => {
-            let CU = await currentUser(user?.id!)
-            console.log(CU);
-            setCartCount(CU?.cartData?.length ?? 0)
+        const cartCountCheck = async () => {
+            if (user?.id) {
+                let CU = await currentUser(user?.id!)
+                setCartCount(CU?.cartData?.length ?? 0)
+            }
+            else {
+                setCartCount(0)
+            }
         }
-
-        const intervalId = setInterval(checkUser, 2000);
-        return () => clearInterval(intervalId);
-    }, [user])
-
-
-    useEffect(() => {
         const checkUser = async () => {
             if (user) {
                 let data = {
@@ -48,16 +45,18 @@ const Nav = () => {
                     name: user?.fullName!,
                     email: user?.primaryEmailAddress?.emailAddress!
                 }
-                console.log(await createUser(data))
+                await createUser(data)
             }
-
         }
         checkUser()
+
+        const intervalId = setInterval(cartCountCheck, 2000);
+        return () => clearInterval(intervalId);
     }, [user])
 
 
     return (
-        <Navbar shouldHideOnScroll className="bg-[#2e2e2e] p-2 mb-4" onMenuOpenChange={setIsMenuOpen} >
+        <Navbar shouldHideOnScroll className="bg-[#131926] p-2 mb-4" onMenuOpenChange={setIsMenuOpen} >
             <NavbarContent justify="start" className="sm:hidden">
                 <NavbarMenuToggle />
                 <Link href="/" >
@@ -83,7 +82,9 @@ const Nav = () => {
             </NavbarContent>
 
             <NavbarContent justify="end">
-                {user ? <UserButton afterSignOutUrl="/" signInUrl="/sign-in" /> : <SignInButton />}
+                {user ? <UserButton afterSignOutUrl="/" signInUrl="/sign-in" /> : <SignInButton>
+                    <button className="flex bg-[#192233] px-4 py-2 rounded-lg">SignIn</button>
+                </SignInButton>}
             </NavbarContent>
 
             {/* mobile menu  */}

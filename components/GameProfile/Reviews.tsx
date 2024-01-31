@@ -10,6 +10,7 @@ import ImageBox from "../ImageBox";
 import { getPlayer } from "@/app/server.ts/apiCalls";
 import { TPlayer } from "@/types";
 import { truncate } from "@/lib/utils";
+import { ScrollShadow } from "@nextui-org/react";
 
 type ReviewType = {
   recommendationid: string,
@@ -46,11 +47,11 @@ const Reviews = ({ review }: { review: ReviewType }) => {
   // getting player data 
   useEffect(() => {
     const playerDetail = async () => {
-      const data = await getPlayer(Number(review?.author?.steamid));
+      const data = await getPlayer(review?.author?.steamid);
       setReviewerData(data?.[0]);
+      setReviewContent(parser.toReact(review.review));
     }
     playerDetail()
-    setReviewContent(parser.toReact(review.review));
   }, [])
 
 
@@ -65,7 +66,7 @@ const Reviews = ({ review }: { review: ReviewType }) => {
           <div className="flex flex-col ">
             <span>{reviewerData?.persona_name ?? 'Unknown'}</span>
             <span className="text-sm">
-              {moment(review.timestamp_created).format('DD-MM-YYYY')}
+              {moment.unix(review.timestamp_created).format('DD MMM, YYYY')}
             </span>
           </div>
         </div>
@@ -77,14 +78,17 @@ const Reviews = ({ review }: { review: ReviewType }) => {
           )}
         </div>
       </div>
-      <div
-        className={`w-[400px] h-[200px] ${readMore ? "overflow-y-scroll scrollBar" : 'overflow-y-hidden'} my-4 whitespace-pre-wrap `}
-        onClick={() =>
-          reviewContent[0].length > 250 && setReadMore((prev) => !prev)
-        }
-      >
-        {readMore ? reviewContent : truncate(reviewContent[0])}
-      </div>
+      <ScrollShadow size={100} className="w-[300px] h-[400px]">
+        <div
+          className={`w-[400px] h-[200px] ${readMore ? "overflow-y-scroll scrollBar" : 'overflow-y-hidden'} my-4 whitespace-pre-wrap `}
+          onClick={() =>
+            reviewContent[0].length > 250 && setReadMore((prev) => !prev)
+          }
+        >
+          {readMore ? reviewContent : truncate(reviewContent[0])}
+        </div>
+      </ScrollShadow>
+
       <div className="text-sm">
         <span>{review.votes_up} people found this review helpful</span>
       </div>

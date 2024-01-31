@@ -26,13 +26,13 @@ export default async function Home() {
 
   return (
     <>
-      {/* <Header gameData={getUniqueData(headerData?.featured_win)} />
+      <Header gameData={getUniqueData(headerData?.featured_win)} />
       <GamesSale gameData={getUniqueData(categoryData?.specials?.items)} />
       <Categories gameData={getUniqueData(categoryData?.top_sellers?.items)} heading="Top Sellers" />
       <Categories gameData={getUniqueData(categoryData?.coming_soon?.items)} heading="Upcoming" />
       <Dlc dlcData={dlcData} />
       <LandingInfinite data={topReleasesData?.response?.pages[0]} />
-      <Categories gameData={getUniqueData(categoryData?.new_releases?.items)} heading="New Releases" /> */}
+      <Categories gameData={getUniqueData(categoryData?.new_releases?.items)} heading="New Releases" />
       <ToastContainer />
     </>
   );

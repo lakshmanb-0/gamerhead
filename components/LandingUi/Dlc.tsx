@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { TDlcData } from "@/types";
 import ImageBox from "../ImageBox";
+import { GameCard } from "../ui/GameCard";
 
 const Dlc = ({ dlcData }: { dlcData: TDlcData }) => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const Dlc = ({ dlcData }: { dlcData: TDlcData }) => {
       <h1 className="text-4xl font-bold"> {dlcData?.name} DLC</h1>
       <div className="flex overflow-x-scroll scrollBar p-2">
         {dlcData?.dlc?.map((item, index: number) => (
+          // <GameCard item={item} />
           <div key={index} className="pr-3 last:pr-0 flex flex-col gap-2 py-5">
             <div
               className="w-[300px] cursor-pointer"

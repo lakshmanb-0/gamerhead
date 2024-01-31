@@ -55,12 +55,13 @@ export default function LandingInfinite({ data }: { data: { item_ids: appid[] } 
   }, [inView, data])
 
 
+
   return (
     <>
       {displayData?.map((el) => (
         <div className=" ">
           <h1>{el?.name}</h1>
-          <ImageBox realImage={el?.background_raw} errorImage={el?.header_image} />
+          <ImageBox realImage={el?.header_image} errorImage={el?.header_image} />
         </div>
       ))}
       <div ref={ref}>
