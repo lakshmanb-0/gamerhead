@@ -39,7 +39,8 @@ export const createUser = async ({ id, name, email }: userType) => {
         await prisma.$disconnect();
     }
 }
-// create User 
+
+// current User 
 export const currentUser = async (userId: string) => {
     try {
         const currentUser = await prisma.usersDb.findFirst({
