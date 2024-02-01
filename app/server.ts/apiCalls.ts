@@ -1,11 +1,11 @@
 'use server'
 
 export const getCategory = async () => {
-    const result = await fetch(`https://store.steampowered.com/api/featuredcategories/?cc=IN&l=english&json=1`, { cache: 'no-store' }).then(result => result.json()).then(data => data)
+    const result = await fetch(`http://store.steampowered.com/api/featuredcategories/?cc=IN&l=english&json=1`, { cache: 'no-store' }).then(result => result.json()).then(data => data).catch(error => console.log(error))
     return result;
 }
 export const getFeature = async () => {
-    const result = await fetch(`https://store.steampowered.com/api/featured/?cc=IN&l=english&json=1`, { cache: 'no-store' }).then(result => result.json()).then(data => data)
+    const result = await fetch(`https://store.steampowered.com/api/featured/?cc=IN&l=english&json=1`, { cache: 'no-store' }).then(result => result.json()).then(data => data).catch(error => console.log(error))
     return result;
 }
 export const getTopReleases = async () => {
@@ -13,11 +13,11 @@ export const getTopReleases = async () => {
     return result
 }
 export const getDlc = async (params: number) => {
-    const result = await fetch(`https://store.steampowered.com/api/dlcforapp/?appid=${params}&cc=IN&l=english&json=1`, { cache: 'no-store' }).then(res => res.json()).then(data => data)
+    const result = await fetch(`https://store.steampowered.com/api/dlcforapp/?appid=${params}&cc=IN&l=english&json=1`, { cache: 'no-store' }).then(res => res.json()).then(data => data).catch(error => console.log(error))
     return result
 }
 export const getAppDetails = async (params: number) => {
-    const result = await fetch(`https://store.steampowered.com/api/appdetails/?appids=${params}&cc=IN&l=english&json=1`, { cache: 'no-store' }).then(res => res.json()).then(data => data)
+    const result = await fetch(`http://store.steampowered.com/api/appdetails/?appids=${params}&cc=IN&l=english&json=1`, { cache: 'no-store' }).then(res => res.json()).then(data => data).catch(error => console.log(error))
     return result
 }
 export const getPlayer = async (params: string) => {

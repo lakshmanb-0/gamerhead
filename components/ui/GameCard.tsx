@@ -14,7 +14,7 @@ export const GameCard = ({ item, heading }: { item: TGameData, heading?: string 
     const handlePrice = (item: TGameData) => {
         if (heading == 'Upcoming') return 'Coming Soon'
         else if (item.final_price == 0) return 'Free'
-        else return '₹' + item.final_price ?? item.original_price
+        else return '₹' + Number(item?.final_price) / 100 ?? Number(item?.original_price) / 100
     }
 
     return (

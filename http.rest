@@ -38,6 +38,10 @@ GET https://store.steampowered.com/api/appdetails/?appids=1817230&cc=INR&l=engli
 
 # Player summaries
 ###
+GET https://api.steampowered.com/ISteamChartsService/GetTopReleasesPages/v1/?key=${process.env.REACT_APP_STEAM_KEY}&cc=IN&l=english&json=1
+Content-Type: application/json
+# Player summaries
+###
 GET https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=F872433F9AF2F8C7F6BF95ED37998E28&steamids=76561198034957967&json=1&cc=IN&l=english
 Content-Type: application/json
 

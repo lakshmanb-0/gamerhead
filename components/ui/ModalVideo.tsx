@@ -23,11 +23,11 @@ type ModalVideo = {
 export default function ModalVideo({ item }: { item: ModalVideo }) {
     return (
         <Dialog>
-            <DialogTrigger className='aspect-video'>
+            <DialogTrigger className='w-fit'>
                 <ImageBox realImage={item?.thumbnail} errorImage={item?.thumbnail} />
             </DialogTrigger>
             <DialogContent>
-                <div className="aspect-video rounded-lg w-[70vw]">
+                <div className="aspect-video rounded-lg ">
                     <Plyr
                         poster={item?.thumbnail}
                         source={{

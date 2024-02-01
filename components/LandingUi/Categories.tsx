@@ -8,10 +8,10 @@ export const Categories = ({ gameData, heading }: TCategoryDataProps) => {
 
   return (
     <div className="py-10 px-4">
-      <h1 className="font-bold text-4xl">{heading}</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-2">
+      <h1 className="font-bold text-4xl py-4">{heading}</h1>
+      <div className={`grid grid-cols-2 gap-4 p-2 ${heading == 'New Releases' ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
         {gameData?.map((item: TGameData) => item.type == 0 && (
-          <GameCard item={item} heading={heading} />
+          <GameCard item={item} heading={heading} key={item.id} />
           // <div
           //   key={item.id}
           //   className={`flex items-center gap-4 py-3  ${heading === "Upcoming" ? "" : "flex-col"}`}
