@@ -25,11 +25,11 @@ export default async function Home() {
   console.log(topReleasesData.response.pages[2]);
 
   const getMonthData = async (index: number) => {
-    return await Promise.all(topReleasesData?.response?.pages[index].item_ids?.map(async (id) => {
+    return await Promise.all(topReleasesData?.response?.pages[index].item_ids?.map(async (id: { appid: number }) => {
       if (!!id.appid) {
         const response = await getAppDetails(Number(id.appid));
-        let responseData = await response[id?.appid].data
-        if (!!responseData) {
+        if (response) {
+          let responseData = await response[id?.appid].data
           return responseData
         }
       }
@@ -51,8 +51,8 @@ export default async function Home() {
       <Categories gameData={getUniqueData(categoryData?.coming_soon?.items)} heading="Upcoming" />
       <Dlc dlcData={dlcData} />
       <LandingInfinite data={monthsData1} />
-      <LandingInfinite data={monthsData2} />
-      <LandingInfinite data={monthsData3} />
+      {/* <LandingInfinite data={monthsData2} />
+      <LandingInfinite data={monthsData3} /> */}
       <ToastContainer />
     </>
   );

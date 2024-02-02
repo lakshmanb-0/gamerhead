@@ -7,7 +7,8 @@ type TImageType = {
     errorImage?: string,
     realImage?: string,
     customStyle?: string,
-    zoomed?: boolean
+    zoomed?: boolean,
+    onClick?: any
 };
 
 
@@ -21,7 +22,8 @@ export default function ImageBox(item: TImageType) {
             src={item?.realImage}
             fallbackSrc='./noImage.jpeg'
             alt='Picture'
-            className={`object-cover h-full w-full ${item?.customStyle}`}
+            onClick={() => item.onClick}
+            className={`object-cover h-full w-full ${item?.customStyle} ${item.onClick && 'cursor-pointer'}`}
         />
     )
 }
