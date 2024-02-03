@@ -1,9 +1,10 @@
 import React from 'react'
 import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
-import { Dialog, DialogContent, DialogTrigger } from './dialog';
-import ImageBox from '../ImageBox';
-import { TSingleGameData } from '@/types';
+import { PlayCircleIcon } from 'lucide-react';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
+import Image from 'next/image';
+
 
 type ModalVideo = {
     id?: number,
@@ -21,25 +22,48 @@ type ModalVideo = {
 }
 
 export default function ModalVideo({ item }: { item: ModalVideo }) {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
     return (
-        <Dialog>
-            <DialogTrigger className='w-fit'>
-                <ImageBox realImage={item?.thumbnail} errorImage={item?.thumbnail} />
-            </DialogTrigger>
-            <DialogContent>
-                <div className="aspect-video rounded-lg ">
-                    <Plyr
-                        poster={item?.thumbnail}
-                        source={{
-                            type: "video",
-                            poster: item?.thumbnail,
-                            sources: [
-                                { src: item?.mp4?.max ?? '' }
-                            ]
-                        }}
-                    />
-                </div>
-            </DialogContent>
-        </Dialog>
+        <>
+            <div onClick={onOpen} className='min-w-[300px] relative cursor-pointer'>
+                <Image src={item?.thumbnail ?? '/noImage.jpeg'} width={1920} height={1080} alt='thubnail' className='rounded-xl' />
+                <PlayCircleIcon className="absolute top-0 left-0 w-full h-full p-14 z-10" />
+            </div>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} className='sm:max-w-[70%] lg:max-w-[60%] m-auto'>
+                <ModalContent>
+                    {() => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">{item.name}</ModalHeader>
+                            <ModalBody>
+                                <div className="aspect-video rounded-lg  w-full">
+                                    <Plyr
+                                        source={{
+                                            type: 'video',
+                                            title: item.name,
+                                            sources: [
+                                                {
+                                                    src: item.mp4?.[480]!,
+                                                    type: 'video/mp4',
+                                                    size: 480,
+                                                },
+                                                {
+                                                    src: item.mp4?.max!,
+                                                    type: 'video/mp4',
+                                                    size: 1080,
+                                                },
+                                            ],
+                                            poster: item.thumbnail,
+                                        }}
+                                    />
+                                </div>
+                            </ModalBody>
+                            <ModalFooter>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     )
 }

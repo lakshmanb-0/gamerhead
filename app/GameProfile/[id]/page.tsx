@@ -33,7 +33,7 @@ const GamePage = async ({ params }: { params: { id: number } }) => {
   }
 
   return (
-    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} inCart={currentUser?.cartData ?? []} />
+    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} currentUser={currentUser} />
   );
 };
 

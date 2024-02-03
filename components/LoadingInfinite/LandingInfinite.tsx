@@ -1,15 +1,13 @@
 "use client";
-import { useState } from "react";
 import { TSingleGameData } from "@/types";
 import TopReleaseCard from "./TopReleaseCard";
 
-// let hasMore = 1;
 export default function LandingInfinite({ data }: { data: TSingleGameData[] }) {
-  const [displayData, setDisplayData] = useState(data);
+  // console.log(data);
 
   return (
     <>
-      {displayData?.map((item) => (
+      {data?.map((item) => !item?.content_descriptors?.ids?.includes(4) && (
         <TopReleaseCard item={item} key={item.steam_appid} />
       ))}
     </>

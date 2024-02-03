@@ -6,11 +6,12 @@ import {
 } from "react-icons/bs";
 import parser from "bbcode-to-react";
 import moment from 'moment';
-import ImageBox from "../ImageBox";
 import { getPlayer } from "@/app/server.ts/apiCalls";
 import { TPlayer } from "@/types";
-import { truncate } from "@/lib/utils";
-import { ScrollShadow } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Avatar } from "@nextui-org/react";
+import { DotIcon } from "lucide-react";
+
 
 type ReviewType = {
   recommendationid: string,
@@ -39,7 +40,6 @@ type ReviewType = {
 
 
 const Reviews = ({ review }: { review: ReviewType }) => {
-  const [readMore, setReadMore] = useState(false);
   const [reviewContent, setReviewContent] = useState<any>('')
   const [reviewerData, setReviewerData] = useState<TPlayer>();
 
@@ -54,50 +54,42 @@ const Reviews = ({ review }: { review: ReviewType }) => {
     playerDetail()
   }, [])
 
-
   return (
-    <div className="bg-[#0f0f0f] px-5 py-4 rounded mb-6">
-      <div className="flex justify-between items-center py-3 ">
-        <div className="flex gap-4 items-center">
-          <div className="w-14 h-14 ">
-            {/* <Image src={reviewerData.avatarfull} width={1080} height={1920} /> */}
-            <ImageBox realImage={`https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} errorImage='/person.jpeg' customStyle='rounded-full w-14 h-14' />
-          </div>
-          <div className="flex flex-col ">
-            <span>{reviewerData?.persona_name ?? 'Unknown'}</span>
-            <span className="text-sm">
-              {moment.unix(review.timestamp_created).format('DD MMM, YYYY')}
-            </span>
+    <Card className="min-w-[340px] my-3">
+      <CardHeader className="justify-between items-start">
+        <div className="flex gap-5">
+          <Avatar isBordered radius="full" size="md" src={`https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} />
+          <div className="flex flex-col items-start justify-center">
+            <div className="flex items-center">
+              <h4 className="text-small font-semibold leading-none text-default-600">@{reviewerData?.persona_name}</h4>
+              <DotIcon />
+              <h5 className="text-small tracking-tight text-default-400">{moment.unix(review.timestamp_created).format('DD MMM, YYYY')}</h5>
+            </div>
+            <h5 className="text-small tracking-tight text-default-400">{reviewerData?.real_name ?? ''} </h5>
           </div>
         </div>
-        <div className="text-2xl">
+        <div className="text-xl">
           {review.voted_up ? (
             <BsFillHandThumbsUpFill className="text-green-500" />
           ) : (
             <BsFillHandThumbsDownFill className="text-red-500" />
           )}
         </div>
-      </div>
-      <ScrollShadow size={100} className="w-[300px] h-[400px]">
-        <div
-          className={`w-[400px] h-[200px] ${readMore ? "overflow-y-scroll scrollBar" : 'overflow-y-hidden'} my-4 whitespace-pre-wrap `}
-          onClick={() =>
-            reviewContent[0].length > 250 && setReadMore((prev) => !prev)
-          }
-        >
-          {readMore ? reviewContent : truncate(reviewContent[0])}
+      </CardHeader>
+      <Divider />
+      <CardBody className='p-3 text-small text-default-400 overflow-auto whitespace-pre-wrap max-h-[300px]' >
+        {reviewContent}
+      </CardBody>
+      <Divider />
+      <CardFooter className="gap-3 pt-4">
+        <div className="flex flex-col">
+          <span className="font-semibold text-white text-small">{review.votes_up} <span className="text-default-400 ">people found this review helpful</span></span>
+          {review.votes_funny != 0 && (
+            <span className="font-semibold text-white text-small">{review.votes_funny} <span className="text-default-400 ">people found this review funny</span></span>
+          )}
         </div>
-      </ScrollShadow>
-
-      <div className="text-sm">
-        <span>{review.votes_up} people found this review helpful</span>
-      </div>
-      {review.votes_funny != 0 && (
-        <div className="text-sm">
-          <span>{review.votes_funny} people found this review funny</span>
-        </div>
-      )}
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 

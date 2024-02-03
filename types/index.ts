@@ -140,7 +140,11 @@ export type TSingleGameData = {
     email?: string
   },
   background?: string,
-  background_raw?: string
+  background_raw?: string,
+  content_descriptors?: {
+    ids?: number[],
+    notes?: string
+  }
 };
 
 
@@ -237,4 +241,14 @@ export type TPlayer = {
   state: string,
   country: string,
   real_name: string
+}
+
+export type TUser = {
+  id: number,
+  name: string,
+  email: string,
+  cartData: number[],
+  wishlistData: number[],
+  lastVisitedData: number[],
+  purchasedData: number[],
 }

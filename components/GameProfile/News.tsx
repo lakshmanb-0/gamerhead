@@ -40,9 +40,7 @@ const News = ({ item }: { item: TNewsData }) => {
           Read More!
         </Link>
       </div>
-      <Linkify>
-        <div className="newsContent overflow-hidden whitespace-pre-wrap py-10">{item.contents.startsWith('<') ? HTMLReactParser(item.contents) : newsContent}</div>
-      </Linkify>
+      <div className="newsContent overflow-hidden whitespace-pre-wrap py-10">{item.contents.startsWith('<') ? HTMLReactParser(item.contents) : newsContent}</div>
     </div>
   );
 };
