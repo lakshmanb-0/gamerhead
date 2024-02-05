@@ -15,6 +15,10 @@ import Dlc from "../LandingUi/Dlc";
 import { createCart, createWishlist } from "@/app/server.ts/prismaDb";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { addCart } from "../redux/reducers/cart.reducer";
+import { addWishlist } from "../redux/reducers/wishlist.reducer";
+import { Tooltip } from "@nextui-org/react";
 
 
 type GameProfileClient = {
@@ -28,6 +32,7 @@ type GameProfileClient = {
 const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: GameProfileClient) => {
   const { user } = useUser();
   const [added, setAdded] = useState({ cart: false, wishlist: false })
+  const dispatch = useDispatch()
 
   // get percentage of positive reviews
   const handleReviewPositive = (total: number, positive: number) => {
@@ -40,14 +45,16 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
   const addToCart = async (id: number) => {
     setAdded({ ...added, cart: true })
     let x = await createCart(user?.id!, id);
-    // dispatch(addCart(x?.[0]?.cartData))
+    console.log(x);
+    dispatch(addCart(x?.cartData))
   }
 
   // add to wishlist 
   const addToWishlist = async (id: number) => {
     setAdded({ ...added, wishlist: true })
     let x = await createWishlist(user?.id!, id);
-    // dispatch(addWishlist(x?.[0]?.wishlistData))
+    console.log(x);
+    dispatch(addWishlist(x?.wishlistData))
   }
 
   console.log(gameData);
@@ -67,16 +74,18 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
                 <MdDateRange className="text-xl" />
                 {gameData?.release_date?.date}
               </span>
-              <div
-                className="flex gap-2 items-center"
-                title={`${handleReviewPositive(reviews?.query_summary?.total_reviews, reviews?.query_summary?.total_positive)}% of the ${reviews?.query_summary?.total_reviews?.toLocaleString("en-IN")} user reviews for this game are positive`}
-              >
-                <BsHandThumbsUp className="text-xl" />
-                {reviews && reviews.query_summary?.review_score_desc}
-                <span className="text-sm">
-                  {`(${reviews && reviews.query_summary.total_reviews.toLocaleString("en")})`}
-                </span>
-              </div>
+              <Tooltip content={`${handleReviewPositive(reviews?.query_summary?.total_reviews, reviews?.query_summary?.total_positive)}% of the ${reviews?.query_summary?.total_reviews?.toLocaleString("en-IN")} user reviews for this game are positive`}>
+                <div
+                  className="flex gap-2 items-center"
+                >
+                  <BsHandThumbsUp className="text-xl" />
+                  {reviews && reviews.query_summary?.review_score_desc}
+                  <span className="text-sm">
+                    {`(${reviews && reviews.query_summary.total_reviews.toLocaleString("en")})`}
+                  </span>
+                </div>
+              </Tooltip>
+
             </div>
             <h1 className="text-3xl sm:text-5xl font-bold py-4">
               {gameData?.name}

@@ -3,7 +3,6 @@ import { TSingleGameData } from "@/types";
 import TopReleaseCard from "./TopReleaseCard";
 
 export default function LandingInfinite({ data }: { data: TSingleGameData[] }) {
-  // console.log(data);
 
   return (
     <>

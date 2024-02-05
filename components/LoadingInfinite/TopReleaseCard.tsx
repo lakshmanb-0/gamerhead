@@ -26,7 +26,7 @@ const TopReleaseCard = ({ item }: { item: TSingleGameData }) => {
             const dlcData = await getDlc(item?.steam_appid);
             setDlcData(dlcData)
         }
-        fetchDlc()
+        !dlcData && fetchDlc()
     }, [])
 
     const handleClick = (id: number) => {
@@ -38,37 +38,35 @@ const TopReleaseCard = ({ item }: { item: TSingleGameData }) => {
             <Card
                 shadow="sm"
                 key={item.steam_appid}
-                className={`max-w-[1060px] mx-auto my-20 ${dlcData?.dlc.length && 'mb-0'}`}
+                className={`max-w-[1060px] mx-2 sm:mx-auto my-10 sm:my-16  ${dlcData?.dlc.length && 'mb-1 sm:mb-1'}`}
             >
-                <CardHeader className="flex justify-between items-center px-6 py-4">
-                    <h1 className="text-xl font-bold">{item.name}</h1>
-                    <div>
-                        <div className="flex gap-2 items-center">
-                            {!!item?.price_overview?.discount_percent ? (
-                                <>
-                                    <span className="text-xl">
-                                        {item?.price_overview?.final_formatted}
-                                    </span>
-                                    <span className="line-through opacity-60 text-xl">
-                                        {item?.price_overview?.initial_formatted}{" "}
-                                    </span>
-                                </>
-                            ) : (
-                                <span className="text-xl">
-                                    {item?.price_overview?.final_formatted
-                                        ?? (item?.release_date?.coming_soon
-                                            ? "Coming soon"
-                                            : "Free to Play")}
+                <CardHeader className="flex text-lg justify-between gap-4 items-center p-4 sm:px-6">
+                    <h1 className=" font-bold truncate">{item.name}</h1>
+                    <div className="flex gap-2 items-center whitespace-nowrap">
+                        {!!item?.price_overview?.discount_percent ? (
+                            <>
+                                <span className="">
+                                    {item?.price_overview?.final_formatted}
                                 </span>
-                            )}
-                        </div>
+                                <span className="line-through opacity-60 ">
+                                    {item?.price_overview?.initial_formatted}{" "}
+                                </span>
+                            </>
+                        ) : (
+                            <span className="">
+                                {item?.price_overview?.final_formatted
+                                    ?? (item?.release_date?.coming_soon
+                                        ? "Coming soon"
+                                        : "Free to Play")}
+                            </span>
+                        )}
                     </div>
                 </CardHeader>
 
-                <CardBody className="grid grid-cols-3 gap-5">
-                    <section className="col-span-2 flex flex-col gap-4">
+                <CardBody className="grid sm:grid-cols-3 gap-5">
+                    <section className="col-span-2 hidden sm:flex flex-col gap-4">
                         <ImageBox realImage={currentImage} onClick={() => handleClick(item.steam_appid)} />
-                        <section className="overflow-x-scroll flex gap-3 py-3">
+                        <section className="overflow-auto flex gap-3 py-3">
                             {item?.screenshots?.map((item) => (
                                 <Image
                                     key={item?.id}

@@ -27,7 +27,6 @@ export default async function page() {
             return response[id]?.data
         }))
     }
-    console.log(cartData);
 
     return (
         <ClientCart buyData={cartData} total={total} />

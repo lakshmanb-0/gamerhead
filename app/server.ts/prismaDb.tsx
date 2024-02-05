@@ -9,7 +9,7 @@ type userType = {
     email: string
 }
 
-// create User 
+// create new User 
 export const createUser = async ({ id, name, email }: userType) => {
     try {
         const currentUser = await prisma.usersDb.findFirst({
@@ -40,7 +40,7 @@ export const createUser = async ({ id, name, email }: userType) => {
     }
 }
 
-// current User 
+// find current User 
 export const currentUser = async (userId: string) => {
     try {
         const currentUser = await prisma.usersDb.findFirst({
@@ -72,8 +72,7 @@ export const createCart = async (userId: string, id: number) => {
             data: { cartData: [...currentUser?.cartData!, id] },
         });
 
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return newCartData;
 
     } catch (error) {
         console.error('Error creating id:', error);
@@ -81,6 +80,7 @@ export const createCart = async (userId: string, id: number) => {
         await prisma.$disconnect();
     }
 }
+
 // delete cart 
 export const deleteCart = async (userId: string, id: number) => {
     try {
@@ -95,8 +95,7 @@ export const deleteCart = async (userId: string, id: number) => {
             data: { cartData: currentUser?.cartData.filter(el => el != id) },
         });
 
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return newCartData;
 
     } catch (error) {
         console.error('Error Deleting id:', error);
@@ -104,6 +103,7 @@ export const deleteCart = async (userId: string, id: number) => {
         await prisma.$disconnect();
     }
 }
+
 // delete ALLcart 
 export const deleteAllCart = async (userId: string) => {
     try {
@@ -118,7 +118,7 @@ export const deleteAllCart = async (userId: string) => {
             data: { cartData: [] },
         });
 
-        return currentUser;
+        return newCartData;
 
     } catch (error) {
         console.error('Error Deleting id:', error);
@@ -126,7 +126,6 @@ export const deleteAllCart = async (userId: string) => {
         await prisma.$disconnect();
     }
 }
-
 
 // create wishlist 
 export const createWishlist = async (userId: string, id: number) => {
@@ -136,11 +135,10 @@ export const createWishlist = async (userId: string, id: number) => {
         })
         const newLastVisited: usersDb = await prisma.usersDb.update({
             where: { id: userId },
-            data: { wishlistData: [...currentUser?.wishlistData!, id] },
+            data: { wishlistData: [id, ...currentUser?.wishlistData!] },
         });
 
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return newLastVisited;
 
     } catch (error) {
         console.error('Error creating id:', error);
@@ -148,6 +146,7 @@ export const createWishlist = async (userId: string, id: number) => {
         await prisma.$disconnect();
     }
 }
+
 // delete wishlist 
 export const deleteWishlist = async (userId: string, id: number) => {
     try {
@@ -159,8 +158,7 @@ export const deleteWishlist = async (userId: string, id: number) => {
             data: { wishlistData: currentUser?.wishlistData.filter(el => el != id) },
         });
 
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return newWishlistData;
 
     } catch (error) {
         console.error('Error Deleting id:', error);
@@ -176,13 +174,13 @@ export const createLastVisited = async (userId: string, id: number) => {
         const currentUser = await prisma.usersDb.findFirst({
             where: { id: userId }
         })
+        let only10Items = currentUser?.lastVisitedData?.slice(0, 10);
         const newLastVisited: usersDb = await prisma.usersDb.update({
             where: { id: userId },
-            data: { lastVisitedData: [...currentUser?.lastVisitedData!, id] },
+            data: { lastVisitedData: [id, ...only10Items!] },
         });
 
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return newLastVisited;
 
     } catch (error) {
         console.error('Error creating id:', error);

@@ -8,7 +8,6 @@ import { GameCard } from "@/components/ui/GameCard";
 
 const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: number[] }) => {
     console.log(buyData);
-    console.log(total);
 
     // handle total
     const handleTotal = () => {
