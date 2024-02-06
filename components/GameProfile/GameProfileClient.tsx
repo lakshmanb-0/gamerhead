@@ -61,13 +61,13 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
   return (
     <main>
-      <header className="h-screen relative text-white ">
-        <div className="relative w-full h-full">
+      <header className="relative text-white ">
+        <div className="hidden sm:block relative w-full h-full">
           <Image src={gameData?.screenshots?.[0].path_full ?? '/noImage.jpeg'} width={1080} height={1920} alt="backgroungImage" className={'z-0 w-full h-full'} />
           <div className="bg-gradient-to-t from-[rgba(0,0,0,0.90)] z-10 absolute bottom-0 left-0 w-full h-full" />
         </div>
 
-        <section className="absolute bottom-0 left-0 z-20 w-full h-full grid gap-4 sm:grid-cols-2 px-4 sm:px-20 py-10">
+        <section className="sm:absolute bottom-0 left-0 z-20 w-full h-full grid gap-8 sm:grid-cols-2 px-4 sm:px-20 py-10">
           <div className="sm:mt-auto">
             <div className="flex gap-4">
               <span className="flex gap-2 items-center">
@@ -120,7 +120,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
           </div>
 
           {/* image left side  */}
-          <div className="sm:w-[60%] mx-auto backdrop-blur-lg bg-[rgba(255,255,255,0.4)] rounded-xl h-fit my-auto ">
+          <div className="sm:w-[60%] mx-auto backdrop-blur-lg bg-[rgba(255,255,255,0.4)] rounded-xl h-fit my-auto order-first sm:order-last  ">
             <div>
               <ImageBox realImage={gameData?.header_image} errorImage={gameData?.background_raw} customStyle={'rounded-xl'} />
             </div>
@@ -180,7 +180,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
       {/* trailers  */}
       {gameData?.movies && (
-        <section className="py-7 sm:py-10 maxWidth">
+        <section className="py-5 sm:py-10 maxWidth">
           <div className="py-4">
             <h1 className="font-bold text-4xl">Trailers</h1>
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
@@ -195,7 +195,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
       {/* screenshots  */}
       {gameData?.screenshots &&
-        <section className="py-7 sm:py-10 maxWidth">
+        <section className="py-5 sm:py-10 maxWidth">
           <div className="py-4">
             <h1 className="font-bold text-4xl ">Screenshots</h1>
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
@@ -211,7 +211,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
       {/* about_the_game  */}
       {gameData?.about_the_game &&
-        <section className="newsContent py-7 sm:py-10 maxWidth">
+        <section className="newsContent py-5 sm:py-10 maxWidth">
           <div className="py-4">
             <h1 className="font-bold text-4xl">About the Game</h1>
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
@@ -237,7 +237,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
       {/* reviews  */}
       {!!reviews?.reviews.length && (
-        <section className="py-10 maxWidth">
+        <section className=" py-5 sm:py-10 maxWidth">
           <div className="py-4">
             <h1 className="font-bold text-4xl ">Reviews</h1>
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
@@ -254,12 +254,12 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
       {/* news  */}
       {!!news?.length && (
-        <section className="py-10 maxWidth ">
+        <section className="py-5 sm:py-10 maxWidth ">
           <div className="py-4">
             <h1 className="font-bold text-4xl">News :</h1>
             <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
           </div>
-          <div className="max-w-[1000px] mx-auto flex flex-col gap-20">
+          <div className="flex flex-col gap-10">
             {news?.map((item) => (
               <News key={item.gid} item={item} />
             ))}
