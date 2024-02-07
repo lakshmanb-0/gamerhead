@@ -56,16 +56,16 @@ const Reviews = ({ review }: { review: ReviewType }) => {
 
   return (
     <Card className="min-w-[300px] sm:min-w-[340px] my-3">
-      <CardHeader className="justify-between items-start">
-        <div className="flex gap-5">
-          <Avatar isBordered radius="full" size="md" src={`https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} />
-          <div className="flex flex-col items-start justify-center">
+      <CardHeader className="justify-between items-center">
+        <div className="flex gap-2 sm:gap-5">
+          <Avatar isBordered radius="full" size="md" src={reviewerData?.avatar_url?.includes('000000') ? '/noImage.jpeg' : `https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} />
+          <div className="flex flex-col items-center justify-center text-sm">
             <div className="flex items-center">
-              <h4 className="text-small font-semibold leading-none text-default-600">@{reviewerData?.persona_name}</h4>
+              <h4 className=" font-semibold leading-none text-default-600">@{reviewerData?.persona_name}</h4>
               <DotIcon />
-              <h5 className="text-small tracking-tight text-default-400">{moment.unix(review.timestamp_created).format('DD MMM, YYYY')}</h5>
+              <h5 className="tracking-tight text-default-400">{moment.unix(review.timestamp_created).format('DD MMM, YYYY')}</h5>
             </div>
-            <h5 className="text-small tracking-tight text-default-400">{reviewerData?.real_name ?? ''} </h5>
+            <h5 className="tracking-tight text-left w-full text-default-400">{reviewerData?.real_name ?? ''} </h5>
           </div>
         </div>
         <div className="text-xl">

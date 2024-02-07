@@ -1,12 +1,12 @@
 import React from 'react'
-import Plyr from "plyr-react";
-import "plyr-react/plyr.css";
+import Plyr from "plyr-react"
+import "plyr-react/plyr.css"
 import { PlayCircleIcon } from 'lucide-react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
-import Image from 'next/image';
+import ImageBox from '../ImageBox';
 
 
-type ModalVideo = {
+type TModalVideo = {
     id?: number,
     name?: string,
     thumbnail?: string,
@@ -21,13 +21,13 @@ type ModalVideo = {
     highlight?: boolean
 }
 
-export default function ModalVideo({ item }: { item: ModalVideo }) {
+export default function ModalVideo({ item }: { item: TModalVideo }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     return (
         <>
             <div onClick={onOpen} className='min-w-[300px] relative cursor-pointer'>
-                <Image src={item?.thumbnail ?? '/noImage.jpeg'} width={1920} height={1080} alt='thubnail' className='rounded-xl' />
+                <ImageBox realImage={item?.thumbnail} customStyle={'rounded-xl'} />
                 <PlayCircleIcon className="absolute top-0 left-0 w-full h-full p-14 z-10" />
             </div>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} className='sm:max-w-[70%] lg:max-w-[60%] m-auto'>

@@ -1,11 +1,9 @@
 import { Categories } from "@/components/LandingUi/Categories";
-import Dlc from "@/components/LandingUi/Dlc";
 import GamesSale from "@/components/LandingUi/GamesSale";
 import Header from "@/components/LandingUi/Header";
 import LandingInfinite from "@/components/LoadingInfinite/LandingInfinite";
-import { getAppDetails, getCategory, getDlc, getFeature, getTopReleases } from "./server.ts/apiCalls";
+import { getAppDetails, getCategory, getFeature, getTopReleases } from "./server.ts/apiCalls";
 import { getUniqueData } from "@/utils/utility";
-import { ToastContainer } from "react-toastify";
 
 
 export default async function Home() {
@@ -41,7 +39,6 @@ export default async function Home() {
       <LandingInfinite data={monthsData1} />
       <LandingInfinite data={monthsData2} />
       <LandingInfinite data={monthsData3} />
-      <ToastContainer />
     </>
   );
 }

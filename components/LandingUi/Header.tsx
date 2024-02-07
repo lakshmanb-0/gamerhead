@@ -2,7 +2,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { TGameData } from "@/types";
-import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay"
 import {
   Carousel,
@@ -11,6 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import ImageBox from "../ImageBox";
 
 const Header = ({ gameData }: { gameData: TGameData[] }) => {
   const router = useRouter();
@@ -30,7 +30,7 @@ const Header = ({ gameData }: { gameData: TGameData[] }) => {
         <CarouselContent>
           {gameData.map((item, index: number) => (
             <CarouselItem key={index} className=" lg:basis-1/2">
-              <Image src={item?.large_capsule_image} alt="picture" width={1920} height={1080} className="w-full object-contain" onClick={() => handleClick(item?.id)} />
+              <ImageBox realImage={item?.large_capsule_image} customStyle={'rounded-xl'} onClick={() => handleClick(item?.id)} />
             </CarouselItem>
           ))}
         </CarouselContent>

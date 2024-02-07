@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import { addCart } from "../redux/reducers/cart.reducer";
 import { useParams, usePathname } from "next/navigation";
+import { BiHeart } from "react-icons/bi";
+import { BsFillHeartFill } from "react-icons/bs";
 
 const menuItems = [
     {
@@ -33,7 +35,6 @@ const Nav = () => {
     const cartData = useSelector((state: RootState) => state.cartData)
     const pathname = usePathname()
     const dispatch = useDispatch()
-    console.log(pathname);
 
     // user check
     useEffect(() => {
@@ -87,6 +88,11 @@ const Nav = () => {
                         <FaCartShopping className='text-xl' />
                     </Badge>
                 </Link>
+                <Link href="/profile" >
+                    <Badge content={cartCount} size="sm" color="success">
+                        <BsFillHeartFill className='text-xl' />
+                    </Badge>
+                </Link>
             </NavbarContent>
 
             <NavbarBrand className="hidden sm:block" >
@@ -103,6 +109,11 @@ const Nav = () => {
                     </Badge>
                 </Link>
                 <SearchDropdown />
+                <Link href="/profile" >
+                    <Badge content={cartCount} size="sm" color="success">
+                        <BsFillHeartFill className='text-xl' />
+                    </Badge>
+                </Link>
             </NavbarContent>
 
             <NavbarContent justify="end">

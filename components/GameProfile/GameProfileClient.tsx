@@ -12,13 +12,14 @@ import ImageBox from "../ImageBox";
 import { TDlcData, TNewsData, TReviewData, TSingleGameData, TUser } from "@/types";
 import ModalVideo from "../ui/ModalVideo";
 import Dlc from "../LandingUi/Dlc";
-import { createCart, createWishlist } from "@/app/server.ts/prismaDb";
+import { createCart, createWishlist, deleteWishlist } from "@/app/server.ts/prismaDb";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/reducers/cart.reducer";
 import { addWishlist } from "../redux/reducers/wishlist.reducer";
 import { Tooltip } from "@nextui-org/react";
+import { toast } from "react-toastify";
 
 
 type GameProfileClient = {
@@ -43,6 +44,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
   // add to cart 
   const addToCart = async (id: number) => {
+    toast.success("Ready to Play! 🎮");
     setAdded({ ...added, cart: true })
     let x = await createCart(user?.id!, id);
     console.log(x);
@@ -51,8 +53,18 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
   // add to wishlist 
   const addToWishlist = async (id: number) => {
+    toast.success("Quest in the Queue 📜");
     setAdded({ ...added, wishlist: true })
     let x = await createWishlist(user?.id!, id);
+    console.log(x);
+    dispatch(addWishlist(x?.wishlistData))
+  }
+
+  // remove to wishlist 
+  const removeWishlist = async (id: number) => {
+    toast.warning("Epic Quest Abandoned 🏴");
+    setAdded({ ...added, wishlist: false })
+    let x = await deleteWishlist(user?.id!, id);
     console.log(x);
     dispatch(addWishlist(x?.wishlistData))
   }
@@ -61,13 +73,13 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
   return (
     <main>
-      <header className="relative text-white ">
-        <div className="hidden sm:block relative w-full h-full">
-          <Image src={gameData?.screenshots?.[0].path_full ?? '/noImage.jpeg'} width={1080} height={1920} alt="backgroungImage" className={'z-0 w-full h-full'} />
+      <header className="relative text-white">
+        <div className="hidden lg:block lg:h-screen xl:h-full relative w-full ">
+          <ImageBox realImage={gameData?.screenshots?.[0]?.path_full} customStyle={'z-0 w-full h-full'} />
           <div className="bg-gradient-to-t from-[rgba(0,0,0,0.90)] z-10 absolute bottom-0 left-0 w-full h-full" />
         </div>
 
-        <section className="sm:absolute bottom-0 left-0 z-20 w-full h-full grid gap-8 sm:grid-cols-2 px-4 sm:px-20 py-10">
+        <section className="lg:absolute bottom-0 left-0 z-20 w-full h-full grid gap-8 lg:grid-cols-2 px-4 md:px-10 py-10">
           <div className="sm:mt-auto">
             <div className="flex gap-4">
               <span className="flex gap-2 items-center">
@@ -120,13 +132,13 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
           </div>
 
           {/* image left side  */}
-          <div className="sm:w-[60%] mx-auto backdrop-blur-lg bg-[rgba(255,255,255,0.4)] rounded-xl h-fit my-auto order-first sm:order-last  ">
+          <div className="md:max-w-[60%] mx-auto backdrop-blur-lg bg-[rgba(255,255,255,0.4)] rounded-xl h-fit my-auto order-first sm:order-last  ">
             <div>
               <ImageBox realImage={gameData?.header_image} errorImage={gameData?.background_raw} customStyle={'rounded-xl'} />
             </div>
             <div className="px-5 py-6">
               <h1 className="text-[1rem] ">{gameData?.short_description}</h1>
-              <div className="py-3 flex gap-3">
+              <div className="py-3 flex flex-wrap gap-3">
                 {gameData?.genres?.map((item, index) =>
                   index < 3 && (
                     <span
@@ -168,10 +180,18 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
                       BUY NOW
                     </button>
                 )}
-                <button className="flex items-center gap-1" onClick={() => addToWishlist(gameData?.steam_appid)}>
-                  {(currentUser?.wishlistData?.includes(gameData?.steam_appid) || added.wishlist) ? <AiFillHeart /> : <AiOutlineHeart />}
-                  Add to Wishlist
-                </button>
+                {
+                  (currentUser?.wishlistData?.includes(gameData?.steam_appid) || added.wishlist) ?
+                    <button className="flex items-center gap-1" onClick={() => removeWishlist(gameData?.steam_appid)}>
+                      <AiFillHeart />
+                      Remove from Wishlist
+                    </button> :
+                    <button className="flex items-center gap-1" onClick={() => addToWishlist(gameData?.steam_appid)}>
+                      <AiOutlineHeart />
+                      Add to Wishlist
+                    </button>
+                }
+
               </div>
             </div>
           </div>

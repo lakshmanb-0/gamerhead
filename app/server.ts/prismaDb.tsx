@@ -107,11 +107,6 @@ export const deleteCart = async (userId: string, id: number) => {
 // delete ALLcart 
 export const deleteAllCart = async (userId: string) => {
     try {
-        const currentUser = await prisma.usersDb.findFirst({
-            where: {
-                id: userId,
-            },
-        })
 
         const newCartData: usersDb = await prisma.usersDb.update({
             where: { id: userId },
@@ -193,19 +188,12 @@ export const createLastVisited = async (userId: string, id: number) => {
 // create purchased 
 export const createPurchased = async (userId: string, id: number[]) => {
     try {
-        const currentUser = await prisma.usersDb.findFirst({
-            where: {
-                id: userId,
-            },
-        })
-
         const newCartData: usersDb = await prisma.usersDb.update({
             where: { id: userId, },
             data: { purchasedData: id },
         });
 
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return newCartData;
 
     } catch (error) {
         console.error('Error creating id:', error);

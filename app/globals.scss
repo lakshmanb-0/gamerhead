@@ -130,5 +130,9 @@
     a {
       @apply text-[#6152c8];
     }
+
+    img {
+      @apply py-2 sm:py-4
+    }
   }
 }

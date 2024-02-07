@@ -41,16 +41,21 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
                         <GameCard item={el} key={el.steam_appid} />
                     )}
                 </div>
-                <div className="w-full text-right py-2 text-4xl">
-                    Total: &#8377;{handleTotal()}
-                </div>
-                <div className="w-full flex justify-end pb-10">
-                    <button
-                        className="bg-gradient-to-r from-[#fe1f94] to-[#fd2adf] text-2xl px-4 py-1 rounded"
-                        onClick={() => handleClick()}>
-                        Buy Now
-                    </button>
-                </div>
+                {
+                    !buyData?.length ? <></> :
+                        <>
+                            <div className="w-full text-right py-2 text-4xl">
+                                Total: &#8377;{handleTotal()}
+                            </div>
+                            <div className="w-full flex justify-end pb-10">
+                                <button
+                                    className="bg-gradient-to-r from-[#fe1f94] to-[#fd2adf] text-2xl px-4 py-1 rounded"
+                                    onClick={() => handleClick()}>
+                                    Buy Now
+                                </button>
+                            </div>
+                        </>
+                }
             </div>
         </>
     );

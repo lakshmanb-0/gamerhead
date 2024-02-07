@@ -4,7 +4,6 @@ import {
     CardBody,
     CardHeader,
 } from "@nextui-org/react";
-import Image from "next/image";
 import "plyr-react/plyr.css";
 import { AiFillWindows } from "react-icons/ai";
 import { RiMacLine } from "react-icons/ri";
@@ -14,6 +13,7 @@ import ImageBox from '../ImageBox';
 import { useRouter } from 'next/navigation';
 import Dlc from '../LandingUi/Dlc';
 import { getDlc } from '@/app/server.ts/apiCalls';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
 const TopReleaseCard = ({ item }: { item: TSingleGameData }) => {
     const [currentImage, setCurrentImage] = useState<string>(item?.screenshots?.[0]?.path_thumbnail ?? '/noImage.jpeg');
@@ -66,16 +66,21 @@ const TopReleaseCard = ({ item }: { item: TSingleGameData }) => {
                 <CardBody className="grid sm:grid-cols-3 gap-5">
                     <section className="col-span-2 hidden sm:flex flex-col gap-4">
                         <ImageBox realImage={currentImage} onClick={() => handleClick(item.steam_appid)} />
-                        <section className="overflow-auto flex gap-3 py-3">
-                            {item?.screenshots?.map((item) => (
-                                <Image
-                                    key={item?.id}
-                                    src={item?.path_thumbnail ?? '/noImage.jpeg'}
-                                    width={1080} height={1920} alt='hello'
-                                    className={`w-[150px] object-cover aspect-video cursor-pointer ${currentImage == item.path_thumbnail && 'border-2 border-white'}`}
-                                    onClick={() => { setCurrentImage(item.path_thumbnail) }} />
-                            ))}
-                        </section>
+                        <ScrollArea>
+                            <section className=" flex gap-3 py-3 pb-5">
+                                {item?.screenshots?.map((item) => (
+                                    <div className="min-w-[150px]" key={item.id} onClick={() => setCurrentImage(item.path_thumbnail)}>
+                                        <ImageBox
+                                            key={item?.id}
+                                            realImage={item?.path_thumbnail}
+                                            zoomed={false}
+                                            customStyle={`w-full cursor-pointer ${currentImage == item.path_thumbnail && 'border-2 border-white'}`}
+                                        />
+                                    </div>
+                                ))}
+                            </section>
+                            <ScrollBar orientation="horizontal" />
+                        </ScrollArea>
                     </section>
 
                     <section>

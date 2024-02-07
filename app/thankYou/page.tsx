@@ -1,5 +1,5 @@
 import React from 'react'
-import { createPurchased, deleteAllCart } from '../server.ts/prismaDb'
+import { createPurchased, currentUser, deleteAllCart } from '../server.ts/prismaDb'
 import { auth } from '@clerk/nextjs'
 import Link from 'next/link';
 
@@ -7,15 +7,9 @@ const page = async ({ searchParams }: { searchParams: { sessionId: string } }) =
     const { userId } = auth();
 
     if (searchParams?.sessionId) {
-        console.log('deleteAllCart');
-        let x = await deleteAllCart(userId!)
-        console.log('deletedAllCart');
-        console.log('createPurchased');
-        console.log(x);
-        if (x?.cartData?.length) {
-            await createPurchased(userId!, x?.cartData!)
-            console.log('createdPurchased');
-        }
+        let x = await currentUser(userId!)
+        await createPurchased(userId!, x?.cartData!)
+        await deleteAllCart(userId!)
     }
 
     return (
