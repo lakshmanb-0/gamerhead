@@ -55,7 +55,7 @@ const Reviews = ({ review }: { review: ReviewType }) => {
   }, [])
 
   return (
-    <Card className="min-w-[300px] sm:min-w-[340px] my-3">
+    <Card className="min-w-[300px] sm:max-w-[340px] my-3">
       <CardHeader className="justify-between items-center">
         <div className="flex gap-2 sm:gap-5">
           <Avatar isBordered radius="full" size="md" src={reviewerData?.avatar_url?.includes('000000') ? '/noImage.jpeg' : `https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} />

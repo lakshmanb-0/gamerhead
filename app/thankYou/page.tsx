@@ -1,7 +1,7 @@
 import React from 'react'
 import { createPurchased, currentUser, deleteAllCart } from '../server.ts/prismaDb'
 import { auth } from '@clerk/nextjs'
-import Link from 'next/link';
+import ClientThankYou from './ClientThankYou';
 
 const page = async ({ searchParams }: { searchParams: { sessionId: string } }) => {
     const { userId } = auth();
@@ -11,9 +11,8 @@ const page = async ({ searchParams }: { searchParams: { sessionId: string } }) =
         await createPurchased(userId!, x?.cartData!)
         await deleteAllCart(userId!)
     }
-
     return (
-        <Link href='/'>Thank you</Link>
+        <ClientThankYou />
     )
 }
 export default page

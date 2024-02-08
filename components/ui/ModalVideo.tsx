@@ -1,10 +1,8 @@
 import React from 'react'
 import Plyr from "plyr-react"
-import "plyr-react/plyr.css"
 import { PlayCircleIcon } from 'lucide-react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import ImageBox from '../ImageBox';
-
 
 type TModalVideo = {
     id?: number,
@@ -37,25 +35,9 @@ export default function ModalVideo({ item }: { item: TModalVideo }) {
                             <ModalHeader className="flex flex-col gap-1">{item.name}</ModalHeader>
                             <ModalBody>
                                 <div className="aspect-video rounded-lg  w-full">
-                                    <Plyr
-                                        source={{
-                                            type: 'video',
-                                            title: item.name,
-                                            sources: [
-                                                {
-                                                    src: item.mp4?.[480]!,
-                                                    type: 'video/mp4',
-                                                    size: 480,
-                                                },
-                                                {
-                                                    src: item.mp4?.max!,
-                                                    type: 'video/mp4',
-                                                    size: 1080,
-                                                },
-                                            ],
-                                            poster: item.thumbnail,
-                                        }}
-                                    />
+                                    <video controls autoPlay >
+                                        <source src={item.mp4?.max!} type="video/mp4" />
+                                    </video>
                                 </div>
                             </ModalBody>
                             <ModalFooter>

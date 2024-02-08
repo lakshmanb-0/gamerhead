@@ -7,7 +7,6 @@ import Stripe from "stripe";
 export async function POST(req: Request) {
     const body = await req.json();
     const origin = "http://localhost:3000";
-    console.log(body);
 
     // cart info 
     const lineItems = body.map((item: TSingleGameData) => ({

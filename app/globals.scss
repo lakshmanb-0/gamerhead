@@ -77,10 +77,6 @@
     @apply object-cover w-full h-full;
   }
 
-  // input {
-  //   @apply border-0 outline-0;
-  // }
-
   video::poster {
     @apply w-full h-full object-cover;
   }
@@ -106,9 +102,9 @@
     @apply border-2 outline-0 text-black p-2 border-[#ededed] bg-[#ededed] rounded-md;
   }
 
-  // .scrollBar {
-  //   @apply scrollbar-thumb-[#6152c8] scrollbar-track-[#f9f1fe] scrollbar-w-[0.5rem] scrollbar-h-[0.5rem] scrollbar-track-rounded-xl scrollbar-thumb-rounded-xl;
-  // }
+  .scrollBar {
+    @apply scrollbar-thumb-[#6152c8] scrollbar-track-[#f9f1fe];
+  }
 
   .requirement {
     div {

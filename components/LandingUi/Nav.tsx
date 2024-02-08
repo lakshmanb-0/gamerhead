@@ -12,6 +12,7 @@ import { addCart } from "../redux/reducers/cart.reducer";
 import { useParams, usePathname } from "next/navigation";
 import { BiHeart } from "react-icons/bi";
 import { BsFillHeartFill } from "react-icons/bs";
+import { addWishlist } from "../redux/reducers/wishlist.reducer";
 
 const menuItems = [
     {
@@ -32,7 +33,9 @@ const Nav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const { user } = useUser();
     const [cartCount, setCartCount] = useState<number>(0)
+    const [wishlistCount, setWishlistCount] = useState<number>(0)
     const cartData = useSelector((state: RootState) => state.cartData)
+    const wishlist = useSelector((state: RootState) => state.wishlistData)
     const pathname = usePathname()
     const dispatch = useDispatch()
 
@@ -61,15 +64,17 @@ const Nav = () => {
     // update cart when cart redux changes 
     useEffect(() => {
         setCartCount(cartData?.length)
+        setWishlistCount(wishlist?.length)
     }, [cartData])
 
     // cart count check function 
     const cartCountCheck = async () => {
-        console.log(user);
         if (user?.id) {
             let CU = await currentUser(user?.id!)
             dispatch(addCart(CU?.cartData))
+            dispatch(addWishlist(CU?.wishlistData))
             setCartCount(CU?.cartData?.length ?? 0)
+            setWishlistCount(CU?.wishlistData?.length ?? 0)
         }
         else {
             setCartCount(0)
@@ -89,7 +94,7 @@ const Nav = () => {
                     </Badge>
                 </Link>
                 <Link href="/profile" >
-                    <Badge content={cartCount} size="sm" color="success">
+                    <Badge content={wishlistCount} size="sm" color="success">
                         <BsFillHeartFill className='text-xl' />
                     </Badge>
                 </Link>
@@ -110,7 +115,7 @@ const Nav = () => {
                 </Link>
                 <SearchDropdown />
                 <Link href="/profile" >
-                    <Badge content={cartCount} size="sm" color="success">
+                    <Badge content={wishlistCount} size="sm" color="success">
                         <BsFillHeartFill className='text-xl' />
                     </Badge>
                 </Link>

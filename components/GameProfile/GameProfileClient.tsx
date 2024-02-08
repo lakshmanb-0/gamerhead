@@ -14,12 +14,13 @@ import ModalVideo from "../ui/ModalVideo";
 import Dlc from "../LandingUi/Dlc";
 import { createCart, createWishlist, deleteWishlist } from "@/app/server.ts/prismaDb";
 import { useUser } from "@clerk/nextjs";
-import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/reducers/cart.reducer";
 import { addWishlist } from "../redux/reducers/wishlist.reducer";
 import { Tooltip } from "@nextui-org/react";
 import { toast } from "react-toastify";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
+import { Check } from "lucide-react";
 
 
 type GameProfileClient = {
@@ -71,6 +72,24 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
   console.log(gameData);
 
+  const supportLanguage = () => {
+    let string = gameData?.supported_languages.split(',')
+
+    return string?.map(el => {
+      let firstString = el.split('<')[0];
+      let secondString = el.split('<')[1];
+
+      return (
+        <TableRow key={el}>
+          <TableCell>{firstString}</TableCell>
+          <TableCell><Check /></TableCell>
+          <TableCell>{secondString?.includes('strong>*') && <Check />}</TableCell>
+          <TableCell><Check /></TableCell>
+        </TableRow>
+      )
+    })
+  }
+
   return (
     <main>
       <header className="relative text-white">
@@ -103,9 +122,9 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
               {gameData?.name}
             </h1>
             <div className="text-sm py-1 flex gap-2">
-              <span className="opacity-60">Features: </span>
+              <span className="opacity-60">Genre: </span>
               <span>
-                {gameData?.categories?.map((item, index: number) =>
+                {gameData?.genres?.map((item, index: number) =>
                   index < 3 && `${item?.description} | `
                 )}
               </span>
@@ -119,11 +138,11 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
               </div>
             </div>
             <div className="w-12 py-1">
-              <Image src={gameData?.required_age == 0 ? "/rating/12.png" : "/rating/18.png"} width={1920} height={1920} alt="age" />
+              <ImageBox realImage={gameData?.required_age == 0 ? "/rating/12.png" : "/rating/18.png"} errorImage={gameData?.background_raw} zoomed={false} customStyle={'rounded-none'} />
             </div>
             <div className="text-sm py-1 flex gap-2">
               <span className="opacity-60">Developer: </span>
-              <span>{gameData?.developers}</span>
+              <span>{gameData?.developers?.join(' , ')}</span>
             </div>
             <div className="text-sm py-1 flex gap-2">
               <span className="opacity-60">Publishers: </span>
@@ -223,7 +242,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
           <section className="flex gap-4 overflow-auto scrollbar py-5">
             {gameData?.screenshots?.map((item) => (
               <a className="min-w-[300px]" href={item.path_full} target="_blank">
-                <ImageBox key={item?.id} realImage={item?.path_thumbnail} errorImage={item?.path_full} customStyle={'rounded'} />
+                <ImageBox key={item?.id} realImage={item?.path_thumbnail} />
               </a>
             ))}
           </section>
@@ -239,18 +258,42 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
           <div className="text-lg py-2">
             {parse(`${gameData?.about_the_game}`)}
           </div>
-          <div className="py-4">
-            <h1 className="pt-10 font-bold text-3xl">System Requirements :</h1>
-            <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
-          </div>
-          <div className="grid  md:grid-cols-2 gap-4 py-10 requirement text-lg">
-            <div>{parse(`${gameData?.pc_requirements?.minimum ?? ''}`)}</div>
-            <div>{parse(`${gameData?.pc_requirements?.recommended ?? ''}`)}</div>
-          </div>
+          {!!gameData?.pc_requirements?.length && <section>
+            <div className="py-4">
+              <h1 className="pt-10 font-bold text-3xl">System Requirements :</h1>
+              <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
+            </div>
+            <div className="grid  md:grid-cols-2 gap-4 py-10 requirement text-lg">
+              <div>{parse(`${gameData?.pc_requirements?.minimum ?? ''}`)}</div>
+              <div>{parse(`${gameData?.pc_requirements?.recommended ?? ''}`)}</div>
+            </div>
+          </section>}
           <div className="text-sm text-[#555555]">
             {parse(`${gameData?.legal_notice ?? ''}`)}
           </div>
+        </section>
+      }
+
+      {/* supported Language  */}
+      {!!gameData?.supported_languages?.length &&
+        <section className="maxWidth">
+          <div className="py-4">
+            <h1 className="font-bold text-4xl">Languages:</h1>
+            <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
+          </div>
+          <Table aria-label="language Support Table" className='max-w-[500px]'>
+            <TableHeader>
+              <TableColumn> </TableColumn>
+              <TableColumn>Interface</TableColumn>
+              <TableColumn>Full Audio</TableColumn>
+              <TableColumn>Subtitles</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {supportLanguage()}
+            </TableBody>
+          </Table>
         </section>}
+
       <section className="py-5 maxWidth">
         <Dlc dlcData={dlcData} />
       </section>

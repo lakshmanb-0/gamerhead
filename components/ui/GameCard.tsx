@@ -35,7 +35,7 @@ export const GameCard = ({ item, heading, dlc }: { item: TGameCard, heading?: st
     return (
         <Card shadow="sm" key={item.id} isPressable onPress={() => handleClick(item.id ?? item?.steam_appid ?? 0)} className={dlc && `min-w-[200px] sm:min-w-[300px]`} >
             <CardBody className="overflow-hidden p-0 relative">
-                <ImageBox realImage={item?.header_image} errorImage={item?.large_capsule_image} customStyle={'rounded-lg'} />
+                <ImageBox realImage={item?.header_image} errorImage={item?.large_capsule_image} />
                 {(!!item?.discount_percent || !!item?.price_overview?.discount_percent) && <div className="absolute top-0 right-0 px-2 sm:px-4 py-1 text-sm sm:text-lg z-10 text-green_color bg-[#212224]">
                     {item.discount_percent ?? item?.price_overview?.discount_percent}%
                 </div>}

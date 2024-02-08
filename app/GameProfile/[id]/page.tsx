@@ -12,11 +12,11 @@ const GamePage = async ({ params }: { params: { id: number } }) => {
 
   // game data
   const response = await getAppDetails(Number(params.id))
-  const gameData = response?.[params.id].data;
+  const gameData = await response?.[params.id].data;
 
   // news data
   const newsApi = await getNews(params.id);
-  const newsResponse = newsApi?.appnews?.newsitems?.filter((item: TNewsData) => item.author !== "SteamDB")
+  const newsResponse = await newsApi?.appnews?.newsitems?.filter((item: TNewsData) => item.author !== "SteamDB")
 
   //review data
   const review = await getReviews(params.id);

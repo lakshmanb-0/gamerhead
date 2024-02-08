@@ -23,9 +23,9 @@ export default function RootLayout({ children, }: {
   }, [pathname]);
 
   return (
-    <html lang="en" className="dark bg-[#192233] text-white" >
-      <body>
-        <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en" className="dark bg-[#192233] text-white" >
+        <body>
           <NextUIProvider>
             <Provider store={store}>
               <Navbar />
@@ -45,8 +45,8 @@ export default function RootLayout({ children, }: {
               />
             </Provider>
           </NextUIProvider>
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

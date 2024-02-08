@@ -67,7 +67,7 @@ const TopReleaseCard = ({ item }: { item: TSingleGameData }) => {
                     <section className="col-span-2 hidden sm:flex flex-col gap-4">
                         <ImageBox realImage={currentImage} onClick={() => handleClick(item.steam_appid)} />
                         <ScrollArea>
-                            <section className=" flex gap-3 py-3 pb-5">
+                            <section className="flex gap-3 py-3 pb-5">
                                 {item?.screenshots?.map((item) => (
                                     <div className="min-w-[150px]" key={item.id} onClick={() => setCurrentImage(item.path_thumbnail)}>
                                         <ImageBox
