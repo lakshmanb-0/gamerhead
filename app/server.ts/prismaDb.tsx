@@ -14,9 +14,10 @@ export const createUser = async ({ id, name, email }: userType) => {
     try {
         const currentUser = await prisma.usersDb.findFirst({
             where: {
-                id: id, // Replace with the actual condition you want to use
+                id: id,
             },
         })
+
         if (!currentUser) {
             const newUser = await prisma.usersDb.create({
                 data: {
@@ -29,9 +30,9 @@ export const createUser = async ({ id, name, email }: userType) => {
                     purchasedData: [],
                 },
             });
+            return newUser
         }
-        const allUsers = await prisma.usersDb.findMany()
-        return allUsers;
+        return currentUser;
 
     } catch (error) {
         console.error('Error creating user:', error);

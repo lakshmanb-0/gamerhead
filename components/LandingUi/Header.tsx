@@ -29,8 +29,8 @@ const Header = ({ gameData }: { gameData: TGameData[] }) => {
       ]}>
         <CarouselContent>
           {gameData.map((item, index: number) => (
-            <CarouselItem key={index} className=" lg:basis-1/2">
-              <ImageBox realImage={item?.large_capsule_image} customStyle={'rounded-xl'} onClick={() => handleClick(item?.id)} />
+            <CarouselItem key={index} className=" lg:basis-1/2" onClick={() => handleClick(item?.id)}>
+              <ImageBox realImage={item?.large_capsule_image} customStyle={'rounded-xl'} />
             </CarouselItem>
           ))}
         </CarouselContent>

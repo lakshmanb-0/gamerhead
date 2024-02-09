@@ -3,6 +3,7 @@ import { createPurchased, currentUser, deleteAllCart } from '../server.ts/prisma
 import { auth } from '@clerk/nextjs'
 import ClientThankYou from './ClientThankYou';
 
+
 const page = async ({ searchParams }: { searchParams: { sessionId: string } }) => {
     const { userId } = auth();
 

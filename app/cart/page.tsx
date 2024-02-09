@@ -5,6 +5,7 @@ import { getAppDetails } from '../server.ts/apiCalls';
 import { TSingleGameData } from '@/types';
 import ClientCart from './ClientCart';
 import { auth } from '@clerk/nextjs';
+import { currentUser } from '../server.ts/prismaDb';
 
 
 const prisma = new PrismaClient();
@@ -15,11 +16,7 @@ export default async function page() {
     let total: number[] = []
 
     if (userId) {
-        const currentUserData = await prisma.usersDb.findFirst({
-            where: {
-                id: userId,
-            },
-        })
+        const currentUserData = await currentUser(userId)
 
         cartData = await Promise.all((currentUserData?.cartData ?? [])?.map(async (id) => {
             const response = await getAppDetails(id);

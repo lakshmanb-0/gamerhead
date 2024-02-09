@@ -14,13 +14,13 @@ import ModalVideo from "../ui/ModalVideo";
 import Dlc from "../LandingUi/Dlc";
 import { createCart, createWishlist, deleteWishlist } from "@/app/server.ts/prismaDb";
 import { useUser } from "@clerk/nextjs";
-import { useDispatch } from "react-redux";
-import { addCart } from "../redux/reducers/cart.reducer";
-import { addWishlist } from "../redux/reducers/wishlist.reducer";
+import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import { Check } from "lucide-react";
+import { RootState } from "../redux/store/store";
+import { addCart, addWishlist, removeWishlist } from "../redux/reducers/auth.reducers";
 
 
 type GameProfileClient = {
@@ -35,6 +35,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
   const { user } = useUser();
   const [added, setAdded] = useState({ cart: false, wishlist: false })
   const dispatch = useDispatch()
+  const state = useSelector((state: RootState) => state.auth)
 
   // get percentage of positive reviews
   const handleReviewPositive = (total: number, positive: number) => {
@@ -49,7 +50,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
     setAdded({ ...added, cart: true })
     let x = await createCart(user?.id!, id);
     console.log(x);
-    dispatch(addCart(x?.cartData))
+    dispatch(addCart(!!x?.cartData?.length ? x?.cartData : [id, ...state.cartData]))
   }
 
   // add to wishlist 
@@ -58,16 +59,22 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
     setAdded({ ...added, wishlist: true })
     let x = await createWishlist(user?.id!, id);
     console.log(x);
-    dispatch(addWishlist(x?.wishlistData))
+    dispatch(addWishlist(!!x?.wishlistData?.length ? x?.wishlistData : [id, ...state.wishlistData]))
   }
 
   // remove to wishlist 
-  const removeWishlist = async (id: number) => {
+  const removeFromWishlist = async (id: number) => {
     toast.warning("Epic Quest Abandoned 🏴");
     setAdded({ ...added, wishlist: false })
     let x = await deleteWishlist(user?.id!, id);
     console.log(x);
-    dispatch(addWishlist(x?.wishlistData))
+    if (x?.wishlistData) {
+      dispatch(addWishlist(!!x?.wishlistData?.length ? x?.wishlistData : [id, ...state.wishlistData]))
+    }
+    else {
+      dispatch(removeWishlist(id))
+    }
+
   }
 
   console.log(gameData);
@@ -121,14 +128,14 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
             <h1 className="text-3xl sm:text-5xl font-bold py-4">
               {gameData?.name}
             </h1>
-            <div className="text-sm py-1 flex gap-2">
+            {/* <div className="text-sm py-1 flex gap-2">
               <span className="opacity-60">Genre: </span>
               <span>
                 {gameData?.genres?.map((item, index: number) =>
                   index < 3 && `${item?.description} | `
                 )}
               </span>
-            </div>
+            </div> */}
             <div className="text-sm py-2 flex items-center gap-2">
               <span className="opacity-60 ">Platform:</span>{" "}
               <div className="flex gap-1 text-xl">
@@ -191,7 +198,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
 
               <div className="flex items-center gap-2 pt-4 justify-between">
                 {!gameData?.release_date?.coming_soon && (
-                  (currentUser?.cartData?.includes(gameData?.steam_appid) || added.cart) ?
+                  (currentUser?.cartData?.includes(gameData?.steam_appid) || state?.cartData?.includes(gameData?.steam_appid) || added.cart) ?
                     <button className="py-3 px-5 bg-green_color text-white rounded-lg text-lg font-semibold cursor-default">
                       Added to Cart
                     </button>
@@ -200,8 +207,8 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
                     </button>
                 )}
                 {
-                  (currentUser?.wishlistData?.includes(gameData?.steam_appid) || added.wishlist) ?
-                    <button className="flex items-center gap-1" onClick={() => removeWishlist(gameData?.steam_appid)}>
+                  (currentUser?.wishlistData?.includes(gameData?.steam_appid) || state?.wishlistData?.includes(gameData?.steam_appid) || added.wishlist) ?
+                    <button className="flex items-center gap-1" onClick={() => removeFromWishlist(gameData?.steam_appid)}>
                       <AiFillHeart />
                       Remove from Wishlist
                     </button> :

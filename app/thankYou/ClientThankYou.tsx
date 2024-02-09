@@ -1,17 +1,29 @@
 'use client'
+import { addPurchased, clearCart } from '@/components/redux/reducers/auth.reducers';
+import { RootState } from '@/components/redux/store/store';
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 const ClientThankYou = () => {
     const router = useRouter();
+
     const [seconds, setSeconds] = useState(7)
+
+    const state = useSelector((state: RootState) => state.auth)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(addPurchased(state.cartData))
+        dispatch(clearCart())
+    }, [])
 
     useEffect(() => {
         if (seconds > 0) {
             const timer = setInterval(() => setSeconds(prevSeconds => prevSeconds - 1), 1000);
             return () => clearInterval(timer);
         } else {
-            router.push('/profile');
+            router.push('/');
         }
     }, [seconds]);
 

@@ -8,48 +8,36 @@ import { createUser, currentUser } from "@/app/server.ts/prismaDb";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
-import { addCart } from "../redux/reducers/cart.reducer";
-import { useParams, usePathname } from "next/navigation";
-import { BiHeart } from "react-icons/bi";
+import { usePathname } from "next/navigation";
 import { BsFillHeartFill } from "react-icons/bs";
-import { addWishlist } from "../redux/reducers/wishlist.reducer";
+import { addCart, addWishlist } from "../redux/reducers/auth.reducers";
 
-const menuItems = [
-    {
-        name: 'Home',
-        link: '/'
-    },
-    {
-        name: 'Catelog',
-        link: '/cart'
-    },
-    {
-        name: 'search',
-        link: ''
-    }
-];
 
 const Nav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const { user } = useUser();
     const [cartCount, setCartCount] = useState<number>(0)
     const [wishlistCount, setWishlistCount] = useState<number>(0)
-    const cartData = useSelector((state: RootState) => state.cartData)
-    const wishlist = useSelector((state: RootState) => state.wishlistData)
+    const state = useSelector((state: RootState) => state.auth)
     const pathname = usePathname()
     const dispatch = useDispatch()
+    // console.log(user);
 
     // user check
     useEffect(() => {
         cartCountCheck();
         const checkUser = async () => {
-            if (user) {
+            if (user?.id) {
+                console.log('asd');
+
                 let data = {
                     id: user?.id!,
                     name: user?.fullName!,
                     email: user?.primaryEmailAddress?.emailAddress!
                 }
-                await createUser(data)
+                let a = await createUser(data)
+                console.log(a);
+
             }
         }
         checkUser()
@@ -63,21 +51,25 @@ const Nav = () => {
 
     // update cart when cart redux changes 
     useEffect(() => {
-        setCartCount(cartData?.length)
-        setWishlistCount(wishlist?.length)
-    }, [cartData])
+        setCartCount(state.cartData?.length)
+        setWishlistCount(state.wishlistData?.length)
+    }, [state])
 
     // cart count check function 
     const cartCountCheck = async () => {
         if (user?.id) {
             let CU = await currentUser(user?.id!)
-            dispatch(addCart(CU?.cartData))
-            dispatch(addWishlist(CU?.wishlistData))
-            setCartCount(CU?.cartData?.length ?? 0)
-            setWishlistCount(CU?.wishlistData?.length ?? 0)
+            console.log(CU);
+            if (CU) {
+                dispatch(addCart(CU?.cartData))
+                setCartCount(CU?.cartData?.length ?? 0)
+                dispatch(addWishlist(CU?.wishlistData))
+                setWishlistCount(CU?.wishlistData?.length ?? 0)
+            }
         }
         else {
             setCartCount(0)
+            setWishlistCount(0)
         }
     }
 

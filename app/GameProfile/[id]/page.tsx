@@ -1,5 +1,5 @@
 import { getAppDetails, getDlc, getNews, getReviews } from "@/app/server.ts/apiCalls";
-import { createLastVisited } from "@/app/server.ts/prismaDb";
+import { createLastVisited, currentUser } from "@/app/server.ts/prismaDb";
 import GameProfileClient from "@/components/GameProfile/GameProfileClient";
 import { TNewsData } from "@/types";
 import { auth } from "@clerk/nextjs";
@@ -22,18 +22,17 @@ const GamePage = async ({ params }: { params: { id: number } }) => {
   const review = await getReviews(params.id);
   const dlcData = await getDlc(gameData?.steam_appid);
 
-
+  let current;
   //all dbData files
-  const currentUser = await prisma.usersDb.findFirst({
-    where: { id: userId! }
-  })
-
-  if (!currentUser?.lastVisitedData?.includes(Number(params.id))) {
-    await createLastVisited(userId!, Number(params.id));
+  if (userId) {
+    current = await currentUser(userId)
+    if (!current?.lastVisitedData?.includes(Number(params.id))) {
+      await createLastVisited(userId!, Number(params.id));
+    }
   }
 
   return (
-    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} currentUser={currentUser} />
+    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} currentUser={current} />
   );
 };
 
