@@ -5,11 +5,10 @@ import Stripe from "stripe";
 import { TSingleGameData } from "@/types";
 import { GameCard } from "@/components/ui/GameCard";
 import { Button } from "@nextui-org/react";
-import { useUser } from "@clerk/nextjs";
 import { getAppDetails } from "../server.ts/apiCalls";
-import { currentUser } from "../server.ts/prismaDb";
 import { useSelector } from "react-redux";
 import { RootState } from "@/components/redux/store/store";
+import ImageBox from "@/components/ImageBox";
 
 
 const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: number[] }) => {
@@ -72,7 +71,7 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
                     <GameCard item={el} key={el.steam_appid} />
                 )}
             </div>
-            {(!!buyData?.length || !!cartData.length) &&
+            {(!!buyData?.length || !!cartData.length) ?
                 <>
                     <div className="w-full text-right py-2 text-4xl">
                         Total: &#8377;{handleTotal()}
@@ -85,6 +84,12 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
                         </Button>
                     </div>
                 </>
+                :
+                <section className="flex justify-center items-center flex-col ">
+                    <ImageBox realImage="./empty_cart.png" customStyle="w-80" zoomed={false} />
+                    <h1 className="font-bold text-5xl text-center">Your Cart is empty</h1>
+                    <p className="text-default-500 pt-4">Looks like you have not added anything to you cart. Go ahead & explore some games</p>
+                </section>
             }
         </div>
 

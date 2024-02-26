@@ -28,8 +28,6 @@ const Nav = () => {
         cartCountCheck();
         const checkUser = async () => {
             if (user?.id) {
-                console.log('asd');
-
                 let data = {
                     id: user?.id!,
                     name: user?.fullName!,

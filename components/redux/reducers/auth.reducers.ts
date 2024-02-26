@@ -27,11 +27,8 @@ const authSlice = createSlice({
                 ? state.wishlistData = action.payload
                 : state.wishlistData = [action.payload, ...state.wishlistData]
         },
-        removeWishlist: (state, action) => {
-            Array.isArray(action.payload)
-                ? state.wishlistData = action.payload
-                : state.wishlistData = state.wishlistData.filter(el => el != action.payload)
-        },
+        removeWishlist: (state, action) => { state.wishlistData = state.wishlistData.filter(el => el != action.payload) }
+        ,
     }
 })
 

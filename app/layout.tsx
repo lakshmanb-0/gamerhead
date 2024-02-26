@@ -9,6 +9,9 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 
 export default function RootLayout({ children, }: {
   children: React.ReactNode;

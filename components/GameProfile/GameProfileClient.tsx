@@ -48,34 +48,42 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
   const addToCart = async (id: number) => {
     toast.success("Ready to Play! 🎮");
     setAdded({ ...added, cart: true })
-    let x = await createCart(user?.id!, id);
+    dispatch(addCart([id, ...state.cartData]))
+    let x;
+    if (user) {
+      x = await createCart(user?.id!, id);
+      dispatch(addCart(x?.cartData))
+    }
     console.log(x);
-    dispatch(addCart(!!x?.cartData?.length ? x?.cartData : [id, ...state.cartData]))
   }
 
   // add to wishlist 
   const addToWishlist = async (id: number) => {
     toast.success("Quest in the Queue 📜");
     setAdded({ ...added, wishlist: true })
-    let x = await createWishlist(user?.id!, id);
+    dispatch(addWishlist([id, ...state.wishlistData]))
+    let x;
+    if (user) {
+      x = await createWishlist(user?.id!, id);
+      dispatch(addWishlist(x?.wishlistData))
+    }
     console.log(x);
-    dispatch(addWishlist(!!x?.wishlistData?.length ? x?.wishlistData : [id, ...state.wishlistData]))
   }
 
   // remove to wishlist 
   const removeFromWishlist = async (id: number) => {
     toast.warning("Epic Quest Abandoned 🏴");
     setAdded({ ...added, wishlist: false })
-    let x = await deleteWishlist(user?.id!, id);
+    dispatch(removeWishlist(id))
+    let x;
+    if (user) {
+      x = await deleteWishlist(user?.id!, id);
+      x?.wishlistData && dispatch(addWishlist(x?.wishlistData))
+    }
     console.log(x);
-    if (x?.wishlistData) {
-      dispatch(addWishlist(!!x?.wishlistData?.length ? x?.wishlistData : [id, ...state.wishlistData]))
-    }
-    else {
-      dispatch(removeWishlist(id))
-    }
 
   }
+
 
   console.log(gameData);
 
