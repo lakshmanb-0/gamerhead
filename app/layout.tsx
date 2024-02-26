@@ -48,6 +48,8 @@ export default function RootLayout({ children, }: {
               />
             </Provider>
           </NextUIProvider>
+          <SpeedInsights />
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
