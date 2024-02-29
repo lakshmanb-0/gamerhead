@@ -10,17 +10,17 @@ Embark on a gaming journey like never before with GamerHead, a cutting-edge Next
 ## Pictures:
 - HomePage 1.1
 <p align="center">
-  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193552/1_qkps0c.png" alt="HomePage1.1">
+  <img src="https://i.ibb.co/f1w1wNw/1.png" >
 </p>
 
 - HomePage 1.2
 <p align="center">
-  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193552/2_ako9ah.png" alt="HomePage1.2">
+  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193552/2_ako9ah.png" >
 </p>
 
 - GameInfo 2.1
 <p align="center">
-  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193553/3_kecvwc.png" alt="GameInfo">
+  <img src="https://i.ibb.co/xSrWxBX/3.png" >
 </p>
 
 ## 🎮 Features:
