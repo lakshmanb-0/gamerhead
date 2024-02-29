@@ -1,34 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GamerHead: Your Ultimate Gaming Store
+[Link](https://gamerhead.vercel.app/)
 
-## Getting Started
+Embark on a gaming journey like never before with GamerHead, a cutting-edge Next.js project that seamlessly integrates the thrill of gaming with secure authentication and a user-friendly experience. This platform brings the gaming store experience to your fingertips, offering an extensive collection of titles sourced directly from the Steam API.
 
-First, run the development server:
+<h3 align="left">Languages and Tools:</h3>
+<p align="left"> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://nextjs.org/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" alt="nextjs" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://redux.js.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40"/> </a> </p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pictures:
+- HomePage 1.1
+<p align="center">
+  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193552/1_qkps0c.png" alt="HomePage1.1">
+</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- HomePage 1.2
+<p align="center">
+  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193552/2_ako9ah.png" alt="HomePage1.2">
+</p>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- GameInfo 2.1
+<p align="center">
+  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193553/3_kecvwc.png" alt="GameInfo">
+</p>
 
-## Learn More
+## 🎮 Features:
 
-To learn more about Next.js, take a look at the following resources:
+- **Secure Authentication:** GamerHead prioritizes user security by implementing robust authentication, ensuring users can log in with verified and real email addresses, providing a trustworthy environment for gaming enthusiasts.
+- **Payment Integration with Stripe:** Enjoy a hassle-free shopping experience with seamless Paytm transactions powered by Stripe Gateway. Purchase your favorite games securely and conveniently, all within the GamerHead platform.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Diverse Pages for Every Need:**
+  - Landing Page: Immerse yourself in the gaming universe with a captivating landing page that showcases the latest and most popular titles.
+  - Game Info Page: Dive deep into the details of each game, from descriptions to system requirements, helping users make informed choices.
+  - Cart and Wishlist: Easily manage your gaming acquisitions with a dedicated cart and wishlist, providing a personalized and organized shopping experience.
+  - Search Game: Explore the vast gaming library effortlessly with a powerful search feature, ensuring you can quickly find the games you desire.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Real-time Data from Steam API:** GamerHead leverages the Steam API to provide up-to-date information about games, ensuring that users have access to the latest releases and details.
 
-## Deploy on Vercel
+- **Responsive Design:** GamerHead is designed to be responsive, offering an optimal viewing and interaction experience across various devices, whether you're on a desktop, tablet, or mobile phone.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+GamerHead is more than just a gaming store; it's a community for avid gamers. Join us on this exciting adventure, explore new releases, build your gaming wishlist, and securely shop for your favorite titles. Elevate your gaming experience with GamerHead today! less
