@@ -41,7 +41,7 @@ const TopReleaseCard = ({ item }) => {
             <Card
                 shadow="sm"
                 key={item.steam_appid}
-                className={`max-w-[1060px] mx-2 sm:mx-auto my-10 sm:my-16  ${dlcData?.dlc.length && 'mb-1 sm:mb-1'}  ${!inView && 'hidden'}`}
+                className={`maxWidth mx-2 sm:mx-auto my-10 sm:my-16 ${dlcData?.dlc.length && 'mb-1 sm:mb-1'} ${!inView && 'hidden'}`}
             >
                 <CardHeader className="flex text-lg justify-between gap-4 items-center p-4 sm:px-6">
                     <h1 className=" font-bold truncate">{item.name}</h1>
@@ -70,7 +70,7 @@ const TopReleaseCard = ({ item }) => {
                     <section className="col-span-2 hidden sm:flex flex-col gap-4 ">
                         <ImageBox realImage={currentImage} zoomed={false} customStyle='cursor-default' />
                         <section className="flex gap-3 py-3 pb-5 overflow-auto">
-                            {item?.screenshots?.map((item, index) => (
+                            {item?.screenshots?.map((item) => (
                                 <div className="min-w-[150px] max-w-[150px]" key={item.id} onClick={() => setCurrentImage(item.path_thumbnail)}>
                                     <ImageBox
                                         key={item?.id}
@@ -116,7 +116,7 @@ const TopReleaseCard = ({ item }) => {
                     </section>
                 </CardBody>
             </Card>
-            <div className="max-w-[1060px] mx-auto">
+            <div className="maxWidth">
                 <Dlc dlcData={dlcData} />
             </div>
         </>
