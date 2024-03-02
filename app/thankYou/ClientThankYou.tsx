@@ -32,7 +32,7 @@ const ClientThankYou = () => {
             <div className="bg-[rgba(0,0,0,0.5)] z-10 absolute top-0 left-0 w-full h-full" />
             <div className='text-center z-20 flex gap-10 flex-col'>
                 <h1 className="text-6xl sm:text-9xl font-bold">Thanks for Purchasing</h1>
-                <h6 className="text-xl sm:text-2xl">Redirecting to Profile page in {seconds} seconds</h6>
+                <h6 className="text-xl sm:text-2xl">Redirecting to Home page in {seconds} seconds</h6>
             </div>
         </section>
     )

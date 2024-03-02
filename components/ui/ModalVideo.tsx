@@ -1,5 +1,4 @@
 import React from 'react'
-import Plyr from "plyr-react"
 import { PlayCircleIcon } from 'lucide-react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
 import ImageBox from '../ImageBox';

@@ -8,7 +8,6 @@ import { Button } from "@nextui-org/react";
 import { getAppDetails } from "../server.ts/apiCalls";
 import { useSelector } from "react-redux";
 import { RootState } from "@/components/redux/store/store";
-import ImageBox from "@/components/ImageBox";
 
 
 const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: number[] }) => {
@@ -66,13 +65,14 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
         <div className="px-10">
             <h1 className="text-3xl">Product Cart</h1>
             <div className="h-1 my-1 rounded w-[7%] bg-gradient-to-r from-[#fe1f94] to-[#fd2adf]" />
-            <div className="py-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(!!buyData.length ? buyData : cartData)?.map((el) =>
-                    <GameCard item={el} key={el.steam_appid} />
-                )}
-            </div>
-            {(!!buyData?.length || !!cartData.length) ?
+
+            {(!!state?.cartData?.length) ?
                 <>
+                    <div className="py-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {(!!buyData.length ? buyData : cartData)?.map((el) =>
+                            <GameCard item={el} key={el.steam_appid} />
+                        )}
+                    </div>
                     <div className="w-full text-right py-2 text-4xl">
                         Total: &#8377;{handleTotal()}
                     </div>
@@ -86,7 +86,7 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
                 </>
                 :
                 <section className="flex justify-center items-center flex-col ">
-                    <ImageBox realImage="./empty_cart.png" customStyle="w-80" zoomed={false} />
+                    <img src="./empty_cart.png" className="w-80" />
                     <h1 className="font-bold text-5xl text-center">Your Cart is empty</h1>
                     <p className="text-default-500 pt-4">Looks like you have not added anything to you cart. Go ahead & explore some games</p>
                 </section>

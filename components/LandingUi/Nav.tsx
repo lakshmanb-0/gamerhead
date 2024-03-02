@@ -21,21 +21,18 @@ const Nav = () => {
     const state = useSelector((state: RootState) => state.auth)
     const pathname = usePathname()
     const dispatch = useDispatch()
-    // console.log(user);
 
     // user check
     useEffect(() => {
         cartCountCheck();
         const checkUser = async () => {
-            if (user?.id) {
+            if (!user?.id) {
                 let data = {
                     id: user?.id!,
                     name: user?.fullName!,
                     email: user?.primaryEmailAddress?.emailAddress!
                 }
                 let a = await createUser(data)
-                console.log(a);
-
             }
         }
         checkUser()
@@ -57,7 +54,6 @@ const Nav = () => {
     const cartCountCheck = async () => {
         if (user?.id) {
             let CU = await currentUser(user?.id!)
-            console.log(CU);
             if (CU) {
                 dispatch(addCart(CU?.cartData))
                 setCartCount(CU?.cartData?.length ?? 0)

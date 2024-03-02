@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "components/GameProfile/News.jsx"  ],
   "exclude": [
     "node_modules"
   ]

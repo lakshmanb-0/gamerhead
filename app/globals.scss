@@ -69,6 +69,33 @@
 }
 
 @layer base {
+
+  //scrollbar 
+  ::-webkit-scrollbar {
+    @apply w-[10px] h-[10px]
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[#a1a1aa] rounded border-3 border-solid border-transparent
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#b1b1b1]
+  }
+
+  ::-webkit-scrollbar-button {
+    @apply hidden
+  }
+
+  ::-webkit-scrollbar-corner {
+    @apply bg-transparent
+  }
+
+
   * {
     @apply border-border;
   }
@@ -87,25 +114,7 @@
     @apply max-w-[1300px] mx-auto px-3;
   }
 
-  .NavbarUl {
-    li {
-      @apply cursor-pointer hover:opacity-50;
-    }
-  }
-
-  .swiper .swiper-button-prev,
-  .swiper .swiper-button-next {
-    @apply font-bold;
-  }
-
-  .loginInput {
-    @apply border-2 outline-0 text-black p-2 border-[#ededed] bg-[#ededed] rounded-md;
-  }
-
-  .scrollBar {
-    @apply scrollbar-thumb-[#6152c8] scrollbar-track-[#f9f1fe];
-  }
-
+  // gameProfile .requirement 
   .requirement {
     div {
       strong {
@@ -120,15 +129,14 @@
     }
   }
 
-
-
+  // gameProfile .news section 
   .newsContent {
     a {
       @apply text-[#6152c8];
     }
 
     img {
-      @apply py-2 sm:py-4
+      @apply py-2 sm:py-4 w-auto h-auto
     }
   }
 }

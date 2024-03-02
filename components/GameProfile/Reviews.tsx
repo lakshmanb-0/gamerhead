@@ -58,7 +58,7 @@ const Reviews = ({ review }: { review: ReviewType }) => {
     <Card className="min-w-[300px] sm:max-w-[340px] my-3">
       <CardHeader className="justify-between items-center">
         <div className="flex gap-2 sm:gap-5">
-          <Avatar isBordered radius="full" size="md" src={reviewerData?.avatar_url?.includes('000000') ? '/noImage.jpeg' : `https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} />
+          <Avatar isBordered radius="full" size="md" src={reviewerData?.avatar_url?.includes('000000') ? '/noImage.png' : `https://avatars.steamstatic.com/${reviewerData?.avatar_url}_full.jpg`} />
           <div className="flex flex-col items-center justify-center text-sm">
             <div className="flex items-center">
               <h4 className=" font-semibold leading-none text-default-600">@{reviewerData?.persona_name}</h4>

@@ -8,22 +8,25 @@ type TImageType = {
     realImage?: string,
     customStyle?: string,
     zoomed?: boolean,
+    noBlurred?: boolean,
     onClick?: any
 };
 
 
 export default function ImageBox(item: TImageType) {
-
     return (
-        <Image
-            width={1920}
-            height={1080}
-            isZoomed={item?.zoomed ?? true}
-            src={item?.realImage}
-            fallbackSrc='./noImage.jpeg'
-            alt='Picture'
-            onClick={() => item.onClick}
-            className={`object-cover h-full w-full ${item?.customStyle} ${item.onClick && 'cursor-pointer'}`}
-        />
+        <div className='bg-cover bg-center bg-no-repeat' style={{ backgroundImage: "url('/noImage.png')" }}>
+            <Image
+                width={1920}
+                height={1080}
+                isZoomed={item?.zoomed ?? true}
+                isBlurred={item?.noBlurred ?? true}
+                src={item?.realImage}
+                alt='Picture'
+                onClick={() => item.onClick}
+                className={`object-cover aspect-video h-full w-full ${item?.customStyle} ${item.onClick && 'cursor-pointer'}`}
+            />
+        </div>
+
     )
 }

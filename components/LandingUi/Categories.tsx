@@ -4,7 +4,6 @@ import { TCategoryDataProps } from "@/types";
 import { GameCard } from "../ui/GameCard";
 
 export const Categories = ({ gameData, heading }: TCategoryDataProps) => {
-  console.log(gameData);
 
   return (
     <div className="py-5 sm:py-10 px-4">
