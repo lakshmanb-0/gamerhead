@@ -14,10 +14,10 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
     console.log(buyData);
     const [cartData, setCartData] = useState<TSingleGameData[]>([])
     const [totalCart, setTotalCart] = useState<number[]>([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const state = useSelector((state: RootState) => state.auth)
 
-
+    // if user is loggedIn then fetchCartData from database
     useEffect(() => {
         const fetchCartData = async () => {
             let cart: TSingleGameData[] | any[] = [];
@@ -35,13 +35,13 @@ const ClientCart = ({ buyData, total }: { buyData: TSingleGameData[], total: num
     }, [])
     console.log(cartData);
 
-    // handle total
+    // handle total amount
     const handleTotal = () => {
         let values = !!total.length ? total : totalCart
         return values?.reduce((acc, curr) => acc + curr, 0);
-
     };
 
+    // handle Payment 
     const handleClick = async () => {
         setLoading(true)
         const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!;

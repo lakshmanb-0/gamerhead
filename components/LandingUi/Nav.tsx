@@ -32,7 +32,7 @@ const Nav = () => {
                     name: user?.fullName!,
                     email: user?.primaryEmailAddress?.emailAddress!
                 }
-                let a = await createUser(data)
+                await createUser(data)
             }
         }
         checkUser()

@@ -1,7 +1,7 @@
 import React from 'react'
 import { PlayCircleIcon } from 'lucide-react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
-import ImageBox from '../ImageBox';
+import ImageBox from './ImageBox';
 
 type TModalVideo = {
     id?: number,

@@ -8,8 +8,8 @@ import { MdDateRange } from "react-icons/md";
 import { AiFillHeart, AiFillWindows, AiOutlineHeart } from "react-icons/ai";
 import { RiMacLine } from "react-icons/ri";
 import { DiLinux } from "react-icons/di";
-import ImageBox from "../ImageBox";
-import { TDlcData, TNewsData, TReviewData, TSingleGameData, TUser } from "@/types";
+import ImageBox from "../ui/ImageBox";
+import { TDlcData, TNewsData, TReviewData, TSingleGameData } from "@/types";
 import ModalVideo from "../ui/ModalVideo";
 import Dlc from "../LandingUi/Dlc";
 import { createCart, createWishlist, deleteWishlist } from "@/app/server.ts/prismaDb";
@@ -28,10 +28,9 @@ type GameProfileClient = {
   news: TNewsData[],
   reviews: TReviewData,
   dlcData: TDlcData,
-  currentUser: TUser | any
 }
 
-const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: GameProfileClient) => {
+const GameProfileClient = ({ gameData, news, reviews, dlcData }: GameProfileClient) => {
   const { user } = useUser();
   const [added, setAdded] = useState({ cart: false, wishlist: false })
   const dispatch = useDispatch()
@@ -104,7 +103,6 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData, currentUser }: Ga
       )
     })
   }
-  console.log(reviews);
 
   return (
     <main>

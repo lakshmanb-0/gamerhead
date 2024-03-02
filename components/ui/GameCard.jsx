@@ -2,7 +2,7 @@
 import { Card, CardBody, CardFooter, Tooltip } from '@nextui-org/react';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import ImageBox from '../ImageBox';
+import ImageBox from './ImageBox';
 import { useInView } from 'react-intersection-observer';
 import { XCircleIcon } from 'lucide-react';
 import { toast } from 'react-toastify';

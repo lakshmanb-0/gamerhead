@@ -8,11 +8,9 @@ import { TSingleGameData } from '@/types';
 const page = async ({ params }: { params: { input: string } }) => {
   const response = await getSearch(params.input);
 
-  let searchData: TSingleGameData[] = []
-
-  await Promise.all(response.map(async (el: SearchDropdown) => {
+  let searchData: TSingleGameData[] = await Promise.all(response.map(async (el: SearchDropdown) => {
     const singleIdData = await getAppDetails(Number(el.appid))
-    searchData.push(singleIdData[el.appid].data)
+    return singleIdData[el.appid].data
   }))
 
   return (

@@ -36,11 +36,11 @@ export const getSearch = async (params: string) => {
     const result = await fetch(`https://steamcommunity.com/actions/SearchApps/${params}?cc=IN&l=english&json=1`, { next: { revalidate: 3600 } }).then(res => res.json()).catch(error => console.log(error))
     return result
 }
-export const getActiveUser = async () => {
-    const result = await fetch(`https://www.valvesoftware.com/en/about/stats?cc=IN&l=english&json=1`, { next: { revalidate: 3600 } }).then(res => res.json()).catch(error => console.log(error))
-    return result
-}
-export const getCategoriesTag = async () => {
-    const result = await fetch(`https://store.steampowered.com/actions/ajaxgetstorecategories?cc=IN&l=english&json=1`, { next: { revalidate: 3600 } }).then(res => res.json()).catch(error => console.log(error))
-    return result
-}
+// export const getActiveUser = async () => {
+//     const result = await fetch(`https://www.valvesoftware.com/en/about/stats?cc=IN&l=english&json=1`, { next: { revalidate: 3600 } }).then(res => res.json()).catch(error => console.log(error))
+//     return result
+// }
+// export const getCategoriesTag = async () => {
+//     const result = await fetch(`https://store.steampowered.com/actions/ajaxgetstorecategories?cc=IN&l=english&json=1`, { next: { revalidate: 3600 } }).then(res => res.json()).catch(error => console.log(error))
+//     return result
+// }

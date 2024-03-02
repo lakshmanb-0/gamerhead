@@ -38,13 +38,12 @@ type ReviewType = {
   written_during_early_access: boolean,
 }
 
-
 const Reviews = ({ review }: { review: ReviewType }) => {
   const [reviewContent, setReviewContent] = useState<any>('')
   const [reviewerData, setReviewerData] = useState<TPlayer>();
 
 
-  // getting player data 
+  // get player data 
   useEffect(() => {
     const playerDetail = async () => {
       const data = await getPlayer(review?.author?.steamid);

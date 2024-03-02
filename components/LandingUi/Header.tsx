@@ -10,12 +10,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import ImageBox from "../ImageBox";
+import ImageBox from "../ui/ImageBox";
 
 const Header = ({ gameData }: { gameData: TGameData[] }) => {
   const router = useRouter();
 
-  //handle click button
+  //handle router button
   const handleClick = (id: number) => {
     router.push(`/GameProfile/${id}`);
   };

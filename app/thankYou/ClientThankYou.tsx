@@ -7,17 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ClientThankYou = () => {
     const router = useRouter();
-
-    const [seconds, setSeconds] = useState(7)
-
+    const [seconds, setSeconds] = useState<number>(7)
     const state = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
 
+    // clear cart and all cartData in purchased data 
     useEffect(() => {
         dispatch(addPurchased(state.cartData))
         dispatch(clearCart())
     }, [])
 
+    // 7 seconds timeout 
     useEffect(() => {
         if (seconds > 0) {
             const timer = setInterval(() => setSeconds(prevSeconds => prevSeconds - 1), 1000);

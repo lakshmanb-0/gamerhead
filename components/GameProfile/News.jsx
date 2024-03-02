@@ -14,6 +14,7 @@ const News = ({ item }) => {
     triggerOnce: true,
   });
 
+  // replace image domain 
   useEffect(() => {
     let imageReplace = item?.contents?.replace(/{STEAM_CLAN_IMAGE}/g, "https://clan.akamai.steamstatic.com/images/")
     if (imageReplace) { setNewsContent(parser.toReact(imageReplace)); }

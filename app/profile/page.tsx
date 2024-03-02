@@ -1,25 +1,21 @@
 'use server'
 import { TSingleGameData } from '@/types';
 import { auth } from '@clerk/nextjs';
-import { PrismaClient } from '@prisma/client';
 import React from 'react'
 import { getAppDetails } from '../server.ts/apiCalls';
 import { ProfileClient } from './ProfileClient';
+import { currentUser } from '../server.ts/prismaDb';
 
 export default async function page() {
-    const prisma = new PrismaClient();
 
     const { userId } = auth();
     let purchased: TSingleGameData[] | any[] = []
     let visited: TSingleGameData[] | any[] = []
     let wishlist: TSingleGameData[] | any[] = []
 
+    // get wishlist ,lasVisited and purchased data if user is loggedIn
     if (userId) {
-        const currentUserData = await prisma.usersDb.findFirst({
-            where: {
-                id: userId,
-            },
-        })
+        const currentUserData = await currentUser(userId)
 
         visited = await Promise.all((currentUserData?.lastVisitedData ?? [])?.map(async (id) => {
             const response = await getAppDetails(id);

@@ -1,20 +1,17 @@
 'use server'
 import React from 'react'
-import { PrismaClient } from "@prisma/client";
 import { getAppDetails } from '../server.ts/apiCalls';
 import { TSingleGameData } from '@/types';
 import ClientCart from './ClientCart';
 import { auth } from '@clerk/nextjs';
 import { currentUser } from '../server.ts/prismaDb';
 
-
-const prisma = new PrismaClient();
-
 export default async function page() {
     const { userId } = auth();
     let cartData: TSingleGameData[] | any[] = []
     let total: number[] = []
 
+    // get user data if signIn 
     if (userId) {
         const currentUserData = await currentUser(userId)
 

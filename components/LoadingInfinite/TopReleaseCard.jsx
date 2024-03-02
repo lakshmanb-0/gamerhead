@@ -7,8 +7,7 @@ import {
 import { AiFillWindows } from "react-icons/ai";
 import { RiMacLine } from "react-icons/ri";
 import { DiLinux } from "react-icons/di";
-import { TDlcData, TSingleGameData } from '@/types';
-import ImageBox from '../ImageBox';
+import ImageBox from '../ui/ImageBox';
 import { useRouter } from 'next/navigation';
 import Dlc from '../LandingUi/Dlc';
 import { getDlc } from '@/app/server.ts/apiCalls';

@@ -3,14 +3,12 @@ import { createLastVisited, currentUser } from "@/app/server.ts/prismaDb";
 import GameProfileClient from "@/components/GameProfile/GameProfileClient";
 import { TNewsData } from "@/types";
 import { auth } from "@clerk/nextjs";
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
 
 const GamePage = async ({ params }: { params: { id: number } }) => {
   const { userId } = auth()
 
-  // game data
+  // game info data
   const response = await getAppDetails(Number(params.id))
   const gameData = await response?.[params.id].data;
 
@@ -23,7 +21,7 @@ const GamePage = async ({ params }: { params: { id: number } }) => {
   const dlcData = await getDlc(gameData?.steam_appid);
 
   let current;
-  //all dbData files
+  //add game id in lastVisited data into database of user
   if (userId) {
     current = await currentUser(userId)
     if (!current?.lastVisitedData?.includes(Number(params.id))) {
@@ -32,7 +30,7 @@ const GamePage = async ({ params }: { params: { id: number } }) => {
   }
 
   return (
-    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} currentUser={current} />
+    <GameProfileClient gameData={gameData} news={newsResponse} reviews={review} dlcData={dlcData} />
   );
 };
 

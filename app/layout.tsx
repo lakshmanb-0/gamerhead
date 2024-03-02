@@ -18,6 +18,7 @@ export default function RootLayout({ children, }: {
 }) {
   const pathname = usePathname()
 
+  // scroll to top if router pathname changes 
   useEffect(() => {
     window.scrollTo({
       top: 0,

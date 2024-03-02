@@ -1,11 +1,11 @@
 "use client";
-import { Spinner } from "@nextui-org/react";
 import React from "react";
+import './loading.scss'
 
 const Loading = () => {
     return (
         <main className="grid place-items-center h-screen">
-            <Spinner size="lg" />
+            <span className="loader"></span>
         </main>
     );
 };

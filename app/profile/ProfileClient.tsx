@@ -5,7 +5,6 @@ import { TSingleGameData } from '@/types'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getAppDetails } from '../server.ts/apiCalls'
-import ImageBox from '@/components/ImageBox'
 
 type TProfileProps = {
     wishlist: TSingleGameData[],
@@ -16,6 +15,7 @@ export const ProfileClient = ({ wishlist, visited, purchased }: TProfileProps) =
     const state = useSelector((state: RootState) => state.auth)
     const [wishlistLocal, setWishlistLocal] = useState<TSingleGameData[]>([])
 
+    // fetch wishData if user is not loggedIn and this is redux data
     useEffect(() => {
         const fetchCartData = async () => {
             let wish: TSingleGameData[] | any[] = [];
@@ -31,7 +31,7 @@ export const ProfileClient = ({ wishlist, visited, purchased }: TProfileProps) =
 
     return (
         <section>
-            {(!!wishlist.length || !!wishlistLocal?.length) ? <div className="py-5 sm:py-10 px-4">
+            {(!!state?.wishlistData?.length) ? <div className="py-5 sm:py-10 px-4">
                 <h1 className="font-bold text-3xl sm:text-4xl py-4">Wishlist</h1>
                 <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-2 gap-6 ">
                     {(!!wishlist?.length ? wishlist : wishlistLocal)?.map((item: any) => (

@@ -17,49 +17,10 @@ export type TGameData = {
   discount_expiration?: number,
   controller_support?: string;
 };
-export type TGameDataProps = {
-  gameData: TGameData[];
-};
 
-// category Api 
-export type TCategoryApiType = {
-  specials: {
-    id: string;
-    name: string;
-    items: TGameData[];
-  };
-  top_sellers: {
-    id: string;
-    name: string;
-    items: TGameData[];
-  };
-  coming_soon: {
-    id: string;
-    name: string;
-    items: TGameData[];
-  };
-  new_releases: {
-    id: string;
-    name: string;
-    items: TGameData[];
-  };
-};
 export type TCategoryDataProps = {
   gameData: TGameData[];
   heading: string;
-};
-
-// header Api 
-export type THeaderApiType = {
-  featured_win: TGameData[];
-};
-
-// single Game api 
-export type TApiDetailsApi = {
-  [key: string]: {
-    success: boolean;
-    data: TSingleGameData;
-  };
 };
 
 export type TSingleGameData = {
@@ -241,14 +202,4 @@ export type TPlayer = {
   state: string,
   country: string,
   real_name: string
-}
-
-export type TUser = {
-  id: number,
-  name: string,
-  email: string,
-  cartData: number[],
-  wishlistData: number[],
-  lastVisitedData: number[],
-  purchasedData: number[],
 }
