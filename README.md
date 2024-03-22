@@ -39,3 +39,20 @@ Embark on a gaming journey like never before with GamerHead, a cutting-edge Next
 - **Responsive Design:** GamerHead is designed to be responsive, offering an optimal viewing and interaction experience across various devices, whether you're on a desktop, tablet, or mobile phone.
 
 GamerHead is more than just a gaming store; it's a community for avid gamers. Join us on this exciting adventure, explore new releases, build your gaming wishlist, and securely shop for your favorite titles. Elevate your gaming experience with GamerHead today! less
+
+## Environment Variable
+    
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=''''''
+    CLERK_SECRET_KEY=''''
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+    
+    REACT_APP_STEAM_KEY=''''
+    DATABASE_URL=''''
+    
+    //Stripe keys
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=''''
+    STRIPE_SECRET_KEY=''''
+    
