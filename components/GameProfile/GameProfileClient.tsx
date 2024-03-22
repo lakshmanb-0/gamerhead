@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import parse from "html-react-parser";
 import Reviews from "./Reviews";
 import News from "./News";
 import { BsHandThumbsUp } from "react-icons/bs";
@@ -271,9 +270,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: GameProfileClie
               <h1 className="font-bold text-4xl">About the Game</h1>
               <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
             </div>
-            <div className="text-lg py-2">
-              {parse(`${gameData?.about_the_game}`)}
-            </div>
+            <div className="text-lg py-2" dangerouslySetInnerHTML={{ __html: gameData?.about_the_game }} />
           </section>
         }
 
@@ -306,8 +303,8 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: GameProfileClie
               <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
             </div>
             <div className="grid  md:grid-cols-2 gap-4 py-10 requirement text-lg">
-              <div>{parse(`${gameData?.pc_requirements?.minimum ?? ''}`)}</div>
-              <div>{parse(`${gameData?.pc_requirements?.recommended ?? ''}`)}</div>
+              <div dangerouslySetInnerHTML={{ __html: gameData?.pc_requirements?.minimum ?? '' }} />
+              <div dangerouslySetInnerHTML={{ __html: gameData?.pc_requirements?.recommended ?? '' }} />
             </div>
           </section>}
           {/* mature content  */}
@@ -316,14 +313,10 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: GameProfileClie
               <h1 className="pt-10 font-bold text-3xl">Mature Content Description :</h1>
               <div className="bg-[#6152c8] rounded h-1 w-[100px] " />
             </div>
-            <div className="text-lg py-2">
-              {parse(`${gameData?.content_descriptors?.notes}`)}
-            </div>
+            <div className="text-lg py-2" dangerouslySetInnerHTML={{ __html: gameData?.content_descriptors?.notes }} />
           </section>}
 
-          <div className="text-sm text-[#555555] newsContent pt-3">
-            {parse(`${gameData?.legal_notice ?? ''}`)}
-          </div>
+          <div className="text-sm text-[#555555] newsContent pt-3" dangerouslySetInnerHTML={{ __html: gameData?.legal_notice }} />
         </section>
       </section>
 

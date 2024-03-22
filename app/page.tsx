@@ -4,13 +4,14 @@ import Header from "@/components/LandingUi/Header";
 import LandingInfinite from "@/components/LoadingInfinite/LandingInfinite";
 import { getAppDetails, getCategory, getFeature, getTopReleases } from "./server.ts/apiCalls";
 import { getUniqueData } from "@/utils/utility";
+import { revalidatePath } from "next/cache";
 
 
 export default async function Home() {
   const categoryData = await getCategory();
   const headerData = await getFeature();
   const topReleasesData = await getTopReleases();
-
+  revalidatePath('/')
   const getMonthData = async (index: number) => {
     return await Promise.all(topReleasesData?.response?.pages[index].item_ids?.map(async (id: { appid: number }) => {
       if (!!id.appid) {
