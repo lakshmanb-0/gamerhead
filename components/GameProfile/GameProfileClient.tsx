@@ -103,7 +103,7 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: GameProfileClie
     })
   }
 
-  return (
+  return !!gameData ? (
     <main>
       <header className="relative text-white">
         <div className="hidden lg:block lg:h-screen xl:h-full relative w-full ">
@@ -357,7 +357,15 @@ const GameProfileClient = ({ gameData, news, reviews, dlcData }: GameProfileClie
         </section>
       )}
     </main>
-  );
+  )
+    : (
+      <section className="grid place-items-center h-screen text-xl sm:text-3xl text-center">
+        <div className="flex flex-col gap-8 px-4">
+          <span className="font-bold text-5xl sm:text-8xl">Sorry for the inconvenience.</span>
+          <span>It looks like the Steam third-party API has crashed. Please try again later.</span>
+        </div>
+      </section>
+    )
 };
 
 export default GameProfileClient;
