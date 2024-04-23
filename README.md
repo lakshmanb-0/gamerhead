@@ -1,4 +1,6 @@
 # GamerHead: Your Ultimate Gaming Store
+  <img src="https://i.postimg.cc/mkHb63yv/616shots-so.png" >
+
 [Link](https://gamerhead.vercel.app/)
 
 Embark on a gaming journey like never before with GamerHead, a cutting-edge Next.js project that seamlessly integrates the thrill of gaming with secure authentication and a user-friendly experience. This platform brings the gaming store experience to your fingertips, offering an extensive collection of titles sourced directly from the Steam API.
@@ -7,21 +9,6 @@ Embark on a gaming journey like never before with GamerHead, a cutting-edge Next
 <p align="left"> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://nextjs.org/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" alt="nextjs" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://redux.js.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40"/> </a> </p>
 
 
-## Pictures:
-- HomePage 1.1
-<p align="center">
-  <img src="https://i.ibb.co/f1w1wNw/1.png" >
-</p>
-
-- HomePage 1.2
-<p align="center">
-  <img src="https://res.cloudinary.com/dxzcpxpuc/image/upload/v1709193552/2_ako9ah.png" >
-</p>
-
-- GameInfo 2.1
-<p align="center">
-  <img src="https://i.ibb.co/xSrWxBX/3.png" >
-</p>
 
 ## 🎮 Features:
 
