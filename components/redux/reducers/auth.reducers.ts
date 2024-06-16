@@ -1,17 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { InitialStore } from "../store/InitialStore"
 
-
+export type StoreData = {
+    header_image: string,
+    name: string,
+    is_free: boolean,
+    price_overview: any,
+    steam_appid: number
+}
 const authSlice = createSlice({
     name: 'authReducer',
     initialState: InitialStore.currentUser,
     reducers: {
-        addCart: (state, action) => {
-            Array.isArray(action.payload)
-                ? state.cartData = action.payload
-                : state.cartData = [action.payload, ...state.cartData]
+        addUser: (state, action) => {
+            state.id = action.payload.id
+            state._id = action.payload._id
+            state.name = action.payload.name
+            state.email = action.payload.email
+            state.cartData = action.payload.cartData
+            state.wishlistData = action.payload.wishlistData
+            state.purchasedData = action.payload.purchasedData
+            state.lastVisitedData = action.payload.lastVisitedData
         },
-        removeFromCart: (state, action) => { state.cartData = state.cartData.filter(el => el != action.payload) },
+        addCart: (state, action) => {
+            state.cartData.unshift(action.payload)
+        },
+        removeFromCart: (state, action) => {
+            state.cartData = state.cartData.filter(el => el.steam_appid != action.payload)
+        },
         clearCart: (state) => { state.cartData = [] },
         addLastVisited: (state, action) => {
             Array.isArray(action.payload)
@@ -24,15 +40,16 @@ const authSlice = createSlice({
                 : state.purchasedData = [action.payload, ...state.purchasedData]
         },
         addWishlist: (state, action) => {
-            Array.isArray(action.payload)
-                ? state.wishlistData = action.payload
-                : state.wishlistData = [action.payload, ...state.wishlistData]
+            state.wishlistData.unshift(action.payload)
+
         },
-        removeWishlist: (state, action) => { state.wishlistData = state.wishlistData.filter(el => el != action.payload) }
+        removeWishlist: (state, action) => {
+            state.wishlistData = state.wishlistData.filter(el => el.steam_appid != action.payload)
+        }
         ,
     }
 })
 
-export const { addCart, addLastVisited, addPurchased, addWishlist, removeWishlist, clearCart, removeFromCart } = authSlice.actions
+export const { addCart, addLastVisited, addPurchased, addWishlist, removeWishlist, clearCart, removeFromCart, addUser } = authSlice.actions
 
 export default authSlice.reducer

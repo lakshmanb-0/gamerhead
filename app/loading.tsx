@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import './loading.scss'
+import { Spin } from "antd";
 
 const Loading = () => {
     return (
         <main className="grid place-items-center h-screen">
-            <span className="loader"></span>
+            <Spin size="large" />
         </main>
     );
 };

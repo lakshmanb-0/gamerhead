@@ -1,36 +1,23 @@
 'use server'
-import { TSingleGameData } from '@/types';
 import { auth } from '@clerk/nextjs';
 import React from 'react'
-import { getAppDetails } from '../server.ts/apiCalls';
-import { ProfileClient } from './ProfileClient';
-import { currentUser } from '../server.ts/prismaDb';
+import { Profile } from '@/components/index';
+import { StoreData } from '@/components/redux/reducers/auth.reducers';
+import userDb from '@/models/userDb';
 
 export default async function page() {
 
     const { userId } = auth();
-    let purchased: TSingleGameData[] | any[] = []
-    let visited: TSingleGameData[] | any[] = []
-    let wishlist: TSingleGameData[] | any[] = []
+    let purchased: StoreData[] = [];
+    let wishlist: StoreData[] = [];
 
     // get wishlist ,lasVisited and purchased data if user is loggedIn
     if (userId) {
-        const currentUserData = await currentUser(userId)
-
-        visited = await Promise.all((currentUserData?.lastVisitedData ?? [])?.map(async (id) => {
-            const response = await getAppDetails(id);
-            return response[id]?.data
-        }))
-        purchased = await Promise.all((currentUserData?.purchasedData ?? [])?.map(async (id) => {
-            const response = await getAppDetails(id);
-            return response[id]?.data
-        }))
-        wishlist = await Promise.all((currentUserData?.wishlistData ?? [])?.map(async (id) => {
-            const response = await getAppDetails(id);
-            return response[id]?.data
-        }))
+        const currentUserData = await userDb.findOne({ id: userId });
+        purchased = currentUserData?.[0]?.purchasedData;
+        wishlist = currentUserData?.[0]?.wishlistData;
     }
     return (
-        <ProfileClient purchased={purchased} visited={visited} wishlist={wishlist} />
+        <Profile purchased={purchased} wishlist={wishlist} />
     )
 }

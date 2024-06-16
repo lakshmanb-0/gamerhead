@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "components/GameProfile/News.jsx", "components/LoadingInfinite/TopReleaseCard.jsx"  ],
+, "components/GameProfile/News/News.tsx", "app/serverAction"  ],
   "exclude": [
     "node_modules"
   ]

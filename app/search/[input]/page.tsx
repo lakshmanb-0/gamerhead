@@ -1,20 +1,13 @@
 'use server'
-import { getAppDetails, getSearch } from '@/app/server.ts/apiCalls';
-import { SearchDropdown } from '@/components/ui/SearchDropdown';
+import { getSearch } from '@/app/serverAction/apiCalls';
+import { Search } from '@/components/index';
 import React from 'react'
-import Search from './Search';
-import { TSingleGameData } from '@/types';
 
 const page = async ({ params }: { params: { input: string } }) => {
   const response = await getSearch(params.input);
 
-  let searchData: TSingleGameData[] = await Promise.all(response.map(async (el: SearchDropdown) => {
-    const singleIdData = await getAppDetails(Number(el.appid))
-    return singleIdData[el.appid].data
-  }))
-
   return (
-    <Search searchData={searchData} searchInput={params.input} />
+    <Search searchData={response} searchInput={params.input} />
   )
 }
 

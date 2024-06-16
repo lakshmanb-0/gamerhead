@@ -1,5 +1,5 @@
 import React from 'react'
-import { createPurchased, currentUser, deleteAllCart } from '../server.ts/prismaDb'
+import { createPurchased, deleteAllCart } from '../serverAction/mongodbApi'
 import { auth } from '@clerk/nextjs'
 import ClientThankYou from './ClientThankYou';
 
@@ -8,8 +8,7 @@ const page = async ({ searchParams }: { searchParams: { sessionId: string } }) =
     const { userId } = auth();
 
     if (searchParams?.sessionId) {
-        let x = await currentUser(userId!)
-        await createPurchased(userId!, x?.cartData!)
+        await createPurchased(userId!)
         await deleteAllCart(userId!)
     }
     return (
