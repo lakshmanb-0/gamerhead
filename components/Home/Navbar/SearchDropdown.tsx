@@ -36,7 +36,7 @@ const SearchDropdown = () => {
             const data = await getSearch(input)
             setOptions(searchResults(data))
         }, 400)
-        input.length && searchFetch()
+        !!input.length && searchFetch()
 
         return () => searchFetch.cancel()
     }, [input])
@@ -56,31 +56,12 @@ const SearchDropdown = () => {
 
     console.log(options)
     return (
-        // <Autocomplete
-        //     defaultItems={options}
-        //     size={'sm'}
-        //     inputValue={input}
-        //     label="Search a Game"
-        //     onKeyDown={e => e.key === 'Enter' && navigateSearchPage()}
-        //     onInputChange={e => setInput(e)}
-        //     shouldCloseOnBlur={true}
-        //     className="max-w-xs"
-        // >
-        //     {(el: searchType) =>
-        //         <AutocompleteItem
-        //             onClick={() => navigateGame(el?.appid)}
-        //             key={el.name}
-        //             startContent={<Avatar className="w-6 h-6" src={el.icon} />}
-        //         >{el.name}</AutocompleteItem>
-        //     }
-        // </Autocomplete>
         <AutoComplete
             options={options}
             value={input}
             onChange={(e) => setInput(e)}
             className="w-80 outline-none"
             size="large"
-            // onSelect={navigateGame}
             onKeyDown={e => e.key === 'Enter' && navigateSearchPage()}
             placeholder="Search a Game"
         />

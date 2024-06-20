@@ -23,14 +23,14 @@ const GameCard: React.FC<Props> = ({ item, dlc }) => {
         <Card
             onClick={navigate}
             hoverable
-            className='border-none overflow-hidden'
-            bodyStyle={{ padding: 0 }}
+            className='border-none overflow-hidden hover:scale-105 transition-transform ease-in-out duration-500'
+            styles={{ body: { padding: 0 } }}
             cover={
                 <div className="relative">
                     <ImageBox realImage={item?.header_image} />
                     {
                         (!!item?.discount_percent || !!item?.price_overview?.discount_percent) &&
-                        <div className="absolute top-1 right-1 px-2 sm:px-4 py-1 text-sm sm:text-lg z-10 text-green_color bg-[#212224] rounded rounded-tr-xl">
+                        <div className="absolute top-2 right-2 px-2 sm:px-3 py-1 text-sm sm:text-lg font-semibold bg-primary rounded">
                             -{item.discount_percent ?? item?.price_overview?.discount_percent}%
                         </div>
                     }

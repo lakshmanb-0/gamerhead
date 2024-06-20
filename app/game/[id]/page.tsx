@@ -1,13 +1,12 @@
-import { getAppDetails, getDlc, getNews, getReviews } from "@/app/serverAction/apiCalls";
-import { AboutGame, Dlc, HeaderGame, MatureContent, Movies, News, Reviews } from "@/components/index";
+import { getAppDetails, getDlc, getReviews } from "@/app/serverAction/apiCalls";
+import { AboutGame, Dlc, HeaderGame, MatureContent, Movies, Reviews } from "@/components/index";
 
 const page = async ({ params }: { params: { id: number } }) => {
 
   const response = getAppDetails(params.id)
-  const newsApi = getNews(params.id);
   const review = getReviews(params.id);
 
-  const [gameData, newsResponse, reviewData] = await Promise.all([response, newsApi, review,])
+  const [gameData, reviewData] = await Promise.all([response, review])
   const dlcData = await getDlc(gameData?.steam_appid);
 
   if (!gameData) {
@@ -28,8 +27,7 @@ const page = async ({ params }: { params: { id: number } }) => {
       <Movies screenshots={gameData?.screenshots} type='screenshots' />
       <AboutGame gameData={gameData} />
       <Dlc dlcData={dlcData} />
-      <Reviews reviews={reviewData.reviews} />
-      <News news={newsResponse} />
+      <Reviews reviews={reviewData.reviews} steamId={params.id} />
       {
         gameData?.content_descriptors?.ids?.includes(4) &&
         <MatureContent notes={gameData?.content_descriptors?.notes ?? ''} />

@@ -84,14 +84,7 @@ const HeaderGame: React.FC<Props> = ({ gameData, reviews }) => {
                     <h1 className="text-3xl sm:text-5xl font-bold py-4">
                         {gameData?.name}
                     </h1>
-                    {/* <div className="text-sm py-1 flex gap-2">
-              <span className="opacity-60">Genre: </span>
-              <span>
-                {gameData?.genres?.map((item, index: number) =>
-                  index < 3 && `${item?.description} | `
-                )}
-              </span>
-            </div> */}
+
                     <div className="text-sm py-2 flex items-center gap-2">
                         <span className="opacity-60 ">Platform:</span>{" "}
                         <div className="flex gap-1 text-xl">
@@ -114,9 +107,9 @@ const HeaderGame: React.FC<Props> = ({ gameData, reviews }) => {
                 </div>
 
                 {/* image left side  */}
-                <div className="md:max-w-[60%] mx-auto backdrop-blur-lg bg-[rgba(255,255,255,0.4)] rounded-xl h-fit my-auto order-first sm:order-last  ">
+                <div className="md:max-w-[60%] mx-auto backdrop-blur-lg bg-[rgba(255,255,255,0.4)] rounded-xl overflow-hidden h-fit my-auto order-first sm:order-last">
                     <div>
-                        <ImageBox realImage={gameData?.header_image} customStyle={'rounded-xl'} />
+                        <ImageBox realImage={gameData?.header_image} customStyle={'rounded-b-none'} />
                     </div>
                     <div className="px-5 py-6">
                         <h1 className="text-[1rem] ">{gameData?.short_description}</h1>
@@ -134,7 +127,7 @@ const HeaderGame: React.FC<Props> = ({ gameData, reviews }) => {
                         <div className="flex gap-2 items-center">
                             {gameData?.price_overview?.discount_percent > 0 ? (
                                 <>
-                                    <span className="rounded bg-blue-500 py-1 px-3">
+                                    <span className="rounded bg-primary text-white py-1 px-3">
                                         {`-${gameData?.price_overview?.discount_percent}% `}
                                     </span>
                                     <span className="line-through text-[rgba(0,0,0,0.40)] text-xl">
@@ -155,7 +148,7 @@ const HeaderGame: React.FC<Props> = ({ gameData, reviews }) => {
                         <div className="flex items-center gap-2 pt-4 justify-between">
                             {!gameData?.release_date?.coming_soon && (
                                 (isGameInCart(cartData, gameData?.steam_appid)) ?
-                                    <button className="py-3 px-5 bg-green_color text-white rounded-lg text-lg font-semibold cursor-default">
+                                    <button className="py-3 px-5 bg-primary text-white rounded-lg text-lg font-semibold cursor-default">
                                         Added to Cart
                                     </button>
                                     : <button className="py-3 px-5 bg-white text-black rounded-lg text-lg font-semibold" onClick={addToCart}>

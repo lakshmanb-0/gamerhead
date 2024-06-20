@@ -1,18 +1,21 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { ImageBox } from '../index';
 import { FaPlay } from '../reactIcons'
 import { Modal } from 'antd';
 
 const ModalVideo: React.FC<{ item: any }> = ({ item }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const showModal = () => {
         setIsModalOpen(true);
+        videoRef.current?.play();
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        videoRef.current?.pause();
     };
     console.log('modal render')
     return (
@@ -30,9 +33,10 @@ const ModalVideo: React.FC<{ item: any }> = ({ item }) => {
                 title={item.name}
                 open={isModalOpen}
                 footer={null}
+                width={800}
             >
                 <div className="aspect-video rounded-lg w-full">
-                    <video controls autoPlay >
+                    <video controls autoPlay ref={videoRef}>
                         <source src={item.mp4?.max!} type="video/mp4" />
                     </video>
                 </div>

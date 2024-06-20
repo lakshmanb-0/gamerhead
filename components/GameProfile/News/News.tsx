@@ -3,7 +3,7 @@ import { NewsItem } from '../../index'
 import { TNewsData } from '@/types'
 
 const News = ({ news }: { news: TNewsData[] }) => {
-  return (
+  return !!news.length && (
     <section className="py-5 sm:py-10 maxWidth ">
       <div className="py-4">
         <h1 className="font-bold text-4xl">News :</h1>

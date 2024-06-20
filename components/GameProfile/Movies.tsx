@@ -1,3 +1,4 @@
+'use client'
 import { TSingleGameData } from '@/types'
 import React from 'react'
 import { ImageBox, ModalVideo } from '../index'
@@ -8,7 +9,6 @@ type Props = {
     type: string
 }
 const Movies: React.FC<Props> = ({ movies, screenshots, type }) => {
-
     return (!!movies?.length || !!screenshots?.length) && (
         <section className="py-5 sm:py-10 maxWidth">
             <div className="py-4">
@@ -20,7 +20,7 @@ const Movies: React.FC<Props> = ({ movies, screenshots, type }) => {
                     <ModalVideo item={item} key={item.id} />
                 ))}
                 {screenshots?.map((item) => (
-                    <ImageBox realImage={item.path_thumbnail} key={item.id} />
+                    <ImageBox realImage={item.path_thumbnail} customStyle={'cursor-pointer'} key={item.id} onClick={() => window.open(item.path_full)} />
                 ))}
             </div>
         </section>
