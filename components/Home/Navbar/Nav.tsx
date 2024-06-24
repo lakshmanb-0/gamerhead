@@ -31,7 +31,6 @@ const Navbar = () => {
         }
         fetchData()
     }, [user])
-
     return (
         <section className="bg-[#131926] sticky top-0 z-[100]">
             <nav className="p-2 gap-2 flex justify-between items-center  maxWidth">

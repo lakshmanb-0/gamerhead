@@ -6,7 +6,7 @@ import Stripe from "stripe";
 
 export async function POST(req: Request) {
     const body = await req.json();
-    const origin = "http://localhost:3000";
+    const origin = "https://gamerhead.vercel.app";
 
     // cart info 
     const lineItems = body.map((item: TSingleGameData) => ({

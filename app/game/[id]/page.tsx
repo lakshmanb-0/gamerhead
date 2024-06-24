@@ -23,8 +23,8 @@ const page = async ({ params }: { params: { id: number } }) => {
   return (
     <main>
       <HeaderGame gameData={gameData} reviews={reviewData} />
-      <Movies movies={gameData?.movies} type='trailers' />
-      <Movies screenshots={gameData?.screenshots} type='screenshots' />
+      {gameData?.movies?.length && <Movies movies={gameData?.movies} type='trailers' />}
+      {gameData?.screenshots?.length && <Movies screenshots={gameData?.screenshots} type='screenshots' />}
       <AboutGame gameData={gameData} />
       <Dlc dlcData={dlcData} />
       <Reviews reviews={reviewData.reviews} steamId={params.id} />
