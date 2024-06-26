@@ -18,7 +18,7 @@ export const createUser = async ({ id, name, email }: userType) => {
             name: name,
             email: email,
         });
-        return newUser
+        return JSON.parse(JSON.stringify(newUser));
 
     } catch (error) {
         console.error('Error creating user:', error);
@@ -35,7 +35,7 @@ export const createCart = async (userId: string, data: any) => {
         }
         const cart = await userDb.findByIdAndUpdate(currentUser._id, { cartData: [data, ...currentUser.cartData] }, { new: true });
 
-        return cart;
+        return JSON.parse(JSON.stringify(cart));
 
     } catch (error) {
         console.error('Error creating id:', error);
@@ -51,7 +51,7 @@ export const deleteCart = async (userId: string, id: number) => {
         }
         const cart = await userDb.findByIdAndUpdate(currentUser._id, { cartData: [...currentUser.cartData.filter((item: any) => item.steam_appid !== id)] }, { new: true });
 
-        return cart;
+        return JSON.parse(JSON.stringify(cart));
 
 
     } catch (error) {
@@ -69,7 +69,7 @@ export const deleteAllCart = async (userId: string) => {
         }
         const cart = await userDb.findByIdAndUpdate(currentUser._id, { cartData: [] }, { new: true });
 
-        return cart;
+        return JSON.parse(JSON.stringify(cart));
 
     } catch (error) {
         console.error('Error Deleting id:', error);
@@ -85,7 +85,7 @@ export const createWishlist = async (userId: string, data: any) => {
         }
         const wishlist = await userDb.findByIdAndUpdate(currentUser._id, { wishlistData: [data, ...currentUser.wishlistData] }, { new: true });
 
-        return wishlist;
+        return JSON.parse(JSON.stringify(wishlist));
 
     } catch (error) {
         console.error('Error creating id:', error);
@@ -98,7 +98,7 @@ export const deleteWishlist = async (userId: string, steam_appid: number) => {
         const currentUser = await userDb.findOne({ id: userId });
         const wishlist = await userDb.findByIdAndUpdate(currentUser._id, { wishlistData: [...currentUser.wishlistData.filter((el: any) => el.steam_appid != steam_appid)] }, { new: true });
 
-        return wishlist;
+        return JSON.parse(JSON.stringify(wishlist));
 
     } catch (error) {
         console.error('Error Deleting id:', error);
@@ -112,9 +112,9 @@ export const createPurchased = async (userId: string) => {
         if (!currentUser) {
             throw new Error('User not found');
         }
-        const newCartData = await userDb.findByIdAndUpdate(currentUser._id, { purchasedData: currentUser.cartData }, { new: true });
+        const newCartData = await userDb.findByIdAndUpdate(currentUser._id, { purchasedData: currentUser.cartData, cartData: [] }, { new: true });
 
-        return newCartData;
+        return JSON.parse(JSON.stringify(newCartData));
 
     } catch (error) {
         console.error('Error creating id:', error);

@@ -10,12 +10,13 @@ export async function POST(req: Request) {
 
     // cart info 
     const lineItems = body.map((item: TSingleGameData) => ({
+
         price_data: {
             currency: "inr",
             unit_amount: item?.price_overview?.final ?? 0,
             product_data: {
                 name: item?.name,
-                images: [item?.capsule_imagev5],
+                images: [item?.header_image],
             },
         },
         quantity: 1,

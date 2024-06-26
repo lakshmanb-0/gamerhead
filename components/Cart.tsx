@@ -26,13 +26,14 @@ const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
         let values = !!buyData?.length ? buyData : state.cartData
         return values.reduce((acc, curr) => acc + (curr?.price_overview?.final || curr?.price_overview?.initial || 0) / 100, 0);
     };
+    console.log(buyData, state.cartData)
 
     // handle Payment 
     const handleClick = async () => {
         setLoading(true)
         const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!;
         const stripe = await loadStripe(STRIPE_PK);
-
+        console.log(buyData, state.cartData)
         const result = await fetch("/checkout-sessions", {
             method: "post",
             body: JSON.stringify((!!buyData?.length ? buyData : state.cartData), null),
@@ -64,7 +65,7 @@ const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
                     <div className="py-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {
                             (!!buyData.length ? buyData : state.cartData)?.map((el) =>
-                                <div className="relative">
+                                <div className="relative" key={el.steam_appid}>
                                     <GameCard item={el} key={el.steam_appid} />
                                     <div className="absolute top-1 left-1 z-10 " onClick={() => handleRemoveCart(el.steam_appid)}>
                                         <BsXCircle size={30} className='bg-[#212224] rounded-full' />

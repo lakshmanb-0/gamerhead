@@ -1,21 +1,28 @@
 'use client'
 import { addPurchased, clearCart } from '@/components/redux/reducers/auth.reducers';
 import { RootState } from '@/components/redux/store/store';
+import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { createPurchased } from '../serverAction/mongodbApi';
 
 const ClientThankYou = () => {
     const router = useRouter();
     const [seconds, setSeconds] = useState<number>(7)
     const state = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
+    const { user } = useUser()
 
     // clear cart and all cartData in purchased data 
     useEffect(() => {
+        const purchased = async () => {
+            await createPurchased(user?.id!)
+        }
+        user?.id && purchased()
         dispatch(addPurchased(state.cartData))
         dispatch(clearCart())
-    }, [])
+    }, [user])
 
     // 7 seconds timeout 
     useEffect(() => {

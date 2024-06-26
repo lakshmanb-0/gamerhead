@@ -20,7 +20,7 @@ const Movies: React.FC<Props> = ({ movies, screenshots, type }) => {
                     <ModalVideo item={item} key={item.id} />
                 ))}
                 {screenshots?.map((item) => (
-                    <ImageBox realImage={item.path_thumbnail} customStyle={'cursor-pointer'} key={item.id} onClick={() => window.open(item.path_full)} />
+                    <ImageBox realImage={item.path_thumbnail} customStyle={'cursor-pointer min-w-[200px] sm:min-w-[300px]'} key={item.id} onClick={() => window.open(item.path_full)} />
                 ))}
             </div>
         </section>

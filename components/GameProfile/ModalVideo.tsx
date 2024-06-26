@@ -20,7 +20,7 @@ const ModalVideo: React.FC<{ item: any }> = ({ item }) => {
     console.log('modal render')
     return (
         <>
-            <div onClick={showModal} className='relative cursor-pointer min-w-[300px]' >
+            <div onClick={showModal} className='relative cursor-pointer min-w-[200px] sm:min-w-[300px]' >
                 <ImageBox realImage={item.thumbnail} customStyle={'rounded-xl z-0'} />
                 <div className='absolute top-0 left-0 w-full h-full grid place-items-center'>
                     <FaPlay size={40} className="w-fit h-fit" />
