@@ -11,6 +11,7 @@ type userType = {
 export const createUser = async ({ id, name, email }: userType) => {
     try {
         const isExistingUser = await userDb.findOne({ id: id });
+        console.log(isExistingUser)
         if (isExistingUser) return JSON.parse(JSON.stringify(isExistingUser))
         console.log(isExistingUser)
         const newUser = await userDb.create({

@@ -27,7 +27,7 @@ const Navbar = () => {
         const fetchData = async () => {
             const currentUser = await createUser({ id: user.id, name: user.firstName || user.fullName, email: user.emailAddresses[0].emailAddress })
             console.log(currentUser, 'nav')
-            dispatch(addUser(currentUser))
+            currentUser && dispatch(addUser(currentUser))
         }
         !!user?.id && fetchData()
     }, [user])

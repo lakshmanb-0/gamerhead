@@ -15,14 +15,17 @@ const authSlice = createSlice({
         addUser: (state, action) => {
             // state = action.payload
             console.log(action.payload.id, 'auth')
-            state.id = action.payload.id
-            state._id = JSON.stringify(action.payload._id)
-            state.name = action.payload.name
-            state.email = action.payload.email
-            state.cartData = action.payload.cartData
-            state.wishlistData = action.payload.wishlistData
-            state.purchasedData = action.payload.purchasedData
-            state.lastVisitedData = action.payload.lastVisitedData
+            if (action.payload) {
+                state.id = action.payload.id
+                state._id = JSON.stringify(action.payload._id)
+                state.name = action.payload.name
+                state.email = action.payload.email
+                state.cartData = action.payload.cartData
+                state.wishlistData = action.payload.wishlistData
+                state.purchasedData = action.payload.purchasedData
+                state.lastVisitedData = action.payload.lastVisitedData
+            }
+
         },
         addCart: (state, action) => {
             state.cartData.unshift(action.payload)
