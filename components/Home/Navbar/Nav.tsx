@@ -20,7 +20,6 @@ const Navbar = () => {
     const { cartData, wishlistData } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
 
-    console.log('navbar')
     // create new User
     useEffect(() => {
         if (!user) return

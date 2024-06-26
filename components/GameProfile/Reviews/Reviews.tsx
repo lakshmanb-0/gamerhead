@@ -18,8 +18,6 @@ const Reviews: React.FC<Props> = ({ reviews, steamId }) => {
   const [personDetails, setPersonDetails] = useState<TReviewPerson[]>([])
   const reviewsRef = useRef(null);
   const [newsResponse, setNewsResponse] = useState([])
-  console.log('review render')
-  console.log(newsResponse)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +27,6 @@ const Reviews: React.FC<Props> = ({ reviews, steamId }) => {
     }
     fetchData()
   }, [])
-  console.log(newsResponse)
 
   useEffect(() => {
     const fetchData = async () => {

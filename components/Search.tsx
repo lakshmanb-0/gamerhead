@@ -11,7 +11,6 @@ type Props = {
     searchInput: string
 }
 const Search = ({ searchData, searchInput }: Props) => {
-    console.log(searchData)
     return (
         <div className="px-4 sm:px-10 py-10 maxWidth">
             <h1 className="text-3xl">{searchInput.replaceAll('%20', ' ')}</h1>

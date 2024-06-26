@@ -4,7 +4,6 @@ import { TSingleGameData } from '@/types'
 import parse from "html-react-parser";
 
 const AboutGame = ({ gameData }: { gameData: TSingleGameData }) => {
-    console.log(gameData)
     const { about_the_game, supported_languages, pc_requirements, content_descriptors, legal_notice } = gameData
 
     return (

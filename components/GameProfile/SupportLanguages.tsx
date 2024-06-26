@@ -34,7 +34,6 @@ const SupportLanguages: FC<{ supported_languages: string[] }> = ({ supported_lan
             key: 'subtitles',
         },
     ];
-    console.log('supported_languages render')
 
     useEffect(() => {
         if (supported_languages.length) {

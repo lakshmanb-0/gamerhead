@@ -15,7 +15,6 @@ import { BsXCircle } from "react-icons/bs";
 
 
 const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
-    console.log(buyData);
     const [loading, setLoading] = useState<boolean>(false)
     const state = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
@@ -33,7 +32,6 @@ const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
         setLoading(true)
         const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!;
         const stripe = await loadStripe(STRIPE_PK);
-        console.log(buyData, state.cartData)
         const result = await fetch("/checkout-sessions", {
             method: "post",
             body: JSON.stringify((!!buyData?.length ? buyData : state.cartData), null),

@@ -13,7 +13,6 @@ const Header: React.FC<Props> = ({ gameData }) => {
   const SlickButtonFix = ({ currentSlide, slideCount, children, ...props }: any) => (
     <div{...props}>{children}</div>
   );
-  console.log(gameData)
   return (
     <Carousel
       arrows

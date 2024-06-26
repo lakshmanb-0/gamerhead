@@ -17,7 +17,6 @@ const ModalVideo: React.FC<{ item: any }> = ({ item }) => {
         setIsModalOpen(false);
         videoRef.current?.pause();
     };
-    console.log('modal render')
     return (
         <>
             <div onClick={showModal} className='relative cursor-pointer min-w-[200px] sm:min-w-[300px]' >

@@ -54,7 +54,6 @@ const SearchDropdown = () => {
         setOptions([])
     }
 
-    console.log(options)
     return (
         <AutoComplete
             options={options}
