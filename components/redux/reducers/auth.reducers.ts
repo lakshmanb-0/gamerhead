@@ -14,7 +14,7 @@ const authSlice = createSlice({
     reducers: {
         addUser: (state, action) => {
             // state = action.payload
-            console.log(action.payload)
+            console.log(action.payload.id, 'auth')
             state.id = action.payload.id
             state._id = JSON.stringify(action.payload._id)
             state.name = action.payload.name

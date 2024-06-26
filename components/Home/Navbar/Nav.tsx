@@ -26,10 +26,10 @@ const Navbar = () => {
         if (!user) return
         const fetchData = async () => {
             const currentUser = await createUser({ id: user.id, name: user.firstName || user.fullName, email: user.emailAddresses[0].emailAddress })
-            console.log(currentUser)
+            console.log(currentUser, 'nav')
             dispatch(addUser(currentUser))
         }
-        fetchData()
+        !!user?.id && fetchData()
     }, [user])
     return (
         <section className="bg-[#131926] sticky top-0 z-[100]">
