@@ -23,7 +23,6 @@ const authSlice = createSlice({
                 state.cartData = action.payload.cartData
                 state.wishlistData = action.payload.wishlistData
                 state.purchasedData = action.payload.purchasedData
-                state.lastVisitedData = action.payload.lastVisitedData
             }
 
         },
@@ -34,11 +33,6 @@ const authSlice = createSlice({
             state.cartData = state.cartData.filter(el => el.steam_appid != action.payload)
         },
         clearCart: (state) => { state.cartData = [] },
-        addLastVisited: (state, action) => {
-            Array.isArray(action.payload)
-                ? state.lastVisitedData = action.payload
-                : state.lastVisitedData = [action.payload, ...state.lastVisitedData]
-        },
         addPurchased: (state, action) => {
             Array.isArray(action.payload)
                 ? state.purchasedData = action.payload
@@ -55,6 +49,6 @@ const authSlice = createSlice({
     }
 })
 
-export const { addCart, addLastVisited, addPurchased, addWishlist, removeWishlist, clearCart, removeFromCart, addUser } = authSlice.actions
+export const { addCart, addPurchased, addWishlist, removeWishlist, clearCart, removeFromCart, addUser } = authSlice.actions
 
 export default authSlice.reducer

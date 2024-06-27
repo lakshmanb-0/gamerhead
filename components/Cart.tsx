@@ -1,8 +1,7 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import Stripe from "stripe";
-import { TSingleGameData } from "@/types";
 import { GameCard } from "@/components/index";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/components/redux/store/store";
@@ -14,7 +13,7 @@ import { deleteCart } from "@/app/serverAction/mongodbApi";
 import { BsXCircle } from "react-icons/bs";
 
 
-const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
+const Cart = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const state = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch()
@@ -22,10 +21,10 @@ const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
 
     // handle total amount
     const handleTotal = () => {
-        let values = !!buyData?.length ? buyData : state.cartData
+        let values = state.cartData
         return values.reduce((acc, curr) => acc + (curr?.price_overview?.final || curr?.price_overview?.initial || 0) / 100, 0);
     };
-    console.log(buyData, state.cartData)
+    console.log(state.cartData)
 
     // handle Payment 
     const handleClick = async () => {
@@ -34,7 +33,7 @@ const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
         const stripe = await loadStripe(STRIPE_PK);
         const result = await fetch("/checkout-sessions", {
             method: "post",
-            body: JSON.stringify((!!buyData?.length ? buyData : state.cartData), null),
+            body: JSON.stringify((state.cartData), null),
             headers: {
                 "content-type": "application/json",
             },
@@ -55,17 +54,17 @@ const Cart = ({ buyData }: { buyData: TSingleGameData[] }) => {
     }
 
     return (
-        <div className="px-10">
+        <div className="px-10 py-5">
             <h1 className="text-3xl">Product Cart</h1>
             <div className="h-1 my-1 rounded w-[7%] bg-gradient-to-r from-[#fe1f94] to-[#fd2adf]" />
-            {(!!state?.cartData?.length || !!buyData?.length) ?
+            {!!state?.cartData?.length ?
                 <>
                     <div className="py-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {
-                            (!!buyData.length ? buyData : state.cartData)?.map((el) =>
+                            (state.cartData)?.map((el) =>
                                 <div className="relative" key={el.steam_appid}>
                                     <GameCard item={el} key={el.steam_appid} />
-                                    <div className="absolute top-1 left-1 z-10 " onClick={() => handleRemoveCart(el.steam_appid)}>
+                                    <div className="absolute top-1 left-1 z-10 cursor-pointer" onClick={() => handleRemoveCart(el.steam_appid)}>
                                         <BsXCircle size={30} className='bg-[#212224] rounded-full' />
                                     </div>
                                 </div>

@@ -10,20 +10,16 @@ type TProfileProps = {
     purchased: StoreData[]
 }
 
-const Profile = ({ wishlist, purchased }: TProfileProps) => {
+const Profile = () => {
     const state = useSelector((state: RootState) => state.auth)
-    let recentlyViewed;
-    if (typeof window !== 'undefined' && window.localStorage) {
-        recentlyViewed = JSON.parse(window.localStorage.getItem("recentlyViewed") || "[]");
-    }
     return (
         <section>
             {
-                (!!state?.wishlistData?.length || !!wishlist?.length)
+                (!!state?.wishlistData?.length)
                     ? <div className="py-5 sm:py-10 px-4">
                         <h1 className="font-bold text-3xl sm:text-4xl py-4">Wishlist</h1>
                         <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-2 gap-6 ">
-                            {(!!wishlist?.length ? wishlist : state?.wishlistData)?.map((item: any) => (
+                            {state?.wishlistData?.map((item: any) => (
                                 <GameCard item={item} key={item.steam_appid} />
                             ))}
                         </div>
@@ -36,10 +32,10 @@ const Profile = ({ wishlist, purchased }: TProfileProps) => {
             }
 
             {
-                !!purchased?.length && <div className="py-5 sm:py-10 px-4">
+                !!state.purchasedData?.length && <div className="py-5 sm:py-10 px-4">
                     <h1 className="font-bold text-3xl sm:text-4xl py-4">Last Purchased</h1>
                     <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-2 gap-6 ">
-                        {purchased?.map((item: any) => (
+                        {state.purchasedData?.map((item: any) => (
                             <GameCard item={item} key={item.steam_appid} />
                         ))}
                     </div>
@@ -47,10 +43,10 @@ const Profile = ({ wishlist, purchased }: TProfileProps) => {
             }
 
             {
-                !!recentlyViewed?.length && <div className="py-5 sm:py-10 px-4">
+                !!state.lastVisitedData?.length && <div className="py-5 sm:py-10 px-4">
                     <h1 className="font-bold text-3xl sm:text-4xl py-4">Last Visited</h1>
                     <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-2 gap-6 ">
-                        {recentlyViewed?.map((item: any) => (
+                        {state.lastVisitedData?.map((item: any) => (
                             <GameCard item={item} key={item.steam_appid} />
                         ))}
                     </div>

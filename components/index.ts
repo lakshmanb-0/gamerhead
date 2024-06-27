@@ -22,11 +22,10 @@ import NewsItem from "./GameProfile/News/NewsItem";
 
 import Cart from "./Cart";
 import Profile from "./Profile";
-import Search from "./Search";
 
 
 export {
     Header, TopSellers, ImageBox, GameCard, Navbar, MobileMenu, SearchDropdown,
     HeaderGame, Movies, AboutGame, MatureContent, Reviews, News, NewsItem, Dlc, ModalVideo, SupportLanguages, Review,
-    Cart, Profile, Search
+    Cart, Profile
 }

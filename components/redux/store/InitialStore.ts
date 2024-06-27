@@ -9,7 +9,7 @@ export const InitialStore = {
         cartData: [] as StoreData[],
         wishlistData: [] as StoreData[],
         purchasedData: [] as StoreData[],
-        lastVisitedData: [] as StoreData[],
+        lastVisitedData: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("recentlyViewed") || "[]") : [] as StoreData[],
     }
 
 }

@@ -42,11 +42,6 @@ const SearchDropdown = () => {
     }, [input])
 
 
-    // handleSubmit 
-    const navigateSearchPage = () => {
-        router.push(`/search/${input}`)
-        setInput("");
-    }
 
     // handleClick 
     const navigateGame = (id: string) => {
@@ -61,7 +56,6 @@ const SearchDropdown = () => {
             onChange={(e) => setInput(e)}
             className="w-80 outline-none"
             size="large"
-            onKeyDown={e => e.key === 'Enter' && navigateSearchPage()}
             placeholder="Search a Game"
         />
     )

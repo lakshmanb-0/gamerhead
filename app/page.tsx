@@ -6,7 +6,6 @@ import { getUniqueData } from "@/utils/utility";
 export default async function Home() {
   const categoryData = await getCategory();
   await connectDB()
-
   return (
     <main className="maxWidth">
       <Header gameData={getUniqueData(categoryData?.specials?.items)} />
